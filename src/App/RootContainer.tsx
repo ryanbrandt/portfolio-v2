@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Router } from "react-router";
 
-import { AppContainer } from "handsome-ui";
+import { AppContainer, Divider } from "handsome-ui";
 
 import routes, { history } from "../routes";
 
@@ -59,10 +59,15 @@ const RootContainer: React.FunctionComponent<Props> = (
         {menuOptions.map((option) => (
           <span
             key={option.name}
-            className={option.active ? "app_menu_active" : "app_menu_option"}
+            className={
+              option.active
+                ? "app_menu_active medium_text"
+                : "app_menu_option medium_text"
+            }
             onClick={() => history.push(option.route)}
           >
             {option.name}
+            {option.active && <Divider style={{ padding: "0.75px" }} />}
           </span>
         ))}
       </div>

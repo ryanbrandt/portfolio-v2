@@ -27,6 +27,23 @@ body {
   text-align: center;
 }
 
+.medium_text {
+  font-size: calc(12px + 0.5vw);
+}
+
+.fadeable-content {
+  animation: fadeIn 1.5s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 /********************
 * App
 ********************/
@@ -42,7 +59,7 @@ body {
 
 .app_menu_option:hover {
   color: black;
-  transition: 0.5s;
+  transition: 0.75s;
   cursor: pointer;
 }
 
