@@ -11,10 +11,20 @@ body {
 * Generics
 ********************/
 
-.flex_row {
+.flex_space_row {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.flex_center_col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.aligned_text {
+  text-align: center;
 }
 
 /********************
@@ -44,3 +54,7 @@ body {
 .root_container {
   margin: 5%;
 }
+
+/********************
+* Home
+********************/

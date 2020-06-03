@@ -55,7 +55,7 @@ const RootContainer: React.FunctionComponent<Props> = (
 
   const _renderHeaderMenu = (): React.ReactNode => {
     return (
-      <div className="flex_row app_menu">
+      <div className="flex_space_row app_menu">
         {menuOptions.map((option) => (
           <span
             key={option.name}

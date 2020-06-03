@@ -34,6 +34,7 @@
     "typescript": "~3.7.2"
   },
   "scripts": {
+    "prestart": "npm-link-shared ./node_modules/handsome-ui/node_modules . react",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
