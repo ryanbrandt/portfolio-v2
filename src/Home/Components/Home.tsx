@@ -1,6 +1,8 @@
 import React from "react";
 
-import { Divider } from "handsome-ui/lib";
+import { Divider, Github, Linkedin } from "handsome-ui";
+
+import { safeOpenWindow } from "../../utils/helpers";
 
 interface Props {}
 
@@ -14,6 +16,24 @@ const Home: React.FunctionComponent<Props> = (): JSX.Element => {
           My name is Ryan Brandt. I'm a Software Engineer based out of
           Philadelphia.
         </p>
+        <div className="aligned_text">
+          <Github
+            className="icon home_icon"
+            width={42}
+            height={42}
+            onClick={() => safeOpenWindow("https://www.github.com/ryanbrandt")}
+            fill="#506670c5"
+          />
+          <Linkedin
+            className="icon home_icon"
+            width={42}
+            height={42}
+            onClick={() =>
+              safeOpenWindow("https://www.linkedin.com/in/ryan-brandt1996/")
+            }
+            fill="#506670c5"
+          />
+        </div>
       </div>
     </div>
   );

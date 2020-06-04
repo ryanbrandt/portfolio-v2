@@ -31,6 +31,15 @@ body {
   font-size: calc(12px + 0.5vw);
 }
 
+icon {
+  cursor: pointer;
+}
+
+icon:hover {
+  color: black;
+  transition: 0.75s;
+}
+
 .fadeable-content {
   animation: fadeIn 1.5s;
 }
@@ -75,3 +84,8 @@ body {
 /********************
 * Home
 ********************/
+
+.home_icon {
+  padding: 1vw;
+  cursor: pointer;
+}
