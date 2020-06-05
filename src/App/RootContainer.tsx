@@ -67,7 +67,6 @@ const RootContainer: React.FunctionComponent<Props> = (
             onClick={() => history.push(option.route)}
           >
             {option.name}
-            {option.active && <Divider style={{ padding: "0.75px" }} />}
           </span>
         ))}
       </div>
