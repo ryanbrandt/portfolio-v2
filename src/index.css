@@ -81,6 +81,10 @@ icon:hover {
   margin: 5%;
 }
 
+.app_wide_container {
+  width: "80vw";
+}
+
 /********************
 * Home
 ********************/
@@ -88,4 +92,16 @@ icon:hover {
 .home_icon {
   padding: 1vw;
   cursor: pointer;
+}
+
+/********************
+* Resumé
+********************/
+
+.resume_column {
+  flex: 1;
+}
+
+.resume_header {
+  text-align: center;
 }
