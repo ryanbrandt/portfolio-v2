@@ -105,3 +105,23 @@ icon:hover {
 .resume_header {
   text-align: center;
 }
+
+/********************
+* Coontact
+********************/
+
+.contact_form {
+  padding: 20px;
+}
+
+.contact_input {
+  min-width: 45vw;
+}
+
+.contact_recaptcha {
+  padding: 10px;
+}
+
+.contact_submit {
+  padding: 20px;
+}
