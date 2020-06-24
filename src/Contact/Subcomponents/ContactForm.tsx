@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 
-import { Input, Button } from "handsome-ui";
+import { Input, Button, Text } from "handsome-ui";
 
 import { recaptchaKey } from "../../utils/secrets";
 
@@ -80,6 +80,11 @@ const ContactForm: React.FunctionComponent<Props> = (props: Props) => {
         value={fields.email}
         containerClassName="contact_input"
         onChange={(value: string) => setFields({ ...fields, email: value })}
+      />
+      <Text
+        label="How Can I Help You?"
+        containerClassName="contact_input"
+        onChange={(value: string) => setFields({ ...fields, content: value })}
       />
       {_renderRecaptcha()}
       {_renderSubmitButton()}

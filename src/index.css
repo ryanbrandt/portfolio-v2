@@ -94,6 +94,11 @@ icon:hover {
   cursor: pointer;
 }
 
+.version_string {
+  color: #506670c5;
+  margin-top: 10vh;
+  font-style: italic;
+}
 /********************
 * Resumé
 ********************/

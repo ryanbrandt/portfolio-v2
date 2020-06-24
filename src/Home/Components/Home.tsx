@@ -3,6 +3,7 @@ import React from "react";
 import { Divider, Github, Linkedin } from "handsome-ui";
 
 import { safeOpenWindow } from "../../utils/helpers";
+import { version } from "../../utils/gitVersion";
 
 interface Props {}
 
@@ -34,6 +35,7 @@ const Home: React.FunctionComponent<Props> = (): JSX.Element => {
             fill="#506670c5"
           />
         </div>
+        <div className="aligned_text version_string">portfolio-{version}</div>
       </div>
     </div>
   );
