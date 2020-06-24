@@ -1,7 +1,7 @@
 {
   "name": "portfolio-v2",
   "description": "Ryan Brandt portfolio & personal page",
-  "version": "1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -37,10 +37,11 @@
   },
   "scripts": {
     "prestart": "npm-link-shared ./node_modules/handsome-ui/node_modules . react",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "./config/git-version.sh && react-scripts start",
+    "build": "./config/git-version.sh && react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "set-version": "./config/git-version.sh"
   },
   "eslintConfig": {
     "extends": "react-app"
