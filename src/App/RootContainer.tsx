@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Router } from "react-router";
 
-import { AppContainer, Divider } from "handsome-ui";
+import { AppContainer, Column } from "handsome-ui";
 
 import routes, { history } from "../routes";
 
 interface Props {}
+
+interface MenuItem {
+  name: string;
+  route: string;
+  active: boolean;
+}
 
 const MENU_OPTIONS = [
   { name: "Home", route: "/" },
@@ -15,7 +21,7 @@ const MENU_OPTIONS = [
   { name: "Blog", route: "/blog" },
 ];
 
-const initialState = [
+const initialState: Array<MenuItem> = [
   { name: "Home", route: "/", active: true },
   { name: "Work", route: "/work", active: false },
   { name: "Resumé", route: "/resumé", active: false },
@@ -33,11 +39,12 @@ const RootContainer: React.FunctionComponent<Props> = (
 
     history.listen((location, action) => {
       const { pathname } = location;
+
       _handlePathChange(pathname);
     });
   }, []);
 
-  const [menuOptions, setMenuOptions] = useState(initialState);
+  const [menuOptions, setMenuOptions] = useState<Array<MenuItem>>(initialState);
 
   const _handlePathChange = (activePath: string): void => {
     setMenuOptions(
@@ -53,10 +60,24 @@ const RootContainer: React.FunctionComponent<Props> = (
     );
   };
 
+  const _handleMobileClick = (item: string): void => {
+    if (item !== "Home") {
+      history.push(item.toLowerCase());
+    } else {
+      history.push("/");
+    }
+  };
+
+  const _getMobileMenu = (): Array<string> => {
+    return menuOptions
+      .filter((option: MenuItem) => !option.active)
+      .map((option: MenuItem) => option.name);
+  };
+
   const _renderHeaderMenu = (): React.ReactNode => {
     return (
       <div className="flex_space_row app_menu">
-        {menuOptions.map((option) => (
+        {menuOptions.map((option: MenuItem) => (
           <span
             key={option.name}
             className={
@@ -73,15 +94,12 @@ const RootContainer: React.FunctionComponent<Props> = (
     );
   };
 
-  const _renderMobileMenu = (): React.ReactNode => {
-    return <p>mobile</p>;
-  };
-
   return (
     <AppContainer
       className="root_container"
-      mobileMenu={_renderMobileMenu()}
+      mobileMenu={_getMobileMenu()}
       headerMenu={_renderHeaderMenu()}
+      onMobileClick={_handleMobileClick}
     >
       <Router history={history}>{routes}</Router>
     </AppContainer>
