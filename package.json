@@ -21,7 +21,7 @@
     "eslint-config-airbnb": "^18.1.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-cypress": "^2.10.3",
-    "handsome-ui": "../handsome-ui",
+    "handsome-ui": "../handsome-ui/lib",
     "prettier": "^2.0.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -36,7 +36,6 @@
     "typescript": "~3.7.2"
   },
   "scripts": {
-    "prestart": "npm-link-shared ./node_modules/handsome-ui/node_modules . react",
     "start": "bash ./config/git-version.sh && react-scripts start",
     "build": "bash ./config/git-version.sh && react-scripts build",
     "test": "react-scripts test",

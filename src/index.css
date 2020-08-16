@@ -56,6 +56,12 @@ icon:hover {
 /********************
 * App
 ********************/
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1;
+}
 
 .app_menu {
   height: 100%;
@@ -79,10 +85,34 @@ icon:hover {
 
 .root_container {
   margin: 5%;
+  flex: 1 1;
 }
 
 .app_wide_container {
-  width: "80vw";
+  width: 80vw;
+}
+
+.app_footer {
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 1vh;
+}
+
+.empty_results-container {
+  padding: 8vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.empty_results-text {
+  color: #506670c5;
+  font-weight: lighter;
+  font-size: 24px;
+  padding: 2vh;
+  text-align: center;
 }
 
 /********************
@@ -111,8 +141,37 @@ icon:hover {
   text-align: center;
 }
 
+.resume_list-item_container {
+  padding: 1vh;
+}
+
+.resume_list-item_header {
+  display: flex;
+  align-items: center;
+}
+
+.resume_list-item_title {
+  font-weight: 600;
+  padding: 1vh;
+}
+
+.resume_list-item_datestring {
+  font-style: italic;
+  font-weight: lighter;
+  color: #506670c5;
+}
+
+.resume_tools-container {
+  padding: 1vh;
+}
+
+.resume_tools-badge {
+  margin: 1vh;
+  display: inline-block !important;
+}
+
 /********************
-* Coontact
+* Contact
 ********************/
 
 .contact_form {

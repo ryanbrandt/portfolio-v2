@@ -79,12 +79,11 @@ const RootContainer: React.FunctionComponent<Props> = (
 
   return (
     <AppContainer
+      className="root_container"
       mobileMenu={_renderMobileMenu()}
       headerMenu={_renderHeaderMenu()}
     >
-      <div className="root_container">
-        <Router history={history}>{routes}</Router>
-      </div>
+      <Router history={history}>{routes}</Router>
     </AppContainer>
   );
 };
