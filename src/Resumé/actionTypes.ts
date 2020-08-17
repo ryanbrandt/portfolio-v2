@@ -1,0 +1,5 @@
+export const RESUME_LIST_REQUEST = "resume/LIST_REQUEST";
+export type RESUME_LIST_REQUEST = typeof RESUME_LIST_REQUEST;
+
+export const RESUME_LIST_SUCCESS = "resume/LIST_SUCCESS";
+export type RESUME_LIST_SUCCESS = typeof RESUME_LIST_SUCCESS;
