@@ -1,25 +1,25 @@
 import * as t from "./actionTypes";
 import { Action } from "./actions";
 
-export interface ResumeState {
+export interface WorkState {
   list: Array<any>; // TODO
 }
 
-const initalState: ResumeState = {
+const initialState: WorkState = {
   list: [],
 };
 
 export default function (
-  state: ResumeState = initalState,
+  state: WorkState = initialState,
   action: Action
-): ResumeState {
+): WorkState {
   switch (action.type) {
-    case t.RESUME_LIST_SUCCESS: {
-      const { resumeList } = action;
+    case t.WORK_LIST_SUCCESS: {
+      const { workList } = action;
 
       return {
         ...state,
-        list: resumeList,
+        list: workList,
       };
     }
 

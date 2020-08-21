@@ -23,7 +23,6 @@ const Home: React.FunctionComponent<Props> = (): JSX.Element => {
             width={42}
             height={42}
             onClick={() => safeOpenWindow("https://www.github.com/ryanbrandt")}
-            fill="#506670c5"
           />
           <Linkedin
             className="icon home_icon"
@@ -32,7 +31,6 @@ const Home: React.FunctionComponent<Props> = (): JSX.Element => {
             onClick={() =>
               safeOpenWindow("https://www.linkedin.com/in/ryan-brandt1996/")
             }
-            fill="#506670c5"
           />
         </div>
         <div className="aligned_text version_string">portfolio-{version}</div>

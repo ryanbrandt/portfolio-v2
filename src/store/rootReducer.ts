@@ -1,5 +1,17 @@
 import { combineReducers } from "redux";
 
-import resumeReducer from "../Resumé/reducer";
+import resumeReducer, { ResumeState } from "../Resumé/reducer";
+import blogReducer, { BlogState } from "../Blog/reducer";
+import workReducer, { WorkState } from "../Work/reducer";
 
-export default combineReducers({ resumeReducer });
+export interface RootState {
+  resume: ResumeState;
+  blog: BlogState;
+  worK: WorkState;
+}
+
+export default combineReducers({
+  resume: resumeReducer,
+  blog: blogReducer,
+  work: workReducer,
+});

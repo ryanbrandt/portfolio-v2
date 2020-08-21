@@ -14,7 +14,7 @@ const App: React.FunctionComponent<Props> = (props: Props): JSX.Element => {
       <Provider store={store}>
         <RootContainer />
         <footer className="app_footer">
-          © 2020 Ryan Brandt. All Rights Reserved.
+          © 2020 Ryan Brandt. All rights reserved.
         </footer>
       </Provider>
     </div>
