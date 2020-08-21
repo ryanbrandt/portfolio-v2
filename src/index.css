@@ -1,8 +1,6 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Sofia Pro", "Source Sans Pro";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -118,10 +116,15 @@ icon:hover {
 /********************
 * Home
 ********************/
-
 .home_icon {
   padding: 1vw;
   cursor: pointer;
+  fill: #506670c5;
+}
+
+.home_icon:hover {
+  fill: black;
+  transition: 0.75s;
 }
 
 .version_string {
