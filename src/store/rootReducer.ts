@@ -7,7 +7,7 @@ import workReducer, { WorkState } from "../Work/reducer";
 export interface RootState {
   resume: ResumeState;
   blog: BlogState;
-  worK: WorkState;
+  work: WorkState;
 }
 
 export default combineReducers({
