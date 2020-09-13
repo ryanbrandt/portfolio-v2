@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import { Dispatch } from "redux";
 
 import { Divider, TabMenu, Row } from "handsome-ui";
 
+import { workListRequest } from "../actions";
 import { getWorkList } from "../selectors";
 
 import EmptyResults from "../../Common/Components/EmptyResults";
@@ -15,7 +17,17 @@ interface StateProps {
   workList: Array<any>; //TODO
 }
 
-const Work = (props: Props & StateProps): JSX.Element => {
+interface DispatchProps {
+  fetchWorkList: () => void;
+}
+
+const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
+  useEffect(() => {
+    const { fetchWorkList } = props;
+
+    fetchWorkList();
+  }, []);
+
   const tabs = [
     { title: "All", key: "all" },
     { title: "Full Stack Web", key: "fullStack" },
@@ -29,37 +41,24 @@ const Work = (props: Props & StateProps): JSX.Element => {
       return <EmptyResults />;
     }
 
-    const work = Object.assign([], workList);
-    const cards = new Array<React.ReactNode>();
+    const work = [...workList];
+    const workRows = [];
     while (work.length > 0) {
-      const currentItems = work.splice(4);
-      cards.push(
-        <Row>
-          <ContentCard
-            imgSrc="project-placeholder.jpg"
-            onClick={() => null}
-            title="Test"
-          />
-          <ContentCard
-            imgSrc="project-placeholder.jpg"
-            onClick={() => null}
-            title="Test"
-          />
-          <ContentCard
-            imgSrc="project-placeholder.jpg"
-            onClick={() => null}
-            title="Test"
-          />
-          <ContentCard
-            imgSrc="project-placeholder.jpg"
-            onClick={() => null}
-            title="Test"
-          />
-        </Row>
-      );
+      workRows.push(work.splice(0, 4));
     }
 
-    return cards;
+    return workRows.map((row, i) => (
+      <Row key={`row_${i}`}>
+        {row.map((item) => (
+          <ContentCard
+            key={item.name}
+            imgSrc={item.image ? item.image : "project-placeholder.jpg"}
+            onClick={() => null}
+            title={item.name}
+          />
+        ))}
+      </Row>
+    ));
   };
 
   return (
@@ -82,4 +81,10 @@ const mapStateToProps = (state: RootState) => {
   };
 };
 
-export default connect(mapStateToProps, null)(Work);
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    fetchWorkList: () => dispatch(workListRequest()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Work);

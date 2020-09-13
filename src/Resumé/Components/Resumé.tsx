@@ -1,37 +1,67 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
 
 import { Divider, Row, Column, Badge } from "handsome-ui";
 
+import { resumeListRequest } from "../actions";
+import { getEducationList, getExperienceList } from "../selectors";
+
 import ResumeItem from "../Subcomponents/ResumeItem";
+import { RootState } from "../../store/rootReducer";
 
 interface Props {}
 
-const Resumé: React.FunctionComponent<Props> = (): JSX.Element => {
+interface StateProps {
+  education: Array<any>;
+  experience: Array<any>;
+}
+
+interface DispatchProps {
+  fetchResumeList: () => void;
+}
+
+const Resumé: React.FunctionComponent<Props & StateProps & DispatchProps> = (
+  props: Props & StateProps & DispatchProps
+): JSX.Element => {
+  useEffect(() => {
+    const { fetchResumeList } = props;
+
+    fetchResumeList();
+  }, []);
+
   const _renderExperience = () => {
-    return (
+    const { experience } = props;
+
+    return experience.map((experienceItem) => (
       <ResumeItem
-        title="Fake Experience"
-        datestring="August 2020"
+        key={experienceItem.name}
+        title={experienceItem.name}
+        datestring={experienceItem.datestring}
         type="expereince"
-        description="yayyayayayayayayayayayayayayay ayayayayayaya ayayay ayayay ayayayayayay ay ayayaya ayay ayayayay ayayayay"
-        achievments="killed it"
+        description={experienceItem.description}
+        achievments={experienceItem.achievements}
       />
-    );
+    ));
   };
 
   const _renderEducation = () => {
-    return (
+    const { education } = props;
+
+    return education.map((educationItem) => (
       <ResumeItem
-        title="Fake Education"
-        datestring="August 2020"
+        key={educationItem.name}
+        title={educationItem.name}
+        datestring={educationItem.datestring}
         type="education"
-        description="yayyayayayayayayayayayayayayay ayayayayayaya ayayay ayayay ayayayayayay ay ayayaya ayay ayayayay ayayayay"
+        description={educationItem.description}
+        achievments={educationItem.achievements}
       />
-    );
+    ));
   };
 
   const _renderToolsAndTechnologies = () => {
-    const fakeList = [
+    const tools = [
       "TypeScript/JavaScript",
       "Node",
       "C#",
@@ -57,7 +87,7 @@ const Resumé: React.FunctionComponent<Props> = (): JSX.Element => {
 
     return (
       <div className="resume_tools-container">
-        {fakeList.map((item) => (
+        {tools.map((item) => (
           <Badge key={item} className="resume_tools-badge" content={item} />
         ))}
       </div>
@@ -93,4 +123,17 @@ const Resumé: React.FunctionComponent<Props> = (): JSX.Element => {
   );
 };
 
-export default Resumé;
+const mapStateToProps = (state: RootState) => {
+  return {
+    education: getEducationList(state),
+    experience: getExperienceList(state),
+  };
+};
+
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    fetchResumeList: () => dispatch(resumeListRequest()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Resumé);

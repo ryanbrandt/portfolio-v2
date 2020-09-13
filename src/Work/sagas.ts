@@ -1,15 +1,29 @@
-import { takeLatest, all } from "redux-saga/effects";
+import { takeLatest, all, put, call } from "redux-saga/effects";
 
+import api from "../utils/api";
+import { setContentLoading } from "../App/actions";
 import * as t from "./actionTypes";
 import * as a from "./actions";
-import { watchBlogListRequest } from "../Blog/sagas";
 
-export function* handleWorkListRequest() {}
+export function* handleWorkListRequest() {
+  yield put(setContentLoading(true));
+
+  try {
+    const { ok, data } = yield call(api.get, "/work");
+    if (ok) {
+      yield put(a.workListSuccess(data));
+    }
+  } catch (e) {
+    console.log(e);
+  } finally {
+    yield put(setContentLoading(false));
+  }
+}
 
 export function* watchWorkListRequest() {
   yield takeLatest(t.WORK_LIST_REQUEST, handleWorkListRequest);
 }
 
 export default function* () {
-  yield all([watchBlogListRequest()]);
+  yield all([watchWorkListRequest()]);
 }

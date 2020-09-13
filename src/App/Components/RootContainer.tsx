@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
 import { Router } from "react-router";
 
-import { AppContainer, Column } from "handsome-ui";
+import { AppContainer, LoadingOverlay } from "handsome-ui";
 
-import routes, { history } from "../routes";
+import { getContentLoading } from "../selectors";
+import routes, { history } from "../../routes";
+import { RootState } from "../../store/rootReducer";
 
 interface Props {}
+
+interface StateProps {
+  contentLoading: boolean;
+}
 
 interface MenuItem {
   name: string;
@@ -29,8 +36,8 @@ const initialState: Array<MenuItem> = [
   { name: "Blog", route: "/blog", active: false },
 ];
 
-const RootContainer: React.FunctionComponent<Props> = (
-  props: Props
+const RootContainer: React.FunctionComponent<Props & StateProps> = (
+  props: Props & StateProps
 ): JSX.Element => {
   useEffect(() => {
     const { location } = history;
@@ -94,6 +101,8 @@ const RootContainer: React.FunctionComponent<Props> = (
     );
   };
 
+  const { contentLoading } = props;
+
   return (
     <AppContainer
       className="root_container"
@@ -102,8 +111,17 @@ const RootContainer: React.FunctionComponent<Props> = (
       onMobileClick={_handleMobileClick}
     >
       <Router history={history}>{routes}</Router>
+      <LoadingOverlay show={contentLoading} />
     </AppContainer>
   );
 };
 
-export default RootContainer;
+const mapStateToProps = (state: RootState) => {
+  return {
+    contentLoading: getContentLoading(state),
+  };
+};
+
+export default connect<StateProps, void, Props, any>(mapStateToProps)(
+  RootContainer
+);
