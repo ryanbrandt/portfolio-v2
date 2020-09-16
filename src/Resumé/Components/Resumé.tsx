@@ -28,6 +28,7 @@ const Resumé: React.FunctionComponent<Props & StateProps & DispatchProps> = (
     const { fetchResumeList } = props;
 
     fetchResumeList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const _renderExperience = () => {

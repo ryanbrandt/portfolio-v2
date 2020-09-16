@@ -26,6 +26,7 @@ const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
     const { fetchWorkList } = props;
 
     fetchWorkList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const tabs = [
