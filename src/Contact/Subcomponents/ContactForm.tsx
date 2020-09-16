@@ -3,8 +3,6 @@ import ReCAPTCHA from "react-google-recaptcha";
 
 import { Input, Button, Text } from "handsome-ui";
 
-import { recaptchaKey } from "../../utils/secrets";
-
 interface Props {}
 
 interface ContactForm {
@@ -40,7 +38,7 @@ const ContactForm: React.FunctionComponent<Props> = (props: Props) => {
     return (
       <div className="contact_recaptcha">
         <ReCAPTCHA
-          sitekey={recaptchaKey}
+          sitekey={"6LeFKr8UAAAAAL-jfBu2qlyDzwySnEDXA4dNJcoA"}
           onChange={(token: string | null) =>
             setCaptchaValidated(token ? true : false)
           }
