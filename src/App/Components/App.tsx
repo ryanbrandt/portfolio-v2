@@ -3,7 +3,6 @@ import { Provider } from "react-redux";
 
 import configureStore from "../../store/store";
 import RootContainer from "./RootContainer";
-import { version } from "../../utils/gitVersion";
 
 interface Props {}
 
@@ -15,7 +14,7 @@ const App: React.FunctionComponent<Props> = (props: Props): JSX.Element => {
       <Provider store={store}>
         <RootContainer />
         <footer className="app_footer">
-          © 2020 Ryan Brandt. All rights reserved. {version}
+          © 2020 Ryan Brandt. All rights reserved. v2.0.0-beta
         </footer>
       </Provider>
     </div>
