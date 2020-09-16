@@ -111,7 +111,7 @@ const RootContainer: React.FunctionComponent<Props & StateProps> = (
       onMobileClick={_handleMobileClick}
     >
       <Router history={history}>{routes}</Router>
-      <LoadingOverlay show={contentLoading} />
+      <LoadingOverlay show={contentLoading} fade />
     </AppContainer>
   );
 };
