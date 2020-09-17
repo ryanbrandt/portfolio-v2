@@ -92,7 +92,10 @@ const RootContainer: React.FunctionComponent<Props & StateProps> = (
                 ? "app_menu_active medium_text"
                 : "app_menu_option medium_text"
             }
-            onClick={() => history.push(option.route)}
+            onClick={() => {
+              history.push(option.route);
+              document.body.scrollTop = 0;
+            }}
           >
             {option.name}
           </span>
