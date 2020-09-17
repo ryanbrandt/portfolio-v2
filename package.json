@@ -32,12 +32,12 @@
     "@types/react-router": "^5.1.7",
     "@types/react-router-dom": "^5.1.5",
     "@types/reselect": "^2.2.0",
-    "prettier": "^2.0.5",
+    "cypress": "^4.5.0",
     "eslint": "^6.6.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-cypress": "^2.10.3",
-    "cypress": "^4.5.0"
+    "prettier": "^2.0.5"
   },
   "scripts": {
     "start": "bash ./config/git-version.sh && react-scripts start",
