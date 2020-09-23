@@ -10,7 +10,7 @@ export const getActiveWorkIndex = (state: RootState) =>
 export const getActiveWorkItem = createSelector(
   [getWorkList, getActiveWorkIndex],
   (list, activeIndex) => {
-    if (activeIndex != -1) {
+    if (activeIndex !== -1) {
       return list[activeIndex];
     }
   }
