@@ -73,6 +73,7 @@ const RootContainer: React.FunctionComponent<Props & StateProps> = (
     } else {
       history.push("/");
     }
+    document.body.scrollTop = 0;
   };
 
   const _getMobileMenu = (): Array<string> => {
