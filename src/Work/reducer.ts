@@ -3,10 +3,12 @@ import { Action } from "./actions";
 
 export interface WorkState {
   list: Array<any>; // TODO
+  activeItemIndex: number;
 }
 
 const initialState: WorkState = {
   list: [],
+  activeItemIndex: -1,
 };
 
 export default function (
@@ -20,6 +22,15 @@ export default function (
       return {
         ...state,
         list: workList,
+      };
+    }
+
+    case t.SET_ACTIVE_WORK_ITEM: {
+      const { index } = action;
+
+      return {
+        ...state,
+        activeItemIndex: index,
       };
     }
 

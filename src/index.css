@@ -225,3 +225,11 @@ icon:hover {
 .contact_submit {
   padding: 20px;
 }
+
+/********************
+* Work
+********************/
+.work_content-container {
+  min-width: 60vw;
+  padding: 25px;
+}

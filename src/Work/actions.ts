@@ -22,4 +22,16 @@ export function workListSuccess(workList: Array<any>): workListSuccess {
   };
 }
 
-export type Action = workListRequest | workListSuccess;
+export interface setActiveWorkItem {
+  type: t.SET_ACTIVE_WORK_ITEM;
+  index: number;
+}
+
+export function setActiveWorkItem(index: number): setActiveWorkItem {
+  return {
+    type: t.SET_ACTIVE_WORK_ITEM,
+    index,
+  };
+}
+
+export type Action = workListRequest | workListSuccess | setActiveWorkItem;

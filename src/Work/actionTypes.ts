@@ -3,3 +3,6 @@ export type WORK_LIST_REQUEST = typeof WORK_LIST_REQUEST;
 
 export const WORK_LIST_SUCCESS = "work/LIST_SUCCESS";
 export type WORK_LIST_SUCCESS = typeof WORK_LIST_SUCCESS;
+
+export const SET_ACTIVE_WORK_ITEM = "work/SET_ACTIVE_ITEM";
+export type SET_ACTIVE_WORK_ITEM = typeof SET_ACTIVE_WORK_ITEM;
