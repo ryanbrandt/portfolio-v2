@@ -73,7 +73,7 @@ const RootContainer: React.FunctionComponent<Props & StateProps> = (
     } else {
       history.push("/");
     }
-    document.body.scrollTop = 0;
+    window.scrollTo(0, 0);
   };
 
   const _getMobileMenu = (): Array<string> => {
@@ -95,7 +95,7 @@ const RootContainer: React.FunctionComponent<Props & StateProps> = (
             }
             onClick={() => {
               history.push(option.route);
-              document.body.scrollTop = 0;
+              window.scrollTo(0, 0);
             }}
           >
             {option.name}
