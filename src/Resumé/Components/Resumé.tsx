@@ -2,13 +2,15 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { Divider, Row, Column, Badge } from "handsome-ui";
+import { Divider, Row, Column, Badge, Download } from "handsome-ui";
 
 import { resumeListRequest } from "../actions";
 import { getEducationList, getExperienceList } from "../selectors";
 
 import ResumeItem from "../Subcomponents/ResumeItem";
 import { RootState } from "../../store/rootReducer";
+import { safeOpenWindow } from "../../utils/helpers";
+import { RESUME_DOWNLOAD_LINK } from "../../utils/constants";
 
 interface Props {}
 
@@ -30,6 +32,10 @@ const Resumé: React.FunctionComponent<Props & StateProps & DispatchProps> = (
     fetchResumeList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const _handleDownloadClick = () => {
+    safeOpenWindow(RESUME_DOWNLOAD_LINK);
+  }
 
   const _renderExperience = () => {
     const { experience } = props;
@@ -64,12 +70,12 @@ const Resumé: React.FunctionComponent<Props & StateProps & DispatchProps> = (
   const _renderToolsAndTechnologies = () => {
     const tools = [
       "TypeScript/JavaScript",
-      "Node",
       "C#",
       "Python",
       "Java",
       "SQL",
       "NoSQL",
+      "Node.js",
       "React",
       "React-Native",
       "Redux",
@@ -84,6 +90,7 @@ const Resumé: React.FunctionComponent<Props & StateProps & DispatchProps> = (
       "Cypress",
       "Jest",
       "Enzyme",
+      "Xunit",
     ];
 
     return (
@@ -98,7 +105,7 @@ const Resumé: React.FunctionComponent<Props & StateProps & DispatchProps> = (
   return (
     <div className="fadeable-content flex_center_col">
       <div>
-        <h1 className="aligned_text">Resumé</h1>
+        <h1 className="aligned_text"><Download className="download_icon" onClick={_handleDownloadClick} />Resumé</h1>
         <Divider />
         <div className="app_wide_container">
           <Row>

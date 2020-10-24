@@ -82,7 +82,7 @@ icon:hover {
 }
 
 .root_container {
-  margin: 5%;
+  margin: 2.5%;
   flex: 1 1;
 }
 
@@ -204,6 +204,17 @@ icon:hover {
 .resume_tools-badge {
   margin: 1vh;
   display: inline-block !important;
+}
+
+.download_icon {
+  padding-right: 1vw;
+  cursor: pointer;
+  fill: #506670c5;
+}
+
+.download_icon:hover {
+  fill: black;
+  transition: 0.75s;
 }
 
 /********************
