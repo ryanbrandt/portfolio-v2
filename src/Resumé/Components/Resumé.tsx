@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { Divider, Row, Column, Badge, Download } from "handsome-ui";
+import { Divider, Row, Column, Badge, Download, AppContext } from "handsome-ui";
 
 import { resumeListRequest } from "../actions";
 import { getEducationList, getExperienceList } from "../selectors";
@@ -103,31 +103,38 @@ const Resumé: React.FunctionComponent<Props & StateProps & DispatchProps> = (
   };
 
   return (
-    <div className="fadeable-content flex_center_col">
-      <div>
-        <h1 className="aligned_text"><Download className="download_icon" onClick={_handleDownloadClick} />Resumé</h1>
-        <Divider />
-        <div className="app_wide_container">
-          <Row>
-            <Column className="resume_column">
-              <h3 className="resume_header">Development Experience</h3>
-              <Divider />
-              {_renderExperience()}
-            </Column>
-            <Column className="resume_column">
-              <h3 className="resume_header">Education</h3>
-              <Divider />
-              {_renderEducation()}
-            </Column>
-            <Column className="resume_column">
-              <h3 className="resume_header">Tools & Technology</h3>
-              <Divider />
-              {_renderToolsAndTechnologies()}
-            </Column>
-          </Row>
+    <AppContext.Consumer>
+      {isMobile => (
+        <div className="fadeable-content flex_center_col">
+          <div>
+            <h1 className="aligned_text">
+              <Download className={isMobile ? "download_icon-mobile" : "download_icon"} onClick={_handleDownloadClick} />
+              Resumé
+            </h1>
+            <Divider />
+            <div className="app_wide_container">
+              <Row>
+                <Column className="resume_column">
+                  <h3 className="resume_header">Development Experience</h3>
+                  <Divider />
+                  {_renderExperience()}
+                </Column>
+                <Column className="resume_column">
+                  <h3 className="resume_header">Education</h3>
+                  <Divider />
+                  {_renderEducation()}
+                </Column>
+                <Column className="resume_column">
+                  <h3 className="resume_header">Tools & Technology</h3>
+                  <Divider />
+                  {_renderToolsAndTechnologies()}
+                </Column>
+              </Row>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </AppContext.Consumer>
   );
 };
 

@@ -5,7 +5,7 @@
   "private": true,
   "dependencies": {
     "apisauce": "^1.1.1",
-    "handsome-ui": "git://github.com/ryanbrandt/handsome-ui#master",
+    "handsome-ui": "git://github.com/ryanbrandt/handsome-ui#portfolio-updates",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-google-recaptcha": "^2.1.0",

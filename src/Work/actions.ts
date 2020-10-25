@@ -34,4 +34,28 @@ export function setActiveWorkItem(index: number): setActiveWorkItem {
   };
 }
 
-export type Action = workListRequest | workListSuccess | setActiveWorkItem;
+export interface setActiveWorkTab {
+  type: t.SET_ACTIVE_WORK_TAB;
+  tab: string;
+}
+
+export function setActiveWorkTab(tab: string): setActiveWorkTab {
+  return {
+    type: t.SET_ACTIVE_WORK_TAB,
+    tab
+  }
+}
+
+export interface setWorkQuery {
+  type: t.SET_WORK_QUERY;
+  query: string;
+}
+
+export function setWorkQuery(query: string): setWorkQuery {
+  return {
+    type: t.SET_WORK_QUERY,
+    query
+  }
+}
+
+export type Action = workListRequest | workListSuccess | setActiveWorkItem | setWorkQuery | setActiveWorkTab;

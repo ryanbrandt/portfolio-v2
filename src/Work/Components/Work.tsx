@@ -4,8 +4,8 @@ import { Dispatch } from "redux";
 
 import { Divider, TabMenu, Row } from "handsome-ui";
 
-import { workListRequest, setActiveWorkItem } from "../actions";
-import { getWorkList } from "../selectors";
+import { workListRequest, setActiveWorkItem, setActiveWorkTab, setWorkQuery } from "../actions";
+import { getFilteredWorkList} from "../selectors";
 
 import WorkContent from "../Subcomponents/WorkContent";
 import EmptyResults from "../../Common/Components/EmptyResults";
@@ -21,6 +21,8 @@ interface StateProps {
 interface DispatchProps {
   fetchWorkList: () => void;
   setActiveItem: (index: number) => void;
+  setQuery: (query: string) => void;
+  setTab: (tab: string) => void;
 }
 
 const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
@@ -34,7 +36,7 @@ const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
 
   const tabs = [
     { title: "All", key: "all" },
-    { title: "Full Stack Web", key: "fullStack" },
+    { title: "Full Stack Web", key: "web" },
     { title: "Tools", key: "tools" },
     { title: "Other", key: "other" },
   ];
@@ -70,13 +72,15 @@ const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
     ));
   };
 
+  const { setTab, setQuery } = props;
+
   return (
     <div className="fadeable-content flex_center_col">
       <div>
         <h1 className="aligned_text">Work</h1>
         <Divider />
         <div className="app_wide_container">
-          <TabMenu tabs={tabs} onTab={() => null} onSearch={() => null} />
+          <TabMenu tabs={tabs} onTab={(tab: string) => setTab(tab)} onSearch={(query: string) => setQuery(query)} />
           {_renderCards()}
         </div>
         <WorkContent open={contentOpen} onClose={() => setContentOpen(false)} />
@@ -87,7 +91,7 @@ const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
 
 const mapStateToProps = (state: RootState) => {
   return {
-    workList: getWorkList(state),
+    workList: getFilteredWorkList(state),
   };
 };
 
@@ -95,6 +99,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     fetchWorkList: () => dispatch(workListRequest()),
     setActiveItem: (index: number) => dispatch(setActiveWorkItem(index)),
+    setQuery: (query: string) => dispatch(setWorkQuery(query)),
+    setTab: (tab: string) => dispatch(setActiveWorkTab(tab)),
   };
 };
 

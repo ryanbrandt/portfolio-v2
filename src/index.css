@@ -42,12 +42,25 @@ icon:hover {
   animation: fadeIn 1s;
 }
 
+.fadeable-half-content {
+  animation: fadeInHalf 1s;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes fadeInHalf {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.5;
   }
 }
 
@@ -207,12 +220,23 @@ icon:hover {
 }
 
 .download_icon {
-  padding-right: 1vw;
+  margin-right: 1vw;
+  cursor: pointer;
+  fill: #506670c5;
+}
+
+.download_icon-mobile {
+  margin-right: 5vw;
   cursor: pointer;
   fill: #506670c5;
 }
 
 .download_icon:hover {
+  fill: black;
+  transition: 0.75s;
+}
+
+.download_icon-mobile:hover {
   fill: black;
   transition: 0.75s;
 }
@@ -241,6 +265,22 @@ icon:hover {
 * Work
 ********************/
 .work_content-container {
-  min-width: 60vw;
-  padding: 25px;
+  width: 60vw;
+  padding: 1vw;
+}
+
+.work_content-datestring {
+  color: #506670c5;
+}
+
+.work-img {
+  height: 75%;
+  width: 75%;
+  padding-bottom: 5vh;
+}
+
+.work-img-mobile {
+  height: 30vh;
+  max-width: 100%;
+  padding-bottom: 5vw;
 }

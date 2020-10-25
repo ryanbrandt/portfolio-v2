@@ -4,11 +4,15 @@ import { Action } from "./actions";
 export interface WorkState {
   list: Array<any>; // TODO
   activeItemIndex: number;
+  activeTab: string;
+  query: string;
 }
 
 const initialState: WorkState = {
   list: [],
   activeItemIndex: -1,
+  activeTab: "all",
+  query: "",
 };
 
 export default function (
@@ -32,6 +36,24 @@ export default function (
         ...state,
         activeItemIndex: index,
       };
+    }
+
+    case t.SET_ACTIVE_WORK_TAB: {
+      const { tab } = action;
+
+      return {
+        ...state,
+        activeTab: tab,
+      };
+    }
+
+    case t.SET_WORK_QUERY: {
+      const { query } = action;
+
+      return {
+        ...state,
+        query,
+      }
     }
 
     default: {
