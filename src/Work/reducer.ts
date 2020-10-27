@@ -3,14 +3,14 @@ import { Action } from "./actions";
 
 export interface WorkState {
   list: Array<any>; // TODO
-  activeItemIndex: number;
+  activeItemId: number;
   activeTab: string;
   query: string;
 }
 
 const initialState: WorkState = {
   list: [],
-  activeItemIndex: -1,
+  activeItemId: -1,
   activeTab: "all",
   query: "",
 };
@@ -30,11 +30,11 @@ export default function (
     }
 
     case t.SET_ACTIVE_WORK_ITEM: {
-      const { index } = action;
+      const { id } = action;
 
       return {
         ...state,
-        activeItemIndex: index,
+        activeItemId: id,
       };
     }
 

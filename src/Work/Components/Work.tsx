@@ -28,9 +28,14 @@ interface DispatchProps {
 const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
   const [contentOpen, setContentOpen] = useState(false);
   useEffect(() => {
-    const { fetchWorkList } = props;
+    const { fetchWorkList, setQuery, setTab } = props;
 
     fetchWorkList();
+
+    return () => {
+      setTab("all");
+      setQuery("");
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -41,9 +46,9 @@ const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
     { title: "Other", key: "other" },
   ];
 
-  const _handleCardSelection = (n: number) => {
+  const _handleCardSelection = (id: number) => {
     const { setActiveItem } = props;
-    setActiveItem(n);
+    setActiveItem(id);
     setContentOpen(true);
   };
   const _renderCards = () => {
@@ -64,7 +69,7 @@ const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
           <ContentCard
             key={item.name}
             imgSrc={item.image ? item.image : "project-placeholder.jpg"}
-            onClick={() => _handleCardSelection(n + 4 * i)}
+            onClick={() => _handleCardSelection(item.id)}
             title={item.name}
           />
         ))}

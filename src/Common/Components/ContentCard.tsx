@@ -13,9 +13,10 @@ const ContentCard = (props: Props) => {
 
   const _renderCard = (isMobile: boolean) => {
     const cssModifier = isMobile ? "-mobile" : "";
+    const fadeClassName = isMobile ? "fadeable-content": "fadeable-half-content";
 
     return (
-      <div className={`fadeable-half-content content_card-container${cssModifier}`} onClick={onClick}>
+      <div className={`${fadeClassName} content_card-container${cssModifier}`} onClick={onClick}>
         <h3 className="content_card-title">{title}</h3>
         <div>
           <img

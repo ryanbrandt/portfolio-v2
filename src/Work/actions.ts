@@ -24,13 +24,13 @@ export function workListSuccess(workList: Array<any>): workListSuccess {
 
 export interface setActiveWorkItem {
   type: t.SET_ACTIVE_WORK_ITEM;
-  index: number;
+  id: number;
 }
 
-export function setActiveWorkItem(index: number): setActiveWorkItem {
+export function setActiveWorkItem(id: number): setActiveWorkItem {
   return {
     type: t.SET_ACTIVE_WORK_ITEM,
-    index,
+    id,
   };
 }
 

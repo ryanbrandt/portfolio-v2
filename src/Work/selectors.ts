@@ -8,14 +8,14 @@ export const getWorkTab = (state: RootState) => state.work.activeTab;
 
 export const getWorkQuery = (state: RootState) => state.work.query;
 
-export const getActiveWorkIndex = (state: RootState) =>
-  state.work.activeItemIndex;
+export const getActiveWorkId = (state: RootState) =>
+  state.work.activeItemId;
 
 export const getActiveWorkItem = createSelector(
-  [getWorkList, getActiveWorkIndex],
-  (list, activeIndex) => {
-    if (activeIndex !== -1) {
-      return list[activeIndex];
+  [getWorkList, getActiveWorkId],
+  (list, activeId) => {
+    if (activeId !== -1) {
+      return list.find(item => item.id === activeId);
     }
   }
 );

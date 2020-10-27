@@ -281,6 +281,6 @@ icon:hover {
 
 .work-img-mobile {
   height: 30vh;
-  max-width: 100%;
+  width: 75vw;
   padding-bottom: 5vw;
 }
