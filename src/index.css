@@ -42,6 +42,10 @@ icon:hover {
   animation: fadeIn 1s;
 }
 
+.fadeable-content-out {
+  animation: fadeOut 1s;
+}
+
 .fadeable-half-content {
   animation: fadeInHalf 1s;
 }
@@ -61,6 +65,15 @@ icon:hover {
   }
   to {
     opacity: 0.5;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }
 
@@ -101,6 +114,23 @@ icon:hover {
 
 .app_wide_container {
   width: 80vw;
+}
+
+.app_scroll-top {
+  position: sticky;
+  bottom: 0;
+  padding: 10px;
+}
+
+.app_scroll-top-hidden {
+  position: sticky;
+  bottom: 0;
+  padding: 10px;
+  opacity: 0;
+}
+
+.app_scroll-top-content {
+  padding: 100px;
 }
 
 .app_footer {
@@ -274,8 +304,8 @@ icon:hover {
 }
 
 .work-img {
-  height: 75%;
-  width: 75%;
+  height: 60%;
+  width: 70%;
   padding-bottom: 5vh;
 }
 

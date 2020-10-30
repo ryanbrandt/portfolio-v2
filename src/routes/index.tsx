@@ -14,7 +14,7 @@ export default (
   <Switch>
     <Route exact path="/" component={Home} />
     <Route exact path="/work" component={Work} />
-    <Route exact path="/resumé" component={Resumé} />
+    <Route exact path="/resume" component={Resumé} />
     <Route exact path="/contact" component={Contact} />
     <Route exact path="/blog" component={Blog} />
     <Route exact path="*" component={Home} />

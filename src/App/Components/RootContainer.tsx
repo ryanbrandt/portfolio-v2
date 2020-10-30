@@ -14,16 +14,20 @@ interface StateProps {
   contentLoading: boolean;
 }
 
-interface MenuItem {
+interface MenuOption {
+  [key: string]: any;
   name: string;
   route: string;
+}
+
+interface MenuItem extends MenuOption {
   active: boolean;
 }
 
 const MENU_OPTIONS = [
   { name: "Home", route: "/" },
   { name: "Work", route: "/work" },
-  { name: "Resumé", route: "/resumé" },
+  { name: "Resumé", route: "/resume" },
   { name: "Contact", route: "/contact" },
   { name: "Blog", route: "/blog" },
 ];
@@ -31,7 +35,7 @@ const MENU_OPTIONS = [
 const initialState: Array<MenuItem> = [
   { name: "Home", route: "/", active: true },
   { name: "Work", route: "/work", active: false },
-  { name: "Resumé", route: "/resumé", active: false },
+  { name: "Resumé", route: "/resume", active: false },
   { name: "Contact", route: "/contact", active: false },
   { name: "Blog", route: "/blog", active: false },
 ];
@@ -68,11 +72,13 @@ const RootContainer: React.FunctionComponent<Props & StateProps> = (
   };
 
   const _handleMobileClick = (item: string): void => {
-    if (item !== "Home") {
-      history.push(item.toLowerCase());
+    const menuOption = MENU_OPTIONS.find((option) => option.name === item);
+    if (menuOption) {
+      history.push(menuOption.route);
     } else {
       history.push("/");
     }
+
     window.scrollTo(0, 0);
   };
 
