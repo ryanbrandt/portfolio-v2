@@ -168,10 +168,8 @@ icon:hover {
 
 .content_card-container:hover {
   padding: 10px;
-  width: 22%;
-  height: 11%;
   opacity: 1;
-  transition: 0.5s;
+  transition: 0.75s;
   color: black;
 }
 
@@ -313,4 +311,18 @@ icon:hover {
   height: 30vh;
   width: 75vw;
   padding-bottom: 5vw;
+}
+
+.work-link {
+  width: fit-content;
+  padding-top: 5px;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.5;
+  text-decoration: none;
+}
+
+.work-link:hover {
+  opacity: 1;
+  transition: 0.5s;
 }
