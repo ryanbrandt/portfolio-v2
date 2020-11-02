@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
 
-import { Modal, AppContext, Row } from "handsome-ui";
+import { Modal, AppContext } from "handsome-ui";
 
 import { RootState } from "../../store/rootReducer";
 import { getActiveWorkItem } from "../selectors";
