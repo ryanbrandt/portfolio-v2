@@ -119,14 +119,16 @@ icon:hover {
 .app_scroll-top {
   position: sticky;
   bottom: 0;
-  padding: 10px;
+  align-self: center;
+  padding: 25px;
 }
 
 .app_scroll-top-hidden {
   position: sticky;
   bottom: 0;
-  padding: 10px;
+  padding: 25px;
   opacity: 0;
+  align-self: center;
 }
 
 .app_scroll-top-content {
