@@ -58,6 +58,7 @@ const RootContainer: React.FunctionComponent<Props & StateProps> = (
   const [menuOptions, setMenuOptions] = useState<Array<MenuItem>>(initialState);
 
   const _handlePathChange = (activePath: string): void => {
+    window.scrollTo(0, 0);
     setMenuOptions(
       MENU_OPTIONS.map((option) => {
         if (option.route === activePath) {
@@ -78,8 +79,6 @@ const RootContainer: React.FunctionComponent<Props & StateProps> = (
     } else {
       history.push("/");
     }
-
-    window.scrollTo(0, 0);
   };
 
   const _getMobileMenu = (): Array<string> => {
@@ -101,7 +100,6 @@ const RootContainer: React.FunctionComponent<Props & StateProps> = (
             }
             onClick={() => {
               history.push(option.route);
-              window.scrollTo(0, 0);
             }}
           >
             {option.name}

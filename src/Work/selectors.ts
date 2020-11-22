@@ -16,6 +16,8 @@ export const getActiveWorkItem = createSelector(
     if (activeId !== -1) {
       return list.find((item) => item.id === activeId);
     }
+
+    return {};
   }
 );
 

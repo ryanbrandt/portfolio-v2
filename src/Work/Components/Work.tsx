@@ -1,11 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { Divider, TabMenu, Row } from "handsome-ui";
+import { Divider, TabMenu, Row, AppContext, Modal } from "handsome-ui";
 
-import { workListRequest, setActiveWorkItem, setActiveWorkTab, setWorkQuery } from "../actions";
-import { getFilteredWorkList} from "../selectors";
+import { history } from "../../routes";
+import {
+  workListRequest,
+  setActiveWorkTab,
+  setWorkQuery,
+  setActiveWorkItem,
+} from "../actions";
+import { getFilteredWorkList, getActiveWorkItem } from "../selectors";
 
 import WorkContent from "../Subcomponents/WorkContent";
 import EmptyResults from "../../Common/Components/EmptyResults";
@@ -15,18 +21,27 @@ import { RootState } from "../../store/rootReducer";
 interface Props {}
 
 interface StateProps {
-  workList: Array<any>; //TODO
+  workList: Array<any>; // TODO
+  activeItem: any; // TODO
 }
 
 interface DispatchProps {
   fetchWorkList: () => void;
-  setActiveItem: (index: number) => void;
   setQuery: (query: string) => void;
   setTab: (tab: string) => void;
+  setActiveItem: (item: any) => void; // TODO
 }
 
 const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
-  const [contentOpen, setContentOpen] = useState(false);
+  const isMobile = useContext(AppContext);
+  const [contentModalOpen, setContentModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (isMobile && contentModalOpen) {
+      setContentModalOpen(false);
+    }
+  }, [isMobile, contentModalOpen]);
+
   useEffect(() => {
     const { fetchWorkList, setQuery, setTab } = props;
 
@@ -35,7 +50,7 @@ const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
     return () => {
       setTab("all");
       setQuery("");
-    }
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -46,11 +61,31 @@ const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
     { title: "Other", key: "other" },
   ];
 
-  const _handleCardSelection = (id: number) => {
+  const _handleCardSelection = (item: any) => {
     const { setActiveItem } = props;
-    setActiveItem(id);
-    setContentOpen(true);
+    setActiveItem(item.id);
+
+    if (isMobile) {
+      history.push(`/work/${item.id}`);
+    } else {
+      setContentModalOpen(true);
+    }
   };
+
+  const _renderContentModal = () => {
+    const { activeItem } = props;
+
+    return (
+      <Modal
+        heading={activeItem.name}
+        open={contentModalOpen}
+        onClose={() => setContentModalOpen(false)}
+      >
+        <WorkContent />
+      </Modal>
+    );
+  };
+
   const _renderCards = () => {
     const { workList } = props;
     if (workList.length < 1) {
@@ -69,7 +104,7 @@ const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
           <ContentCard
             key={item.name}
             imgSrc={item.image ? item.image : "project-placeholder.jpg"}
-            onClick={() => _handleCardSelection(item.id)}
+            onClick={() => _handleCardSelection(item)}
             title={item.name}
           />
         ))}
@@ -85,11 +120,15 @@ const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
         <h1 className="aligned_text">Work</h1>
         <Divider />
         <div className="app_wide_container">
-          <TabMenu tabs={tabs} onTab={(tab: string) => setTab(tab)} onSearch={(query: string) => setQuery(query)} />
+          <TabMenu
+            tabs={tabs}
+            onTab={(tab: string) => setTab(tab)}
+            onSearch={(query: string) => setQuery(query)}
+          />
           {_renderCards()}
         </div>
-        <WorkContent open={contentOpen} onClose={() => setContentOpen(false)} />
       </div>
+      {_renderContentModal()}
     </div>
   );
 };
@@ -97,15 +136,16 @@ const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
 const mapStateToProps = (state: RootState) => {
   return {
     workList: getFilteredWorkList(state),
+    activeItem: getActiveWorkItem(state),
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     fetchWorkList: () => dispatch(workListRequest()),
-    setActiveItem: (index: number) => dispatch(setActiveWorkItem(index)),
     setQuery: (query: string) => dispatch(setWorkQuery(query)),
     setTab: (tab: string) => dispatch(setActiveWorkTab(tab)),
+    setActiveItem: (item: any) => dispatch(setActiveWorkItem(item)), // TODO
   };
 };
 

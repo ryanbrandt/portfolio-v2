@@ -299,6 +299,10 @@ icon:hover {
   padding: 1vw;
 }
 
+.work_content-container-mobile {
+  padding-top: 5vh;
+}
+
 .work_content-datestring {
   color: #506670c5;
 }
@@ -311,7 +315,7 @@ icon:hover {
 
 .work-img-mobile {
   height: 30vh;
-  width: 75vw;
+  width: 80vw;
   padding-bottom: 5vw;
 }
 

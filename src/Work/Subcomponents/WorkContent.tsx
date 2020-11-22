@@ -1,23 +1,31 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useContext } from "react";
 import { connect } from "react-redux";
 
-import { Modal, AppContext } from "handsome-ui";
+import { AppContext, Breadcrumbs } from "handsome-ui";
 
+import { history } from "../../routes";
 import { RootState } from "../../store/rootReducer";
 import { getActiveWorkItem } from "../selectors";
 import { safeOpenWindow } from "../../utils/helpers";
 
-interface Props {
-  open: boolean;
-  onClose: () => void;
-}
+interface Props {}
 
 interface StateProps {
   activeItem: any; // TODO
 }
 
 const WorkContent = (props: Props & StateProps) => {
-  const { open, activeItem, onClose } = props;
+  const WORK_ITEM_PATH_REGEX = /\/work\/[-0-9]+/;
+  const isMobile = useContext(AppContext);
+  const { activeItem } = props;
+
+  useEffect(() => {
+    const { location } = window;
+    const { pathname } = location;
+    if (WORK_ITEM_PATH_REGEX.test(pathname) && (!isMobile || !activeItem.id)) {
+      history.push("/work");
+    }
+  }, [isMobile, activeItem]);
 
   const _renderLinks = () => {
     return (
@@ -46,28 +54,44 @@ const WorkContent = (props: Props & StateProps) => {
     );
   };
 
+  const _renderMobileHeader = () => {
+    const crumbs = [
+      {
+        title: "Work",
+        action: () => history.push("/work"),
+      },
+      { title: activeItem.name, action: () => null, disabled: true },
+    ];
+
+    return (
+      <Fragment>
+        <Breadcrumbs crumbs={crumbs} />
+        <h1 className="aligned_text">{activeItem.name}</h1>
+      </Fragment>
+    );
+  };
+
   if (activeItem) {
     return (
-      <AppContext.Consumer>
-        {(isMobile) => (
-          <Modal heading={activeItem.name} open={open} onClose={onClose}>
-            <div className="work_content-container">
-              <div className="flex_center_col">
-                <img
-                  className={isMobile ? "work-img-mobile" : "work-img"}
-                  src="project-placeholder.jpg"
-                  alt="project-placeholder.jpg"
-                />
-              </div>
-              <div className="work_content-datestring">
-                {activeItem.datestring}
-                {_renderLinks()}
-              </div>
-              <p>{activeItem.description}</p>
-            </div>
-          </Modal>
-        )}
-      </AppContext.Consumer>
+      <div
+        className={
+          isMobile ? "work_content-container-mobile" : " work_content-container"
+        }
+      >
+        {isMobile && _renderMobileHeader()}
+        <div className="flex_center_col">
+          <img
+            className={isMobile ? "work-img-mobile" : "work-img"}
+            src="../project-placeholder.jpg"
+            alt="project-placeholder.jpg"
+          />
+        </div>
+        <div className="work_content-datestring">
+          {activeItem.datestring}
+          {_renderLinks()}
+        </div>
+        <p>{activeItem.description}</p>
+      </div>
     );
   }
 
