@@ -77,7 +77,7 @@ const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
 
     return (
       <Modal
-        heading={activeItem.name}
+        heading={<h1 className="aligned_text">{activeItem.name}</h1>}
         open={contentModalOpen}
         onClose={() => setContentModalOpen(false)}
       >

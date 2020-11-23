@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useContext } from "react";
 import { connect } from "react-redux";
 
-import { AppContext, Breadcrumbs } from "handsome-ui";
+import { AppContext, Breadcrumbs, Column, Github } from "handsome-ui";
 
 import { history } from "../../routes";
 import { RootState } from "../../store/rootReducer";
@@ -29,15 +29,13 @@ const WorkContent = (props: Props & StateProps) => {
 
   const _renderLinks = () => {
     return (
-      <Fragment>
+      <div className="aligned_text">
         {activeItem.source && (
           <Fragment>
-            <div
-              className="work-link"
+            <Github
+              className="home_icon"
               onClick={() => safeOpenWindow(activeItem.source)}
-            >
-              Source
-            </div>
+            />
           </Fragment>
         )}
         {activeItem.deploy && (
@@ -50,7 +48,7 @@ const WorkContent = (props: Props & StateProps) => {
             </div>
           </Fragment>
         )}
-      </Fragment>
+      </div>
     );
   };
 
@@ -75,7 +73,9 @@ const WorkContent = (props: Props & StateProps) => {
     return (
       <div
         className={
-          isMobile ? "work_content-container-mobile" : " work_content-container"
+          isMobile
+            ? "work_content-container-mobile fadeable-content"
+            : " work_content-container"
         }
       >
         {isMobile && _renderMobileHeader()}
@@ -86,10 +86,10 @@ const WorkContent = (props: Props & StateProps) => {
             alt="project-placeholder.jpg"
           />
         </div>
-        <div className="work_content-datestring">
+        <Column className="work_content-datestring aligned_text">
           {activeItem.datestring}
           {_renderLinks()}
-        </div>
+        </Column>
         <p>{activeItem.description}</p>
       </div>
     );
