@@ -15,11 +15,11 @@ interface StateProps {
 }
 
 const WorkContent = (props: Props & StateProps) => {
-  const WORK_ITEM_PATH_REGEX = /\/work\/[-0-9]+/;
   const isMobile = useContext(AppContext);
   const { activeItem } = props;
 
   useEffect(() => {
+    const WORK_ITEM_PATH_REGEX = /\/work\/[-0-9]+/;
     const { location } = window;
     const { pathname } = location;
     if (WORK_ITEM_PATH_REGEX.test(pathname) && (!isMobile || !activeItem.id)) {
