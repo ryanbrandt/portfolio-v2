@@ -1,5 +1,7 @@
 import Apisauce from "apisauce";
 
+import { BACKEND_BASE_URL } from "./secrets";
+
 export default Apisauce.create({
-  baseURL: "https://ae5m276oi5.execute-api.us-east-1.amazonaws.com/prod",
+  baseURL: BACKEND_BASE_URL,
 });

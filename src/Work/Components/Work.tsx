@@ -56,7 +56,7 @@ const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
 
   const tabs = [
     { title: "All", key: "all" },
-    { title: "Full Stack Web", key: "web" },
+    { title: "Web", key: "web" },
     { title: "Tools", key: "tools" },
     { title: "Other", key: "other" },
   ];

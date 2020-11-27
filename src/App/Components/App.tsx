@@ -1,6 +1,7 @@
 import React from "react";
 import { Provider } from "react-redux";
 
+import { version } from "../../utils/gitVersion";
 import configureStore from "../../store/store";
 import RootContainer from "./RootContainer";
 import ScrollTopIcon from "../Subcomponents/ScrollTopIcon";
@@ -17,8 +18,8 @@ const App: React.FunctionComponent<Props> = (props: Props): JSX.Element => {
       <Provider store={store}>
         <RootContainer />
         <ScrollTopIcon appRef={appRef} />
-        <footer className="app_footer">
-          © 2020 Ryan Brandt. All rights reserved. v2.0.0
+        <footer className="app_footer aligned_text">
+          © 2020 Ryan Brandt. All rights reserved. <br /> {version}
         </footer>
       </Provider>
     </div>

@@ -1,4 +1,6 @@
 /work       /
+/work/:id   /
 /contact    /
 /resume     /
 /blog       /
+/*          /

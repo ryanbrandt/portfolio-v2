@@ -5,6 +5,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 
 import { Input, Button, Text, LoadingOverlay, Badge } from "handsome-ui";
 
+import { RECAPTCHA_KEY } from "../../utils/secrets";
 import { sendMessageRequest } from "../actions";
 
 interface DispatchProps {
@@ -65,7 +66,7 @@ const ContactForm = (props: Props & DispatchProps) => {
     return (
       <div className="contact_recaptcha">
         <ReCAPTCHA
-          sitekey={"6LeFKr8UAAAAAL-jfBu2qlyDzwySnEDXA4dNJcoA"}
+          sitekey={RECAPTCHA_KEY}
           onChange={(token: string | null) =>
             setCaptchaValidated(token ? true : false)
           }
