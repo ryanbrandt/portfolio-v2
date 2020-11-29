@@ -5,6 +5,8 @@ import { version } from "../../utils/gitVersion";
 import configureStore from "../../store/store";
 import RootContainer from "./RootContainer";
 import ScrollTopIcon from "../Subcomponents/ScrollTopIcon";
+import { Column } from "handsome-ui";
+import { history } from "../../routes";
 
 interface Props {}
 
@@ -19,7 +21,18 @@ const App: React.FunctionComponent<Props> = (props: Props): JSX.Element => {
         <RootContainer />
         <ScrollTopIcon appRef={appRef} />
         <footer className="app_footer aligned_text">
-          © 2020 Ryan Brandt. All rights reserved. <br /> {version}
+          <Column>
+            <div>© 2020 Ryan Brandt. All rights reserved.</div>{" "}
+            <div>
+              {version}{" "}
+              <div
+                className="app_footer-link"
+                onClick={() => history.push("/login")}
+              >
+                Admin Portal
+              </div>
+            </div>
+          </Column>
         </footer>
       </Provider>
     </div>

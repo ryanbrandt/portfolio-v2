@@ -18,7 +18,6 @@ body::-webkit-scrollbar-thumb {
 /********************
 * Generics
 ********************/
-
 .flex_space_row {
   display: flex;
   justify-content: space-between;
@@ -152,6 +151,16 @@ icon:hover {
   justify-content: center;
   align-items: center;
   padding-bottom: 1vh;
+}
+
+.app_footer-link {
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.app_footer-link:hover {
+  opacity: 1;
+  transition: 0.5s ease;
 }
 
 .empty_results-container {
@@ -342,4 +351,11 @@ icon:hover {
 .work-link:hover {
   opacity: 1;
   transition: 0.5s;
+}
+
+/********************
+* Admin
+********************/
+.login_button_container {
+  padding: 15px;
 }

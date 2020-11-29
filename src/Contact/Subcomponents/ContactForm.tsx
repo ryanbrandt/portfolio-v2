@@ -94,7 +94,12 @@ const ContactForm = (props: Props & DispatchProps) => {
   const _renderMessageSection = (): React.ReactNode => {
     return (
       <div className="flex_center_col">
-        {errorMessage && <Badge content={errorMessage} />}
+        {errorMessage && (
+          <Badge
+            style={{ backgroundColor: "rgba(255, 0, 0, 0.616)" }}
+            content={errorMessage}
+          />
+        )}
         {successMessage && <Badge content={successMessage} />}
       </div>
     );

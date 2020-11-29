@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "apisauce": "^1.1.1",
+    "aws-amplify": "^3.3.10",
     "handsome-ui": "git://github.com/ryanbrandt/handsome-ui#portfolio-updates",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

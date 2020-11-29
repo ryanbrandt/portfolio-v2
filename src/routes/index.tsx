@@ -2,6 +2,7 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
+import Login from "../Auth/Components/Login";
 import Home from "../Home/Components/Home";
 import Work from "../Work/Components/Work";
 import WorkContent from "../Work/Subcomponents/WorkContent";
@@ -14,6 +15,7 @@ export const history = createBrowserHistory();
 export default (
   <Switch>
     <Route exact path="/" component={Home} />
+    <Route exact path="/login" component={Login} />
     <Route exact path="/work" component={Work} />
     <Route exact path="/work/:id" component={WorkContent} />
     <Route exact path="/resume" component={Resumé} />
