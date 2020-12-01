@@ -4,6 +4,7 @@ import { Dispatch } from "redux";
 
 import { Badge, Input, Button, Divider } from "handsome-ui";
 
+import { version } from "../../utils/gitVersion";
 import { adminLoginRequest } from "../actions";
 
 interface LoginForm {
@@ -54,8 +55,10 @@ const Login: React.FunctionComponent<Props & DispatchProps> = (
       const { loginRequest } = props;
 
       loginRequest(resolve, reject, fields.email, fields.password);
-    }).catch((errorMessage) => setError(errorMessage));
-    setProcessing(false);
+    }).catch((errorMessage) => {
+      setError(errorMessage);
+      setProcessing(false);
+    });
   };
 
   const disabled = !_formIsValid() || processing;
@@ -85,6 +88,7 @@ const Login: React.FunctionComponent<Props & DispatchProps> = (
           />
         </div>
         <Divider />
+        <div className="app_version-text">{version}</div>
         {error && (
           <Badge
             className="fadeable-content"

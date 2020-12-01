@@ -37,4 +37,28 @@ export function adminLoginSuccess(user: CognitoUser): adminLoginSuccess {
   };
 }
 
-export type Action = adminLoginRequest | adminLoginSuccess;
+export interface adminLogout {
+  type: t.ADMIN_LOGOUT_REQUEST;
+}
+
+export function adminLogout(): adminLogout {
+  return {
+    type: t.ADMIN_LOGOUT_REQUEST,
+  };
+}
+
+export interface destroyAdminSession {
+  type: t.DESTROY_ADMIN_SESSION;
+}
+
+export function destroyAdminSession(): destroyAdminSession {
+  return {
+    type: t.DESTROY_ADMIN_SESSION,
+  };
+}
+
+export type Action =
+  | adminLoginRequest
+  | adminLoginSuccess
+  | adminLogout
+  | destroyAdminSession;

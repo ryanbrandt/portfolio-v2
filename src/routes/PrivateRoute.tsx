@@ -1,64 +1,28 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Auth } from "aws-amplify";
-import { Route, Redirect, RouteProps } from "react-router-dom";
+import React from "react";
+import { CognitoUser } from "@aws-amplify/auth";
+import { connect } from "react-redux";
+import { Route, RouteProps } from "react-router-dom";
 
-import { history } from "./index";
+import { getActiveUser } from "../Auth/selectors";
+import { RootState } from "../store/rootReducer";
+import Login from "../Auth/Components/Login";
 
 interface Props extends RouteProps {}
 
-const PrivateRoute = (props: Props) => {
-  const [authenticated, setAuthenticated] = useState(false);
-  const [loaded, setLoaded] = useState(false);
+interface StateProps {
+  user: CognitoUser | null;
+}
 
-  const historyListener = useRef<Function | null>(null);
+const PrivateRoute = (props: Props & StateProps) => {
+  const { user, component } = props;
 
-  useEffect(() => {
-    Auth.currentAuthenticatedUser()
-      .then(() => {
-        setAuthenticated(true);
-        setLoaded(true);
-      })
-      .catch(() => history.push("/login"));
-
-    historyListener.current = history.listen(() => {
-      Auth.currentAuthenticatedUser()
-        .then()
-        .catch(() => {
-          if (authenticated) {
-            setAuthenticated(false);
-          }
-        });
-    });
-
-    return () => {
-      if (historyListener.current) {
-        historyListener.current();
-      }
-    };
-  }, []);
-
-  if (!loaded) {
-    return null;
-  }
-
-  const { component } = props;
-
-  return (
-    <Route
-      {...props}
-      render={() => {
-        return authenticated && component ? (
-          component
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/login",
-            }}
-          />
-        );
-      }}
-    />
-  );
+  return <Route {...props} component={user && component ? component : Login} />;
 };
 
-export default PrivateRoute;
+const mapStateToProps = (state: RootState) => {
+  return {
+    user: getActiveUser(state),
+  };
+};
+
+export default connect<any, any, any, any>(mapStateToProps, null)(PrivateRoute);

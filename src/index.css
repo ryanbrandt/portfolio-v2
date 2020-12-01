@@ -163,6 +163,12 @@ icon:hover {
   transition: 0.5s ease;
 }
 
+.app_version-text {
+  color: #506670c5;
+  text-align: center;
+  padding: 15px;
+}
+
 .empty_results-container {
   padding: 8vh;
   display: flex;

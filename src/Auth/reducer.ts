@@ -22,6 +22,13 @@ export default function (state: AuthState = initialState, action: Action) {
       };
     }
 
+    case t.DESTROY_ADMIN_SESSION: {
+      return {
+        ...state,
+        user: null,
+      };
+    }
+
     default: {
       return state;
     }
