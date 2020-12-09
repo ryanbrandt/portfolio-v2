@@ -6,6 +6,8 @@ import { getWorkList } from "../Work/selectors";
 
 export const getAdminActiveTab = (state: RootState) => state.admin.activeTab;
 export const getAdminQuery = (state: RootState) => state.admin.query;
+export const getAdminActiveItemId = (state: RootState) =>
+  state.admin.activeItemId;
 
 export const getFilteredAdminData = createSelector(
   [getAdminActiveTab, getAdminQuery, getWorkList, getResumeList],
@@ -19,6 +21,8 @@ export const getFilteredAdminData = createSelector(
       data = [];
     }
 
-    return data.filter((item) => item.name?.toLowerCase().includes(query));
+    return data.filter((item) =>
+      item.name?.toLowerCase().includes(query.toLowerCase())
+    );
   }
 );

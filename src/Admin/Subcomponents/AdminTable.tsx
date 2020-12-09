@@ -1,22 +1,35 @@
 import React, { Fragment, useContext } from "react";
 import { connect } from "react-redux";
+import { Dispatch } from "redux";
 
-import { Table, TablRow, TableCell, AppContext } from "handsome-ui";
+import { Table, TableRow, TableCell, AppContext } from "handsome-ui";
+
+import { history } from "../../routes";
 import { RootState } from "../../store/rootReducer";
+import { adminSetActiveItemId } from "../actions";
 import { getFilteredAdminData } from "../selectors";
 
 import EmptyResults from "../../Common/Components/EmptyResults";
 
 interface Props {}
 
+interface DispatchProps {
+  setActiveItem: (id: number) => void;
+}
+
 interface StateProps {
   data: any; // TODO
 }
 
-const AdminTable = (props: Props & StateProps) => {
+const AdminTable = (props: Props & DispatchProps & StateProps) => {
   const isMobile = useContext(AppContext);
 
-  const { data } = props;
+  const { data, setActiveItem } = props;
+
+  const _handleRowSelection = (id: number) => {
+    setActiveItem(id);
+    history.push("admin/manage");
+  };
 
   if (data.length < 1) {
     return <EmptyResults />;
@@ -29,10 +42,10 @@ const AdminTable = (props: Props & StateProps) => {
       headers={isMobile ? ["Name"] : ["Name", "Created", "Modified"]}
     >
       {data.map((item: any, i: number) => (
-        <TablRow
+        <TableRow
           key={`${item.name}_${i}`}
           className="fadeable-content"
-          onClick={() => null}
+          onClick={() => _handleRowSelection(item.id)}
           darkened={i % 2 === 0}
         >
           <TableCell>{item.name}</TableCell>
@@ -42,10 +55,16 @@ const AdminTable = (props: Props & StateProps) => {
               <TableCell>{item.modified}</TableCell>
             </Fragment>
           )}
-        </TablRow>
+        </TableRow>
       ))}
     </Table>
   );
+};
+
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    setActiveItem: (id: number) => dispatch(adminSetActiveItemId(id)),
+  };
 };
 
 const mapStateToProps = (state: RootState) => {
@@ -54,4 +73,7 @@ const mapStateToProps = (state: RootState) => {
   };
 };
 
-export default connect<any, any, any, any>(mapStateToProps, null)(AdminTable); // TODO
+export default connect<StateProps, DispatchProps, Props, any>(
+  mapStateToProps,
+  mapDispatchToProps
+)(AdminTable); // TODO

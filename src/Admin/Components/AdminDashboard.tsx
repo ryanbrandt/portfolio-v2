@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { Divider, TabMenu } from "handsome-ui";
+import { Button, Column, Divider, TabMenu } from "handsome-ui";
 
 import { adminInitRequest, adminSetActiveTab, adminSetQuery } from "../actions";
 import { AdminTab } from "../types";
@@ -34,7 +34,10 @@ const AdminDashboard = (props: Props & DispatchProps) => {
   return (
     <div className="fadeable-content flex_center_col">
       <div>
-        <h1 className="aligned_text">Admin Portal</h1>
+        <Column className="flex_center_col admin_create-margin">
+          <h1>Admin Portal</h1>
+          <Button title="Create Item" inverting onClick={() => null} />
+        </Column>
         <Divider />
         <div className="app_wide_container">
           <TabMenu

@@ -6813,7 +6813,7 @@ handle-thing@^2.0.0:
 
 "handsome-ui@git://github.com/ryanbrandt/handsome-ui#portfolio-updates":
   version "1.0.0"
-  resolved "git://github.com/ryanbrandt/handsome-ui#a988f54827cd7ac2f783ad29bf78f3a77b075fd5"
+  resolved "git://github.com/ryanbrandt/handsome-ui#8a9fcbce95cf1bd67f57d276f4e45559843bdd9f"
 
 har-schema@^2.0.0:
   version "2.0.0"

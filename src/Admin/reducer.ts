@@ -5,11 +5,13 @@ import { AdminTab } from "./types";
 export interface AdminState {
   activeTab: AdminTab;
   query: string;
+  activeItemId: number;
 }
 
 const initialState: AdminState = {
   activeTab: "resume",
   query: "",
+  activeItemId: -1,
 };
 
 export default function (state = initialState, action: Action) {
@@ -29,6 +31,15 @@ export default function (state = initialState, action: Action) {
       return {
         ...state,
         query,
+      };
+    }
+
+    case t.ADMIN_SET_ACTIVE_ITEM_ID: {
+      const { id } = action;
+
+      return {
+        ...state,
+        activeItemId: id,
       };
     }
 

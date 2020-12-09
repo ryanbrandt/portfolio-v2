@@ -35,4 +35,20 @@ export function adminSetQuery(query: string): adminSetQuery {
   };
 }
 
-export type Action = adminInitRequest | adminSetActiveTab | adminSetQuery;
+export interface adminSetActiveItemId {
+  type: t.ADMIN_SET_ACTIVE_ITEM_ID;
+  id: number;
+}
+
+export function adminSetActiveItemId(id: number): adminSetActiveItemId {
+  return {
+    type: t.ADMIN_SET_ACTIVE_ITEM_ID,
+    id,
+  };
+}
+
+export type Action =
+  | adminInitRequest
+  | adminSetActiveTab
+  | adminSetQuery
+  | adminSetActiveItemId;

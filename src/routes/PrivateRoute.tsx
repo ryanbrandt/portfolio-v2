@@ -25,4 +25,6 @@ const mapStateToProps = (state: RootState) => {
   };
 };
 
-export default connect<any, any, any, any>(mapStateToProps, null)(PrivateRoute);
+export default connect<StateProps, void, Props, any>(mapStateToProps)(
+  PrivateRoute
+);

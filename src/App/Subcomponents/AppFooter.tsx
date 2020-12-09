@@ -63,7 +63,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   };
 };
 
-export default connect<any, any, any, any>(
+export default connect<StateProps, DispatchProps, Props, any>(
   mapStateToProps,
   mapDispatchToProps
 )(AppFooter);
