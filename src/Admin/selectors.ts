@@ -26,3 +26,17 @@ export const getFilteredAdminData = createSelector(
     );
   }
 );
+
+export const getAdminResumeActiveItem = createSelector(
+  [getAdminActiveItemId, getResumeList],
+  (id, resume) => {
+    return resume.find((item) => item.id === id);
+  }
+);
+
+export const getAdminWorkActiveItem = createSelector(
+  [getAdminActiveItemId, getWorkList],
+  (id, work) => {
+    return work.find((item) => item.id === id);
+  }
+);

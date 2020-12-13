@@ -11,18 +11,24 @@ import {
   setWorkQuery,
   setActiveWorkItem,
 } from "../actions";
-import { getFilteredWorkList, getActiveWorkItem } from "../selectors";
+import {
+  getFilteredWorkList,
+  getActiveWorkItem,
+  getWorkTab,
+} from "../selectors";
 
 import WorkContent from "../Subcomponents/WorkContent";
 import EmptyResults from "../../Common/Components/EmptyResults";
 import ContentCard from "../../Common/Components/ContentCard";
 import { RootState } from "../../store/rootReducer";
+import { getAdminActiveTab } from "../../Admin/selectors";
 
 interface Props {}
 
 interface StateProps {
   workList: Array<any>; // TODO
   activeItem: any; // TODO
+  activeTab: any; // TODO
 }
 
 interface DispatchProps {
@@ -112,7 +118,7 @@ const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
     ));
   };
 
-  const { setTab, setQuery } = props;
+  const { setTab, setQuery, activeTab } = props;
 
   return (
     <div className="fadeable-content flex_center_col">
@@ -121,7 +127,10 @@ const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
         <Divider />
         <div className="app_wide_container">
           <TabMenu
-            tabs={tabs}
+            tabs={tabs.map((tab) => ({
+              ...tab,
+              active: tab.key === activeTab,
+            }))}
             onTab={(tab: string) => setTab(tab)}
             onSearch={(query: string) => setQuery(query)}
           />
@@ -137,6 +146,7 @@ const mapStateToProps = (state: RootState) => {
   return {
     workList: getFilteredWorkList(state),
     activeItem: getActiveWorkItem(state),
+    activeTab: getWorkTab(state),
   };
 };
 

@@ -4,12 +4,19 @@ import { Dispatch } from "redux";
 
 import { Button, Column, Divider, TabMenu } from "handsome-ui";
 
+import { history } from "../../routes";
 import { adminInitRequest, adminSetActiveTab, adminSetQuery } from "../actions";
 import { AdminTab } from "../types";
+import { RootState } from "../../store/rootReducer";
 
 import AdminTable from "../Subcomponents/AdminTable";
+import { getAdminActiveTab } from "../selectors";
 
 interface Props {}
+
+interface StateProps {
+  activeTab: AdminTab;
+}
 
 interface DispatchProps {
   initAdminPortal: () => void;
@@ -17,7 +24,7 @@ interface DispatchProps {
   setQuery: (query: string) => void;
 }
 
-const AdminDashboard = (props: Props & DispatchProps) => {
+const AdminDashboard = (props: Props & StateProps & DispatchProps) => {
   const tabs = [
     { title: "Resumé", key: "resume" },
     { title: "Work", key: "work" },
@@ -29,19 +36,26 @@ const AdminDashboard = (props: Props & DispatchProps) => {
     initAdminPortal();
   }, [initAdminPortal]);
 
-  const { setTab, setQuery } = props;
+  const { setTab, setQuery, activeTab } = props;
 
   return (
     <div className="fadeable-content flex_center_col">
       <div>
         <Column className="flex_center_col admin_create-margin">
           <h1>Admin Portal</h1>
-          <Button title="Create Item" inverting onClick={() => null} />
+          <Button
+            title="Create Item"
+            inverting
+            onClick={() => history.push("/admin/create")}
+          />
         </Column>
         <Divider />
         <div className="app_wide_container">
           <TabMenu
-            tabs={tabs}
+            tabs={tabs.map((tab) => ({
+              ...tab,
+              active: activeTab === tab.key,
+            }))}
             onTab={(key) => setTab(key as AdminTab)}
             onSearch={(query) => setQuery(query)}
           />
@@ -52,6 +66,12 @@ const AdminDashboard = (props: Props & DispatchProps) => {
   );
 };
 
+const mapStateToProps = (state: RootState): StateProps => {
+  return {
+    activeTab: getAdminActiveTab(state),
+  };
+};
+
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     initAdminPortal: () => dispatch(adminInitRequest()),
@@ -60,4 +80,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(AdminDashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(AdminDashboard);

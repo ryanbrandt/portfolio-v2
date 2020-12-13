@@ -5,6 +5,7 @@ import { createBrowserHistory } from "history";
 import PrivateRoute from "./PrivateRoute";
 import AdminDashboard from "../Admin/Components/AdminDashboard";
 import AdminItemManagement from "../Admin/Components/AdminItemManagement";
+import AdminItemCreation from "../Admin/Components/AdminItemCreation";
 import Home from "../Home/Components/Home";
 import Work from "../Work/Components/Work";
 import WorkContent from "../Work/Subcomponents/WorkContent";
@@ -19,6 +20,7 @@ export default (
     <Route exact path="/" component={Home} />
     <PrivateRoute exact path="/admin" component={AdminDashboard} />
     <PrivateRoute exact path="/admin/manage" component={AdminItemManagement} />
+    <PrivateRoute exact path="/admin/create" component={AdminItemCreation} />
     <Route exact path="/work" component={Work} />
     <Route exact path="/work/:id" component={WorkContent} />
     <Route exact path="/resume" component={Resumé} />

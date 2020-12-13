@@ -369,3 +369,7 @@ icon:hover {
 .admin_create-margin {
   margin-bottom: 15px;
 }
+
+.admin_manage-container-mobile {
+  padding-top: 5vh;
+}

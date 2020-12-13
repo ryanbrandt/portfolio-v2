@@ -4,7 +4,7 @@ import { Dispatch } from "redux";
 
 import { Input, Text, Button } from "handsome-ui";
 import { RootState } from "../../store/rootReducer";
-import { getAdminResumeActiveItem } from "../selectors";
+import { getAdminWorkActiveItem } from "../selectors";
 
 interface Props {
   create?: boolean;
@@ -16,28 +16,34 @@ interface StateProps {
 
 interface DispatchProps {}
 
-interface ResumeFormState {
+interface WorkFormState {
   name: string;
   dateString: string;
   description: string;
+  tags: Array<string>;
+  source: string;
 }
 
-const ResumeForm = (props: Props & StateProps & DispatchProps) => {
+const WorkForm = (props: Props & StateProps & DispatchProps) => {
   const { create, activeItem } = props;
 
-  const initialFormState: ResumeFormState = {
+  const initialFormState: WorkFormState = {
     name: "",
     dateString: "",
     description: "",
+    tags: [],
+    source: "",
   };
 
   if (activeItem && !create) {
     initialFormState.name = activeItem.name;
     initialFormState.dateString = activeItem.datestring;
     initialFormState.description = activeItem.description;
+    initialFormState.tags = activeItem.tags;
+    initialFormState.source = activeItem.source;
   }
 
-  const [form, setForm] = useState<ResumeFormState>(initialFormState);
+  const [form, setForm] = useState<WorkFormState>(initialFormState);
 
   const _renderInputs = (): React.ReactNode => {
     return (
@@ -52,6 +58,11 @@ const ResumeForm = (props: Props & StateProps & DispatchProps) => {
           value={form.dateString}
           onChange={(value: string) => setForm({ ...form, dateString: value })}
         />
+        <Input
+          label="Source"
+          value={form.source}
+          onChange={(value: string) => setForm({ ...form, source: value })}
+        />
         <Text
           label="Description"
           value={form.description}
@@ -65,7 +76,7 @@ const ResumeForm = (props: Props & StateProps & DispatchProps) => {
     <div className="fadeable-content flex_center_col">
       <div>
         <h1 className="aligned_text">
-          {create ? "Create Resumé Item" : "Manage Resumé Item"}
+          {create ? "Create Work Item" : "Manage Work Item"}
         </h1>
         {_renderInputs()}
         <div className="flex_center_col">
@@ -82,7 +93,7 @@ const ResumeForm = (props: Props & StateProps & DispatchProps) => {
 
 const mapStateToProps = (state: RootState): StateProps => {
   return {
-    activeItem: getAdminResumeActiveItem(state),
+    activeItem: getAdminWorkActiveItem(state),
   };
 };
 
@@ -93,4 +104,4 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
 export default connect<StateProps, DispatchProps, Props, any>(
   mapStateToProps,
   mapDispatchToProps
-)(ResumeForm);
+)(WorkForm);

@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
 import { connect } from "react-redux";
 
-import { AppContext, Breadcrumbs } from "handsome-ui";
+import { Breadcrumbs, AppContext } from "handsome-ui";
 
-import { history } from "../../routes";
 import { getAdminActiveTab } from "../selectors";
+import { history } from "../../routes";
 
 import ResumeForm from "../Subcomponents/ResumeForm";
-import { AdminTab } from "../types";
 import { RootState } from "../../store/rootReducer";
+import { AdminTab } from "../types";
 import WorkForm from "../Subcomponents/WorkForm";
 
 interface Props {}
@@ -17,14 +17,14 @@ interface StateProps {
   activeTab: AdminTab;
 }
 
-const AdminItemManagement = (props: Props & StateProps) => {
-  const _renderCrumbs = () => {
+const AdminItemCreation = (props: Props & StateProps) => {
+  const _renderCrumbs = (): React.ReactNode => {
     const crumbs = [
       {
         title: "Admin Dashboard",
         action: () => history.push("/admin"),
       },
-      { title: "Manage", action: () => null, disabled: true },
+      { title: "Create", action: () => null, disabled: true },
     ];
 
     return <Breadcrumbs crumbs={crumbs} />;
@@ -32,9 +32,9 @@ const AdminItemManagement = (props: Props & StateProps) => {
 
   const _renderForm = (): React.ReactNode => {
     const { activeTab } = props;
-    let form = <ResumeForm />;
+    let form = <ResumeForm create />;
     if (activeTab === "work") {
-      form = <WorkForm />;
+      form = <WorkForm create />;
     }
 
     return form;
@@ -56,4 +56,4 @@ const mapStateToProps = (state: RootState): StateProps => {
   };
 };
 
-export default connect(mapStateToProps)(AdminItemManagement);
+export default connect(mapStateToProps)(AdminItemCreation);
