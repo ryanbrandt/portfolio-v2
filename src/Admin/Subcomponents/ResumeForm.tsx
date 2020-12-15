@@ -2,9 +2,13 @@ import React, { Fragment, useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { Input, Text, Button } from "handsome-ui";
+import { Input, Text, Button, Badge } from "handsome-ui";
 import { RootState } from "../../store/rootReducer";
 import { getAdminResumeActiveItem } from "../selectors";
+import {
+  adminCreateResumeItemRequest,
+  adminUpdateResumeItemRequest,
+} from "../actions";
 
 interface Props {
   create?: boolean;
@@ -14,11 +18,14 @@ interface StateProps {
   activeItem: any; // TODO
 }
 
-interface DispatchProps {}
+interface DispatchProps {
+  createItem: (item: any, resolve: any, reject: any) => void; // TODO
+  updateItem: (item: any, resolve: any, reject: any) => void; // TODO
+}
 
 interface ResumeFormState {
   name: string;
-  dateString: string;
+  datestring: string;
   description: string;
 }
 
@@ -27,17 +34,49 @@ const ResumeForm = (props: Props & StateProps & DispatchProps) => {
 
   const initialFormState: ResumeFormState = {
     name: "",
-    dateString: "",
+    datestring: "",
     description: "",
   };
 
   if (activeItem && !create) {
     initialFormState.name = activeItem.name;
-    initialFormState.dateString = activeItem.datestring;
+    initialFormState.datestring = activeItem.datestring;
     initialFormState.description = activeItem.description;
   }
 
   const [form, setForm] = useState<ResumeFormState>(initialFormState);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  const onCreateClick = async (): Promise<void> => {
+    setErrorMessage(null);
+    setSuccessMessage(null);
+
+    await new Promise<string>((resolve, reject) => {
+      const { createItem } = props;
+
+      createItem(form, resolve, reject);
+    })
+      .then((successString) => setSuccessMessage(successString))
+      .catch((errorString) => setErrorMessage(errorString));
+  };
+
+  const onUpdateClick = async (): Promise<void> => {
+    setErrorMessage(null);
+    setSuccessMessage(null);
+
+    await new Promise<string>((resolve, reject) => {
+      const { updateItem, activeItem } = props;
+
+      updateItem(
+        { ...activeItem, ...form, tags: JSON.stringify(activeItem.tags) },
+        resolve,
+        reject
+      );
+    })
+      .then((successString) => setSuccessMessage(successString))
+      .catch((errorString) => setErrorMessage(errorString));
+  };
 
   const _renderInputs = (): React.ReactNode => {
     return (
@@ -49,8 +88,8 @@ const ResumeForm = (props: Props & StateProps & DispatchProps) => {
         />
         <Input
           label="Date String"
-          value={form.dateString}
-          onChange={(value: string) => setForm({ ...form, dateString: value })}
+          value={form.datestring}
+          onChange={(value: string) => setForm({ ...form, datestring: value })}
         />
         <Text
           label="Description"
@@ -61,6 +100,48 @@ const ResumeForm = (props: Props & StateProps & DispatchProps) => {
     );
   };
 
+  const _renderMessage = (): React.ReactNode => {
+    let message: string | null = null;
+    let className = "app-success";
+
+    if (errorMessage) {
+      className = "app-error";
+      message = errorMessage;
+    }
+
+    if (successMessage) {
+      message = successMessage;
+    }
+
+    if (message) {
+      return (
+        <div className="flex_center_col">
+          <Badge
+            className={`fadeable-content ${className}`}
+            content={message}
+          />
+        </div>
+      );
+    }
+
+    return null;
+  };
+
+  const _renderSubmit = (): React.ReactNode => {
+    let action = onUpdateClick;
+    let title = "Update Item";
+    if (create) {
+      title = "Create Item";
+      action = onCreateClick;
+    }
+
+    return (
+      <div className="flex_center_col admin_button_container">
+        <Button title={title} onClick={action} inverting />
+      </div>
+    );
+  };
+
   return (
     <div className="fadeable-content flex_center_col">
       <div>
@@ -68,13 +149,8 @@ const ResumeForm = (props: Props & StateProps & DispatchProps) => {
           {create ? "Create Resumé Item" : "Manage Resumé Item"}
         </h1>
         {_renderInputs()}
-        <div className="flex_center_col">
-          <Button
-            title={create ? "Create Item" : "Update Item"}
-            onClick={() => null}
-            inverting
-          />
-        </div>
+        {_renderSubmit()}
+        {_renderMessage()}
       </div>
     </div>
   );
@@ -87,7 +163,12 @@ const mapStateToProps = (state: RootState): StateProps => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
-  return {};
+  return {
+    createItem: (item: any, resolve: any, reject: any) =>
+      dispatch(adminCreateResumeItemRequest(item, resolve, reject)),
+    updateItem: (item: any, resolve: any, reject: any) =>
+      dispatch(adminUpdateResumeItemRequest(item, resolve, reject)),
+  };
 };
 
 export default connect<StateProps, DispatchProps, Props, any>(

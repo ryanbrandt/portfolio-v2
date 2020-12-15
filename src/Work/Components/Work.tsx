@@ -16,12 +16,11 @@ import {
   getActiveWorkItem,
   getWorkTab,
 } from "../selectors";
+import { RootState } from "../../store/rootReducer";
 
 import WorkContent from "../Subcomponents/WorkContent";
 import EmptyResults from "../../Common/Components/EmptyResults";
 import ContentCard from "../../Common/Components/ContentCard";
-import { RootState } from "../../store/rootReducer";
-import { getAdminActiveTab } from "../../Admin/selectors";
 
 interface Props {}
 

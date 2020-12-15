@@ -78,7 +78,7 @@ const Login: React.FunctionComponent<Props & DispatchProps> = (
             setFields({ ...fields, password: value })
           }
         />
-        <div className="flex_center_col login_button_container">
+        <div className="flex_center_col admin_button_container">
           <Button
             title="Login"
             onClick={disabled ? () => null : _handleLogin}
@@ -90,14 +90,7 @@ const Login: React.FunctionComponent<Props & DispatchProps> = (
         <Divider />
         <div className="app_version-text">{version}</div>
         {error && (
-          <Badge
-            className="fadeable-content"
-            style={{
-              backgroundColor: "rgba(255, 0, 0, 0.616)",
-              margin: "10px",
-            }}
-            content={error}
-          />
+          <Badge className="fadeable-content app-error" content={error} />
         )}
       </div>
     </div>

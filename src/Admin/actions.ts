@@ -47,8 +47,92 @@ export function adminSetActiveItemId(id: number): adminSetActiveItemId {
   };
 }
 
+export interface adminUpdateResumeItemRequest {
+  type: t.ADMIN_UPDATE_RESUME_ITEM_REQUEST;
+  item: any; // TODO
+  resolve: any;
+  reject: any;
+}
+
+export function adminUpdateResumeItemRequest(
+  item: any,
+  resolve: any,
+  reject: any
+): adminUpdateResumeItemRequest {
+  return {
+    type: t.ADMIN_UPDATE_RESUME_ITEM_REQUEST,
+    item,
+    resolve,
+    reject,
+  };
+}
+
+export interface adminCreateResumeItemRequest {
+  type: t.ADMIN_CREATE_RESUME_ITEM_REQUEST;
+  item: any; // TODO
+  resolve: any;
+  reject: any;
+}
+
+export function adminCreateResumeItemRequest(
+  item: any,
+  resolve: any,
+  reject: any
+): adminCreateResumeItemRequest {
+  return {
+    type: t.ADMIN_CREATE_RESUME_ITEM_REQUEST,
+    item,
+    resolve,
+    reject,
+  };
+}
+
+export interface adminUpdateWorkItemRequest {
+  type: t.ADMIN_UPDATE_WORK_ITEM_REQUEST;
+  item: any; // TODO
+  resolve: any;
+  reject: any;
+}
+
+export function adminUpdateWorkItemRequest(
+  item: any,
+  resolve: any,
+  reject: any
+): adminUpdateWorkItemRequest {
+  return {
+    type: t.ADMIN_UPDATE_WORK_ITEM_REQUEST,
+    item,
+    resolve,
+    reject,
+  };
+}
+
+export interface adminCreateWorkItemRequest {
+  type: t.ADMIN_CREATE_WORK_ITEM_REQUEST;
+  item: any; // TODO
+  resolve: any;
+  reject: any;
+}
+
+export function adminCreateWorkItemRequest(
+  item: any,
+  resolve: any,
+  reject: any
+): adminCreateWorkItemRequest {
+  return {
+    type: t.ADMIN_CREATE_WORK_ITEM_REQUEST,
+    item,
+    resolve,
+    reject,
+  };
+}
+
 export type Action =
   | adminInitRequest
   | adminSetActiveTab
   | adminSetQuery
-  | adminSetActiveItemId;
+  | adminSetActiveItemId
+  | adminUpdateResumeItemRequest
+  | adminUpdateWorkItemRequest
+  | adminCreateResumeItemRequest
+  | adminCreateWorkItemRequest;

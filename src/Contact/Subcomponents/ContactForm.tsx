@@ -96,7 +96,7 @@ const ContactForm = (props: Props & DispatchProps) => {
       <div className="flex_center_col">
         {errorMessage && (
           <Badge
-            style={{ backgroundColor: "rgba(255, 0, 0, 0.616)" }}
+            className="fadeable-content app-error"
             content={errorMessage}
           />
         )}

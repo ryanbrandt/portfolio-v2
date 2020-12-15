@@ -96,6 +96,16 @@ icon:hover {
   flex: 1 1;
 }
 
+.app-error {
+  background-color: rgba(255, 0, 0, 0.616) !important;
+  margin: 10px;
+}
+
+.app-success {
+  background-color: rgb(138 199 126 / 62%) !important;
+  margin: 10px;
+}
+
 .app_menu {
   height: 100%;
   padding: 0% 5% 0% 5%;
@@ -362,7 +372,7 @@ icon:hover {
 /********************
 * Admin
 ********************/
-.login_button_container {
+.admin_button_container {
   padding: 15px;
 }
 

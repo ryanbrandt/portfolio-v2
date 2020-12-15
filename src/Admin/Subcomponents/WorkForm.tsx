@@ -2,9 +2,13 @@ import React, { Fragment, useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { Input, Text, Button } from "handsome-ui";
+import { Input, Text, Button, Badge } from "handsome-ui";
 import { RootState } from "../../store/rootReducer";
 import { getAdminWorkActiveItem } from "../selectors";
+import {
+  adminCreateWorkItemRequest,
+  adminUpdateWorkItemRequest,
+} from "../actions";
 
 interface Props {
   create?: boolean;
@@ -14,11 +18,14 @@ interface StateProps {
   activeItem: any; // TODO
 }
 
-interface DispatchProps {}
+interface DispatchProps {
+  createItem: (item: any, resolve: any, reject: any) => void; // TODO
+  updateItem: (item: any, resolve: any, reject: any) => void; // TODO
+}
 
 interface WorkFormState {
   name: string;
-  dateString: string;
+  datestring: string;
   description: string;
   tags: Array<string>;
   source: string;
@@ -29,7 +36,7 @@ const WorkForm = (props: Props & StateProps & DispatchProps) => {
 
   const initialFormState: WorkFormState = {
     name: "",
-    dateString: "",
+    datestring: "",
     description: "",
     tags: [],
     source: "",
@@ -37,13 +44,72 @@ const WorkForm = (props: Props & StateProps & DispatchProps) => {
 
   if (activeItem && !create) {
     initialFormState.name = activeItem.name;
-    initialFormState.dateString = activeItem.datestring;
+    initialFormState.datestring = activeItem.datestring;
     initialFormState.description = activeItem.description;
     initialFormState.tags = activeItem.tags;
     initialFormState.source = activeItem.source;
   }
 
   const [form, setForm] = useState<WorkFormState>(initialFormState);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  const onCreateClick = async (): Promise<void> => {
+    setErrorMessage(null);
+    setSuccessMessage(null);
+
+    await new Promise<string>((resolve, reject) => {
+      const { updateItem } = props;
+
+      updateItem(form, resolve, reject);
+    })
+      .then((successString: string) => setSuccessMessage(successString))
+      .catch((error: string) => setErrorMessage(error));
+  };
+
+  const onUpdateClick = async (): Promise<void> => {
+    setErrorMessage(null);
+    setSuccessMessage(null);
+
+    await new Promise<string>((resolve, reject) => {
+      const { updateItem } = props;
+
+      updateItem(
+        { ...activeItem, ...form, tags: JSON.stringify(activeItem.tags) },
+        resolve,
+        reject
+      );
+    })
+      .then((successString: string) => setSuccessMessage(successString))
+      .catch((error: string) => setErrorMessage(error));
+  };
+
+  const _renderMessage = (): React.ReactNode => {
+    let message: string | null = null;
+    let className = "app-success";
+
+    if (errorMessage) {
+      className = "app-error";
+      message = errorMessage;
+    }
+
+    if (successMessage) {
+      message = successMessage;
+    }
+
+    if (message) {
+      return (
+        <div className="flex_center_col">
+          <Badge
+            className={`fadeable-content ${className}`}
+            content={message}
+          />
+        </div>
+      );
+    }
+
+    return null;
+  };
 
   const _renderInputs = (): React.ReactNode => {
     return (
@@ -55,8 +121,8 @@ const WorkForm = (props: Props & StateProps & DispatchProps) => {
         />
         <Input
           label="Date String"
-          value={form.dateString}
-          onChange={(value: string) => setForm({ ...form, dateString: value })}
+          value={form.datestring}
+          onChange={(value: string) => setForm({ ...form, datestring: value })}
         />
         <Input
           label="Source"
@@ -72,6 +138,21 @@ const WorkForm = (props: Props & StateProps & DispatchProps) => {
     );
   };
 
+  const _renderSubmit = (): React.ReactNode => {
+    let action = onUpdateClick;
+    let title = "Update Item";
+    if (create) {
+      title = "Create Item";
+      action = onCreateClick;
+    }
+
+    return (
+      <div className="flex_center_col admin_button_container">
+        <Button title={title} onClick={action} inverting />
+      </div>
+    );
+  };
+
   return (
     <div className="fadeable-content flex_center_col">
       <div>
@@ -79,13 +160,8 @@ const WorkForm = (props: Props & StateProps & DispatchProps) => {
           {create ? "Create Work Item" : "Manage Work Item"}
         </h1>
         {_renderInputs()}
-        <div className="flex_center_col">
-          <Button
-            title={create ? "Create Item" : "Update Item"}
-            onClick={() => null}
-            inverting
-          />
-        </div>
+        {_renderSubmit()}
+        {_renderMessage()}
       </div>
     </div>
   );
@@ -98,7 +174,12 @@ const mapStateToProps = (state: RootState): StateProps => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
-  return {};
+  return {
+    createItem: (item: any, resolve: any, reject: any) =>
+      dispatch(adminCreateWorkItemRequest(item, resolve, reject)),
+    updateItem: (item: any, resolve: any, reject: any) =>
+      dispatch(adminUpdateWorkItemRequest(item, resolve, reject)),
+  };
 };
 
 export default connect<StateProps, DispatchProps, Props, any>(
