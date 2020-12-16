@@ -9,6 +9,7 @@ import {
   adminCreateResumeItemRequest,
   adminUpdateResumeItemRequest,
 } from "../actions";
+import TagSection from "./TagSection";
 
 interface Props {
   create?: boolean;
@@ -27,6 +28,7 @@ interface ResumeFormState {
   name: string;
   datestring: string;
   description: string;
+  tags: Array<string>;
 }
 
 const ResumeForm = (props: Props & StateProps & DispatchProps) => {
@@ -36,12 +38,14 @@ const ResumeForm = (props: Props & StateProps & DispatchProps) => {
     name: "",
     datestring: "",
     description: "",
+    tags: [],
   };
 
   if (activeItem && !create) {
     initialFormState.name = activeItem.name;
     initialFormState.datestring = activeItem.datestring;
     initialFormState.description = activeItem.description;
+    initialFormState.tags = activeItem.tags;
   }
 
   const [form, setForm] = useState<ResumeFormState>(initialFormState);
@@ -127,6 +131,20 @@ const ResumeForm = (props: Props & StateProps & DispatchProps) => {
     return null;
   };
 
+  const _renderTagSection = (): React.ReactNode => {
+    const availableTags = ["education", "experience"]; // TODO put in backend
+
+    return (
+      <TagSection
+        tags={form.tags}
+        availableTags={availableTags}
+        onUpdateTags={(newTags: Array<string>) =>
+          setForm({ ...form, tags: newTags })
+        }
+      />
+    );
+  };
+
   const _renderSubmit = (): React.ReactNode => {
     let action = onUpdateClick;
     let title = "Update Item";
@@ -149,6 +167,7 @@ const ResumeForm = (props: Props & StateProps & DispatchProps) => {
           {create ? "Create Resumé Item" : "Manage Resumé Item"}
         </h1>
         {_renderInputs()}
+        {_renderTagSection()}
         {_renderSubmit()}
         {_renderMessage()}
       </div>

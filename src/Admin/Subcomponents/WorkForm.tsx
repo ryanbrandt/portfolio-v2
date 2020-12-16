@@ -9,6 +9,7 @@ import {
   adminCreateWorkItemRequest,
   adminUpdateWorkItemRequest,
 } from "../actions";
+import TagSection from "./TagSection";
 
 interface Props {
   create?: boolean;
@@ -138,6 +139,20 @@ const WorkForm = (props: Props & StateProps & DispatchProps) => {
     );
   };
 
+  const _renderTagSection = (): React.ReactNode => {
+    const availableTags = ["web", "tools", "other"]; // TODO put in backend
+
+    return (
+      <TagSection
+        tags={form.tags}
+        availableTags={availableTags}
+        onUpdateTags={(newTags: Array<string>) =>
+          setForm({ ...form, tags: newTags })
+        }
+      />
+    );
+  };
+
   const _renderSubmit = (): React.ReactNode => {
     let action = onUpdateClick;
     let title = "Update Item";
@@ -160,6 +175,7 @@ const WorkForm = (props: Props & StateProps & DispatchProps) => {
           {create ? "Create Work Item" : "Manage Work Item"}
         </h1>
         {_renderInputs()}
+        {_renderTagSection()}
         {_renderSubmit()}
         {_renderMessage()}
       </div>
