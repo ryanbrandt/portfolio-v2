@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CognitoUser } from "@aws-amplify/auth";
 import { connect } from "react-redux";
 import { Route, RouteProps } from "react-router-dom";
 
+import { history } from "./index";
 import { getActiveUser } from "../Auth/selectors";
 import { RootState } from "../store/rootReducer";
 import Login from "../Auth/Components/Login";
@@ -15,6 +16,15 @@ interface StateProps {
 
 const PrivateRoute = (props: Props & StateProps) => {
   const { user, component } = props;
+
+  const { location } = history;
+  const { pathname } = location;
+
+  useEffect(() => {
+    if (!user && pathname !== "/admin") {
+      history.push("/admin");
+    }
+  }, [pathname, user]);
 
   return <Route {...props} component={user && component ? component : Login} />;
 };
