@@ -65,3 +65,23 @@ export const handlePromisifiedUpdate = async (
     }
   }
 };
+
+export const handleDelete = async (
+  path: string,
+  id: number
+): Promise<boolean> => {
+  let success = false;
+  try {
+    const { ok, status } = await api.delete(`${path}/${id}`);
+
+    if (ok) {
+      success = true;
+    } else {
+      console.log(`Failed to delete item with ${status}`);
+    }
+  } catch (e) {
+    console.log(`Failed to complete item delete request ${e}`);
+  }
+
+  return success;
+};

@@ -87,6 +87,20 @@ export function adminCreateResumeItemRequest(
   };
 }
 
+export interface adminDeleteResumeItemRequest {
+  type: t.ADMIN_DELETE_RESUME_ITEM_REQUEST;
+  id: number;
+}
+
+export function adminDeleteResumeItemRequest(
+  id: number
+): adminDeleteResumeItemRequest {
+  return {
+    type: t.ADMIN_DELETE_RESUME_ITEM_REQUEST,
+    id,
+  };
+}
+
 export interface adminUpdateWorkItemRequest {
   type: t.ADMIN_UPDATE_WORK_ITEM_REQUEST;
   item: any; // TODO
@@ -127,6 +141,20 @@ export function adminCreateWorkItemRequest(
   };
 }
 
+export interface adminDeleteWorkItemRequest {
+  type: t.ADMIN_DELETE_WORK_ITEM_REQUEST;
+  id: number;
+}
+
+export function adminDeleteWorkItemRequest(
+  id: number
+): adminDeleteWorkItemRequest {
+  return {
+    type: t.ADMIN_DELETE_WORK_ITEM_REQUEST,
+    id,
+  };
+}
+
 export type Action =
   | adminInitRequest
   | adminSetActiveTab
@@ -135,4 +163,6 @@ export type Action =
   | adminUpdateResumeItemRequest
   | adminUpdateWorkItemRequest
   | adminCreateResumeItemRequest
-  | adminCreateWorkItemRequest;
+  | adminCreateWorkItemRequest
+  | adminDeleteWorkItemRequest
+  | adminDeleteResumeItemRequest;

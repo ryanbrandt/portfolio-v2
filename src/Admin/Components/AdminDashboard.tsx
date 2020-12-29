@@ -48,6 +48,7 @@ const AdminDashboard = (props: Props & StateProps & DispatchProps) => {
             title={`Create ${activeTabDisplay} Item`}
             inverting
             onClick={() => history.push("/admin/create")}
+            disabled={activeTab === "blog"}
           />
         </Column>
         <Divider />

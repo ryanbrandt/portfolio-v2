@@ -3,7 +3,11 @@ import { blogListRequest } from "../Blog/actions";
 import { resumeListRequest } from "../Resumé/actions";
 import { workListRequest } from "../Work/actions";
 
-import { handlePromisifiedCreate, handlePromisifiedUpdate } from "./helpers";
+import {
+  handleDelete,
+  handlePromisifiedCreate,
+  handlePromisifiedUpdate,
+} from "./helpers";
 import * as t from "./actionTypes";
 import * as a from "./actions";
 
@@ -43,6 +47,25 @@ export function* handleAdminUpdateResumeItemRequest(
     item,
     resolve,
     reject
+  );
+}
+
+export function* handleAdminDeleteResumeItemRequest(
+  action: a.adminDeleteResumeItemRequest
+) {
+  const { id } = action;
+
+  const success = yield call(handleDelete, "/resume", id);
+
+  if (success) {
+    yield put(resumeListRequest());
+  }
+}
+
+export function* watchAdminDeleteResumeItemRequest() {
+  yield takeLatest(
+    t.ADMIN_DELETE_RESUME_ITEM_REQUEST,
+    handleAdminDeleteResumeItemRequest
   );
 }
 
@@ -89,12 +112,33 @@ export function* watchAdminUpdateWorkItemRequest() {
   );
 }
 
+export function* handleAdminDeleteWorkItemRequest(
+  action: a.adminDeleteWorkItemRequest
+) {
+  const { id } = action;
+
+  const success = yield call(handleDelete, "/work", id);
+
+  if (success) {
+    yield put(workListRequest());
+  }
+}
+
+export function* watchAdminDeleteWorkItemRequest() {
+  yield takeLatest(
+    t.ADMIN_DELETE_WORK_ITEM_REQUEST,
+    handleAdminDeleteWorkItemRequest
+  );
+}
+
 export default function* rootSaga() {
   yield all([
     watchAdminInitRequest(),
     watchAdminCreateResumeItemRequest(),
     watchAdminUpdateResumeItemRequest(),
+    watchAdminDeleteResumeItemRequest(),
     watchAdminCreateWorkItemRequest(),
     watchAdminUpdateWorkItemRequest(),
+    watchAdminDeleteWorkItemRequest(),
   ]);
 }

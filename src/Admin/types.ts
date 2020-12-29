@@ -15,4 +15,5 @@ export interface WorkItemForm {
   description: string;
   tags: Array<string>;
   source: string;
+  deploy: string;
 }

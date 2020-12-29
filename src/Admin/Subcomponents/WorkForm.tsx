@@ -3,6 +3,7 @@ import React, { Fragment, useState } from "react";
 import { Input, Text } from "handsome-ui";
 
 import { WorkItemForm } from "../types";
+import { WORK_TAGS } from "../constants";
 
 import TagSection from "./TagSection";
 
@@ -20,6 +21,7 @@ const WorkForm = (props: Props): JSX.Element => {
     description: "",
     tags: [],
     source: "",
+    deploy: "",
   };
 
   if (activeItem) {
@@ -29,6 +31,7 @@ const WorkForm = (props: Props): JSX.Element => {
     initialFormState.description = activeItem.description;
     initialFormState.tags = activeItem.tags;
     initialFormState.source = activeItem.source;
+    initialFormState.deploy = activeItem.deploy;
   }
 
   const [form, setForm] = useState<WorkItemForm>(initialFormState);
@@ -56,9 +59,14 @@ const WorkForm = (props: Props): JSX.Element => {
           }
         />
         <Input
-          label="Source"
+          label="Source URL"
           value={form.source}
           onChange={(value: string) => onFormChange({ ...form, source: value })}
+        />
+        <Input
+          label="Deploy URL"
+          value={form.deploy}
+          onChange={(value: string) => onFormChange({ ...form, deploy: value })}
         />
         <Text
           label="Description"
@@ -72,12 +80,10 @@ const WorkForm = (props: Props): JSX.Element => {
   };
 
   const _renderTagSection = (): React.ReactNode => {
-    const availableTags = ["web", "tools", "other"]; // TODO put in backend
-
     return (
       <TagSection
         tags={form.tags}
-        availableTags={availableTags}
+        availableTags={WORK_TAGS}
         onUpdateTags={(newTags: Array<string>) =>
           onFormChange({ ...form, tags: newTags })
         }

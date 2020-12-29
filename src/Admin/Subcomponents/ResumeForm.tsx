@@ -2,6 +2,7 @@ import React, { Fragment, useState } from "react";
 
 import { Input, Text } from "handsome-ui";
 
+import { RESUME_TAGS } from "../constants";
 import { ResumeItemForm } from "../types";
 
 import TagSection from "./TagSection";
@@ -65,12 +66,10 @@ const ResumeForm = (props: Props): JSX.Element => {
   };
 
   const _renderTagSection = (): React.ReactNode => {
-    const availableTags = ["education", "experience"]; // TODO put in backend
-
     return (
       <TagSection
         tags={form.tags}
-        availableTags={availableTags}
+        availableTags={RESUME_TAGS}
         onUpdateTags={(newTags: Array<string>) =>
           onFormChange({ ...form, tags: newTags })
         }

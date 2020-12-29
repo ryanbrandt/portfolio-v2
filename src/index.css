@@ -372,6 +372,10 @@ icon:hover {
 /********************
 * Admin
 ********************/
+.admin_table {
+  width: 100%;
+}
+
 .admin_button_container {
   padding: 15px;
 }
@@ -404,4 +408,15 @@ icon:hover {
 .admin_add-remove:hover {
   opacity: 1;
   transition: 0.75s;
+}
+
+.admin_delete-modal-details {
+  padding-bottom: 25px;
+  font-weight: 600;
+}
+
+.admin_delete-modal-cancel {
+  padding-top: 25px;
+  padding-bottom: 25px;
+  cursor: pointer;
 }
