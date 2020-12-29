@@ -3,34 +3,9 @@ import { blogListRequest } from "../Blog/actions";
 import { resumeListRequest } from "../Resumé/actions";
 import { workListRequest } from "../Work/actions";
 
+import { handlePromisifiedCreate, handlePromisifiedUpdate } from "./helpers";
 import * as t from "./actionTypes";
 import * as a from "./actions";
-import api from "../utils/api";
-
-function* handlePromisifiedUpdate(
-  path: string,
-  payload: any,
-  resolve: any,
-  reject: any
-) {
-  let success = true;
-  try {
-    const { ok } = yield call(api.put, path, payload);
-
-    if (!ok) {
-      success = false;
-    }
-  } catch (e) {
-    console.log(`Failed to complete item update request ${e}`);
-    success = false;
-  } finally {
-    if (success) {
-      resolve("Successfully updated item!");
-    } else {
-      reject("Failed to update item. Try again?");
-    }
-  }
-}
 
 export function* handleAdminInitRequest() {
   yield put(workListRequest());
@@ -40,6 +15,21 @@ export function* handleAdminInitRequest() {
 
 export function* watchAdminInitRequest() {
   yield takeLatest(t.ADMIN_INIT_REQUEST, handleAdminInitRequest);
+}
+
+export function* handleAdminCreateResumeItemRequest(
+  action: a.adminCreateResumeItemRequest
+) {
+  const { item, resolve, reject } = action;
+
+  yield call(handlePromisifiedCreate, "/resume", item, resolve, reject);
+}
+
+export function* watchAdminCreateResumeItemRequest() {
+  yield takeLatest(
+    t.ADMIN_CREATE_RESUME_ITEM_REQUEST,
+    handleAdminCreateResumeItemRequest
+  );
 }
 
 export function* handleAdminUpdateResumeItemRequest(
@@ -60,6 +50,21 @@ export function* watchAdminUpdateResumeItemRequest() {
   yield takeLatest(
     t.ADMIN_UPDATE_RESUME_ITEM_REQUEST,
     handleAdminUpdateResumeItemRequest
+  );
+}
+
+export function* handleAdminCreateWorkItemRequest(
+  action: a.adminCreateWorkItemRequest
+) {
+  const { item, resolve, reject } = action;
+
+  yield call(handlePromisifiedCreate, "/work", item, resolve, reject);
+}
+
+export function* watchAdminCreateWorkItemRequest() {
+  yield takeLatest(
+    t.ADMIN_CREATE_WORK_ITEM_REQUEST,
+    handleAdminCreateWorkItemRequest
   );
 }
 
@@ -87,7 +92,9 @@ export function* watchAdminUpdateWorkItemRequest() {
 export default function* rootSaga() {
   yield all([
     watchAdminInitRequest(),
+    watchAdminCreateResumeItemRequest(),
     watchAdminUpdateResumeItemRequest(),
+    watchAdminCreateWorkItemRequest(),
     watchAdminUpdateWorkItemRequest(),
   ]);
 }

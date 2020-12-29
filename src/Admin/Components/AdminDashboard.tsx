@@ -8,9 +8,9 @@ import { history } from "../../routes";
 import { adminInitRequest, adminSetActiveTab, adminSetQuery } from "../actions";
 import { AdminTab } from "../types";
 import { RootState } from "../../store/rootReducer";
+import { getAdminActiveTab } from "../selectors";
 
 import AdminTable from "../Subcomponents/AdminTable";
-import { getAdminActiveTab } from "../selectors";
 
 interface Props {}
 
@@ -37,6 +37,7 @@ const AdminDashboard = (props: Props & StateProps & DispatchProps) => {
   }, [initAdminPortal]);
 
   const { setTab, setQuery, activeTab } = props;
+  const activeTabDisplay = tabs.find((tab) => tab.key === activeTab)?.title;
 
   return (
     <div className="fadeable-content flex_center_col">
@@ -44,7 +45,7 @@ const AdminDashboard = (props: Props & StateProps & DispatchProps) => {
         <Column className="flex_center_col admin_create-margin">
           <h1>Admin Portal</h1>
           <Button
-            title="Create Item"
+            title={`Create ${activeTabDisplay} Item`}
             inverting
             onClick={() => history.push("/admin/create")}
           />
