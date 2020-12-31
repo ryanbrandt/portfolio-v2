@@ -3,10 +3,12 @@
  *
  * @param url The url for the new window
  */
-export function safeOpenWindow(url: string) {
-  const newWindow = window.open(url);
+export function safeOpenWindow(url: string | null) {
+  if (url) {
+    const newWindow = window.open(url);
 
-  if (newWindow) {
-    newWindow.opener = null;
+    if (newWindow) {
+      newWindow.opener = null;
+    }
   }
 }

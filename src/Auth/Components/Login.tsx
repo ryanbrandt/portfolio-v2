@@ -38,6 +38,7 @@ const Login: React.FunctionComponent<Props & DispatchProps> = (
 
   const _formIsValid = (): boolean => {
     let allFieldsComplete = true;
+    // eslint-disable-next-line no-restricted-syntax
     for (const key in fields) {
       if (fields[key].length < 1) {
         allFieldsComplete = false;
@@ -61,6 +62,18 @@ const Login: React.FunctionComponent<Props & DispatchProps> = (
     });
   };
 
+  const _renderError = (): React.ReactNode => {
+    if (error) {
+      return (
+        <div className="flex_center_col">
+          <Badge className="fadeable-content app-error" content={error} />
+        </div>
+      );
+    }
+
+    return null;
+  };
+
   const disabled = !_formIsValid() || processing;
 
   return (
@@ -68,7 +81,7 @@ const Login: React.FunctionComponent<Props & DispatchProps> = (
       <div>
         <h1 className="aligned_text">Admin Login</h1>
         <Input
-          label="Email"
+          label="Username"
           onChange={(value: string) => setFields({ ...fields, email: value })}
         />
         <Input
@@ -89,9 +102,7 @@ const Login: React.FunctionComponent<Props & DispatchProps> = (
         </div>
         <Divider />
         <div className="app_version-text">{version}</div>
-        {error && (
-          <Badge className="fadeable-content app-error" content={error} />
-        )}
+        {_renderError()}
       </div>
     </div>
   );

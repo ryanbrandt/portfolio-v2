@@ -1,6 +1,7 @@
 import { createSelector } from "reselect";
 
 import { RootState } from "../store/rootReducer";
+import { PLACEHOLDER_WORK_ITEM } from "./constants";
 
 export const getWorkList = (state: RootState) => state.work.list;
 
@@ -13,11 +14,13 @@ export const getActiveWorkId = (state: RootState) => state.work.activeItemId;
 export const getActiveWorkItem = createSelector(
   [getWorkList, getActiveWorkId],
   (list, activeId) => {
-    if (activeId !== -1) {
-      return list.find((item) => item.id === activeId);
+    const activeItem = list.find((item) => item.id === activeId);
+
+    if (activeItem) {
+      return activeItem;
     }
 
-    return {};
+    return PLACEHOLDER_WORK_ITEM;
   }
 );
 

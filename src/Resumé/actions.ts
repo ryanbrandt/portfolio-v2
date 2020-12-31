@@ -1,3 +1,4 @@
+import { ResumeItem } from "../utils/types";
 import * as t from "./actionTypes";
 
 export interface resumeListRequest {
@@ -12,10 +13,12 @@ export function resumeListRequest(): resumeListRequest {
 
 export interface resumeListSuccess {
   type: t.RESUME_LIST_SUCCESS;
-  resumeList: Array<any>; // TODO
+  resumeList: Array<ResumeItem>;
 }
 
-export function resumeListSuccess(resumeList: Array<any>): resumeListSuccess {
+export function resumeListSuccess(
+  resumeList: Array<ResumeItem>
+): resumeListSuccess {
   return {
     type: t.RESUME_LIST_SUCCESS,
     resumeList,

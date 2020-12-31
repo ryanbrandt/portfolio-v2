@@ -5,18 +5,19 @@ import { Dispatch } from "redux";
 import { Divider, Row, Column, Badge, Download, AppContext } from "handsome-ui";
 
 import { resumeListRequest } from "../actions";
+import { RESUME_DOWNLOAD_LINK, RESUME_TOOLS } from "../constants";
 import { getEducationList, getExperienceList } from "../selectors";
-
-import ResumeItem from "../Subcomponents/ResumeItem";
 import { RootState } from "../../store/rootReducer";
 import { safeOpenWindow } from "../../utils/helpers";
-import { RESUME_DOWNLOAD_LINK } from "../../utils/constants";
+import { ResumeItem as IResumeItem } from "../../utils/types";
+
+import ResumeItem from "../Subcomponents/ResumeItem";
 
 interface Props {}
 
 interface StateProps {
-  education: Array<any>;
-  experience: Array<any>;
+  education: Array<IResumeItem>;
+  experience: Array<IResumeItem>;
 }
 
 interface DispatchProps {
@@ -33,9 +34,9 @@ const Resumé: React.FunctionComponent<Props & StateProps & DispatchProps> = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const _handleDownloadClick = () => {
+  const _handleDownloadClick = (): void => {
     safeOpenWindow(RESUME_DOWNLOAD_LINK);
-  }
+  };
 
   const _renderExperience = () => {
     const { experience } = props;
@@ -47,12 +48,12 @@ const Resumé: React.FunctionComponent<Props & StateProps & DispatchProps> = (
         datestring={experienceItem.datestring}
         type="expereince"
         description={experienceItem.description}
-        achievments={experienceItem.achievements}
+        achievments={experienceItem.achievments}
       />
     ));
   };
 
-  const _renderEducation = () => {
+  const _renderEducation = (): React.ReactNode => {
     const { education } = props;
 
     return education.map((educationItem) => (
@@ -62,75 +63,57 @@ const Resumé: React.FunctionComponent<Props & StateProps & DispatchProps> = (
         datestring={educationItem.datestring}
         type="education"
         description={educationItem.description}
-        achievments={educationItem.achievements}
+        achievments={educationItem.achievments}
       />
     ));
   };
 
-  const _renderToolsAndTechnologies = () => {
-    const tools = [
-      "TypeScript/JavaScript",
-      "C#",
-      "Python",
-      "Java",
-      "SQL",
-      "NoSQL",
-      "Node.js",
-      "React",
-      "React-Native",
-      "Redux",
-      "Electron",
-      "Express",
-      "Serverless",
-      ".NET",
-      "WPF",
-      "ReactiveUI",
-      "Flask",
-      "Django",
-      "Cypress",
-      "Jest",
-      "Enzyme",
-      "Xunit",
-    ];
-
+  const _renderToolsAndTechnologies = (): React.ReactNode => {
     return (
       <div className="resume_tools-container">
-        {tools.map((item) => (
+        {RESUME_TOOLS.map((item) => (
           <Badge key={item} className="resume_tools-badge" content={item} />
         ))}
       </div>
     );
   };
 
+  const _renderResumeSection = (): React.ReactNode => {
+    return (
+      <Row>
+        <Column className="resume_column">
+          <h3 className="resume_header">Development Experience</h3>
+          <Divider />
+          {_renderExperience()}
+        </Column>
+        <Column className="resume_column">
+          <h3 className="resume_header">Education</h3>
+          <Divider />
+          {_renderEducation()}
+        </Column>
+        <Column className="resume_column">
+          <h3 className="resume_header">Tools & Technology</h3>
+          <Divider />
+          {_renderToolsAndTechnologies()}
+        </Column>
+      </Row>
+    );
+  };
+
   return (
     <AppContext.Consumer>
-      {isMobile => (
+      {(isMobile) => (
         <div className="fadeable-content flex_center_col">
           <div>
             <h1 className="aligned_text">
-              <Download className={isMobile ? "download_icon-mobile" : "download_icon"} onClick={_handleDownloadClick} />
+              <Download
+                className={isMobile ? "download_icon-mobile" : "download_icon"}
+                onClick={_handleDownloadClick}
+              />
               Resumé
             </h1>
             <Divider />
-            <div className="app_wide_container">
-              <Row>
-                <Column className="resume_column">
-                  <h3 className="resume_header">Development Experience</h3>
-                  <Divider />
-                  {_renderExperience()}
-                </Column>
-                <Column className="resume_column">
-                  <h3 className="resume_header">Education</h3>
-                  <Divider />
-                  {_renderEducation()}
-                </Column>
-                <Column className="resume_column">
-                  <h3 className="resume_header">Tools & Technology</h3>
-                  <Divider />
-                  {_renderToolsAndTechnologies()}
-                </Column>
-              </Row>
-            </div>
+            <div className="app_wide_container">{_renderResumeSection()}</div>
           </div>
         </div>
       )}
@@ -138,14 +121,14 @@ const Resumé: React.FunctionComponent<Props & StateProps & DispatchProps> = (
   );
 };
 
-const mapStateToProps = (state: RootState) => {
+const mapStateToProps = (state: RootState): StateProps => {
   return {
     education: getEducationList(state),
     experience: getExperienceList(state),
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
+const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
   return {
     fetchResumeList: () => dispatch(resumeListRequest()),
   };

@@ -7,11 +7,12 @@ import { history } from "../../routes";
 import { RootState } from "../../store/rootReducer";
 import { getActiveWorkItem } from "../selectors";
 import { safeOpenWindow } from "../../utils/helpers";
+import { WorkItem } from "../../utils/types";
 
 interface Props {}
 
 interface StateProps {
-  activeItem: any; // TODO
+  activeItem: WorkItem;
 }
 
 const WorkContent = (props: Props & StateProps) => {
@@ -27,7 +28,7 @@ const WorkContent = (props: Props & StateProps) => {
     }
   }, [isMobile, activeItem]);
 
-  const _renderLinks = () => {
+  const _renderLinks = (): React.ReactNode => {
     return (
       <div className="aligned_text">
         {activeItem.source && (
@@ -52,7 +53,7 @@ const WorkContent = (props: Props & StateProps) => {
     );
   };
 
-  const _renderMobileHeader = () => {
+  const _renderMobileHeader = (): React.ReactNode => {
     const crumbs = [
       {
         title: "Work",
@@ -104,6 +105,6 @@ const mapStateToProps = (state: RootState) => {
   };
 };
 
-export default connect<StateProps, void, Props, any>(mapStateToProps)(
+export default connect<StateProps, void, Props, RootState>(mapStateToProps)(
   WorkContent
 );

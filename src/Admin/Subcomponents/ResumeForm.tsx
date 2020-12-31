@@ -3,12 +3,13 @@ import React, { Fragment, useState } from "react";
 import { Input, Text } from "handsome-ui";
 
 import { RESUME_TAGS } from "../constants";
+import { ResumeItem } from "../../utils/types";
 import { ResumeItemForm } from "../types";
 
 import TagSection from "./TagSection";
 
 interface Props {
-  activeItem?: any; // TODO
+  activeItem?: ResumeItem;
   onUpdate: (item: ResumeItemForm) => void;
 }
 
@@ -19,6 +20,7 @@ const ResumeForm = (props: Props): JSX.Element => {
     name: "",
     datestring: "",
     description: "",
+    achievments: "",
     tags: [],
   };
 
@@ -27,6 +29,7 @@ const ResumeForm = (props: Props): JSX.Element => {
     initialFormState.name = activeItem.name;
     initialFormState.datestring = activeItem.datestring;
     initialFormState.description = activeItem.description;
+    initialFormState.achievments = activeItem.achievments || "";
     initialFormState.tags = activeItem.tags;
   }
 

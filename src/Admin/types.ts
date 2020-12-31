@@ -5,6 +5,7 @@ export interface ResumeItemForm {
   name: string;
   datestring: string;
   description: string;
+  achievments: string;
   tags: Array<string>;
 }
 

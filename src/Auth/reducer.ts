@@ -11,7 +11,10 @@ const initialState: AuthState = {
   user: null,
 };
 
-export default function (state: AuthState = initialState, action: Action) {
+export default function (
+  state: AuthState = initialState,
+  action: Action
+): AuthState {
   switch (action.type) {
     case t.ADMIN_LOGIN_SUCCESS: {
       const { user } = action;

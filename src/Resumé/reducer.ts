@@ -1,8 +1,9 @@
 import * as t from "./actionTypes";
 import { Action } from "./actions";
+import { ResumeItem } from "../utils/types";
 
 export interface ResumeState {
-  list: Array<any>; // TODO
+  list: Array<ResumeItem>;
 }
 
 const initalState: ResumeState = {

@@ -17,6 +17,8 @@ import {
   getWorkTab,
 } from "../selectors";
 import { RootState } from "../../store/rootReducer";
+import { WorkItem } from "../../utils/types";
+import { WorkTab } from "../types";
 
 import WorkContent from "../Subcomponents/WorkContent";
 import EmptyResults from "../../Common/Components/EmptyResults";
@@ -25,16 +27,16 @@ import ContentCard from "../../Common/Components/ContentCard";
 interface Props {}
 
 interface StateProps {
-  workList: Array<any>; // TODO
-  activeItem: any; // TODO
-  activeTab: any; // TODO
+  workList: Array<WorkItem>;
+  activeItem: WorkItem;
+  activeTab: WorkTab;
 }
 
 interface DispatchProps {
   fetchWorkList: () => void;
   setQuery: (query: string) => void;
-  setTab: (tab: string) => void;
-  setActiveItem: (item: any) => void; // TODO
+  setTab: (tab: WorkTab) => void;
+  setActiveItem: (id: number) => void;
 }
 
 const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
@@ -66,7 +68,7 @@ const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
     { title: "Other", key: "other" },
   ];
 
-  const _handleCardSelection = (item: any) => {
+  const _handleCardSelection = (item: WorkItem): void => {
     const { setActiveItem } = props;
     setActiveItem(item.id);
 
@@ -77,7 +79,7 @@ const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
     }
   };
 
-  const _renderContentModal = () => {
+  const _renderContentModal = (): React.ReactNode => {
     const { activeItem } = props;
 
     return (
@@ -91,7 +93,7 @@ const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
     );
   };
 
-  const _renderCards = () => {
+  const _renderCards = (): React.ReactNode => {
     const { workList } = props;
     if (workList.length < 1) {
       return <EmptyResults />;
@@ -105,7 +107,7 @@ const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
 
     return workRows.map((row, i) => (
       <Row key={`row_${i}`}>
-        {row.map((item, n) => (
+        {row.map((item) => (
           <ContentCard
             key={item.name}
             imgSrc={item.image ? item.image : "project-placeholder.jpg"}
@@ -130,7 +132,7 @@ const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
               ...tab,
               active: tab.key === activeTab,
             }))}
-            onTab={(tab: string) => setTab(tab)}
+            onTab={(tab: string) => setTab(tab as WorkTab)}
             onSearch={(query: string) => setQuery(query)}
           />
           {_renderCards()}
@@ -141,7 +143,7 @@ const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
   );
 };
 
-const mapStateToProps = (state: RootState) => {
+const mapStateToProps = (state: RootState): StateProps => {
   return {
     workList: getFilteredWorkList(state),
     activeItem: getActiveWorkItem(state),
@@ -149,12 +151,12 @@ const mapStateToProps = (state: RootState) => {
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
+const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
   return {
     fetchWorkList: () => dispatch(workListRequest()),
     setQuery: (query: string) => dispatch(setWorkQuery(query)),
-    setTab: (tab: string) => dispatch(setActiveWorkTab(tab)),
-    setActiveItem: (item: any) => dispatch(setActiveWorkItem(item)), // TODO
+    setTab: (tab: WorkTab) => dispatch(setActiveWorkTab(tab)),
+    setActiveItem: (id: number) => dispatch(setActiveWorkItem(id)),
   };
 };
 

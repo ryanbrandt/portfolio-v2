@@ -35,6 +35,6 @@ const mapStateToProps = (state: RootState) => {
   };
 };
 
-export default connect<StateProps, void, Props, any>(mapStateToProps)(
+export default connect<StateProps, void, Props, RootState>(mapStateToProps)(
   PrivateRoute
 );

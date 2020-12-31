@@ -7,13 +7,13 @@ interface Props {
   datestring: string;
   type: "expereince" | "education";
   description: string;
-  achievments?: string;
+  achievments: string | null;
 }
 
 const ResumeItem: React.FunctionComponent<Props> = (
   props: Props
 ): JSX.Element => {
-  const _renderAchievements = () => {
+  const _renderAchievements = (): React.ReactNode => {
     const { achievments } = props;
 
     if (achievments) {
@@ -24,11 +24,13 @@ const ResumeItem: React.FunctionComponent<Props> = (
         </div>
       );
     }
+
+    return null;
   };
 
   const { title, datestring, description, type } = props;
 
-  let iconProps = {
+  const iconProps = {
     width: 20,
     height: 20,
   };

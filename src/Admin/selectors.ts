@@ -2,6 +2,7 @@ import { createSelector } from "reselect";
 import { getResumeList } from "../Resumé/selectors";
 
 import { RootState } from "../store/rootReducer";
+import { ResumeItem, WorkItem } from "../utils/types";
 import { getWorkList } from "../Work/selectors";
 
 export const getAdminActiveTab = (state: RootState) => state.admin.activeTab;
@@ -12,7 +13,7 @@ export const getAdminActiveItemId = (state: RootState) =>
 export const getFilteredAdminData = createSelector(
   [getAdminActiveTab, getAdminQuery, getWorkList, getResumeList],
   (tab, query, work, resume) => {
-    let data = resume;
+    let data: Array<ResumeItem | WorkItem> = resume;
     if (tab === "work") {
       data = work;
     }

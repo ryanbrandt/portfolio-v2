@@ -3,12 +3,13 @@ import React, { Fragment, useState } from "react";
 import { Input, Text } from "handsome-ui";
 
 import { WorkItemForm } from "../types";
+import { WorkItem } from "../../utils/types";
 import { WORK_TAGS } from "../constants";
 
 import TagSection from "./TagSection";
 
 interface Props {
-  activeItem?: any;
+  activeItem?: WorkItem;
   onUpdate: (item: WorkItemForm) => void;
 }
 
@@ -30,8 +31,8 @@ const WorkForm = (props: Props): JSX.Element => {
     initialFormState.datestring = activeItem.datestring;
     initialFormState.description = activeItem.description;
     initialFormState.tags = activeItem.tags;
-    initialFormState.source = activeItem.source;
-    initialFormState.deploy = activeItem.deploy;
+    initialFormState.source = activeItem.source || "";
+    initialFormState.deploy = activeItem.deploy || "";
   }
 
   const [form, setForm] = useState<WorkItemForm>(initialFormState);

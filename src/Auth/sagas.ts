@@ -1,6 +1,7 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import Amplify, { Auth } from "aws-amplify";
 
+import api from "../utils/api";
 import awsConfig from "../utils/awsConfig";
 import * as a from "./actions";
 import * as t from "./actionTypes";
@@ -15,6 +16,11 @@ export function* handleAdminLoginRequest(action: a.adminLoginRequest) {
 
     const user = yield call([Auth, Auth.signIn], email, password);
     yield put(a.adminLoginSuccess(user));
+
+    const { signInUserSession } = user;
+    const { idToken } = signInUserSession;
+    const { jwtToken } = idToken;
+    api.setHeader("Authorization", jwtToken);
   } catch (e) {
     success = false;
     console.log("Failed to authenticate admin");
@@ -23,7 +29,7 @@ export function* handleAdminLoginRequest(action: a.adminLoginRequest) {
     if (success) {
       resolve();
     } else {
-      reject("Invalid email or password provided.");
+      reject("Invalid credentials.");
     }
   }
 }
@@ -39,6 +45,8 @@ export function* handleAdminLogoutRequest() {
 
     yield call([Auth, Auth.signOut]);
     yield put(a.destroyAdminSession());
+
+    api.deleteHeader("Authorization");
   } catch (e) {
     console.log(`Error signing user out ${e}`);
   }

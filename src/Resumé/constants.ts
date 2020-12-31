@@ -1,0 +1,31 @@
+export const RESUME_TOOLS = [
+  "TypeScript/JavaScript",
+  "C#",
+  "Python",
+  "Java",
+  "SQL",
+  "NoSQL",
+  "Node.js",
+  "React",
+  "React-Native",
+  "Redux",
+  "Electron",
+  "Express",
+  "Serverless",
+  ".NET",
+  "WPF",
+  "ReactiveUI",
+  "Flask",
+  "Django",
+  "Cypress",
+  "Jest",
+  "Enzyme",
+  "Xunit",
+  "AWS",
+  "Heroku",
+  "WiX Toolset",
+  "CircleCI",
+];
+
+export const RESUME_DOWNLOAD_LINK =
+  "http://ryanbrandt-resume.s3.amazonaws.com/Resume2020.pdf";

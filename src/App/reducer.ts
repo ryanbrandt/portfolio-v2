@@ -9,7 +9,7 @@ const initialState: AppState = {
   contentLoading: false,
 };
 
-export default function (state = initialState, action: Action) {
+export default function (state = initialState, action: Action): AppState {
   switch (action.type) {
     case t.SET_CONTENT_LOADING: {
       const { loading } = action;

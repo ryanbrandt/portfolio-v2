@@ -1,4 +1,6 @@
+import { WorkItem } from "../utils/types";
 import * as t from "./actionTypes";
+import { WorkTab } from "./types";
 
 export interface workListRequest {
   type: t.WORK_LIST_REQUEST;
@@ -12,10 +14,10 @@ export function workListRequest(): workListRequest {
 
 export interface workListSuccess {
   type: t.WORK_LIST_SUCCESS;
-  workList: Array<any>; // TODO
+  workList: Array<WorkItem>;
 }
 
-export function workListSuccess(workList: Array<any>): workListSuccess {
+export function workListSuccess(workList: Array<WorkItem>): workListSuccess {
   return {
     type: t.WORK_LIST_SUCCESS,
     workList,
@@ -36,14 +38,14 @@ export function setActiveWorkItem(id: number): setActiveWorkItem {
 
 export interface setActiveWorkTab {
   type: t.SET_ACTIVE_WORK_TAB;
-  tab: string;
+  tab: WorkTab;
 }
 
-export function setActiveWorkTab(tab: string): setActiveWorkTab {
+export function setActiveWorkTab(tab: WorkTab): setActiveWorkTab {
   return {
     type: t.SET_ACTIVE_WORK_TAB,
-    tab
-  }
+    tab,
+  };
 }
 
 export interface setWorkQuery {
@@ -54,8 +56,13 @@ export interface setWorkQuery {
 export function setWorkQuery(query: string): setWorkQuery {
   return {
     type: t.SET_WORK_QUERY,
-    query
-  }
+    query,
+  };
 }
 
-export type Action = workListRequest | workListSuccess | setActiveWorkItem | setWorkQuery | setActiveWorkTab;
+export type Action =
+  | workListRequest
+  | workListSuccess
+  | setActiveWorkItem
+  | setWorkQuery
+  | setActiveWorkTab;

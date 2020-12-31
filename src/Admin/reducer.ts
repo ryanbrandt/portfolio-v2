@@ -14,7 +14,7 @@ const initialState: AdminState = {
   activeItemId: -1,
 };
 
-export default function (state = initialState, action: Action) {
+export default function (state = initialState, action: Action): AdminState {
   switch (action.type) {
     case t.ADMIN_SET_ACTIVE_TAB: {
       const { tab } = action;

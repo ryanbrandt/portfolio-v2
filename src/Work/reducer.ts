@@ -1,10 +1,12 @@
 import * as t from "./actionTypes";
 import { Action } from "./actions";
+import { WorkItem } from "../utils/types";
+import { WorkTab } from "./types";
 
 export interface WorkState {
-  list: Array<any>; // TODO
+  list: Array<WorkItem>;
   activeItemId: number;
-  activeTab: string;
+  activeTab: WorkTab;
   query: string;
 }
 
@@ -53,7 +55,7 @@ export default function (
       return {
         ...state,
         query,
-      }
+      };
     }
 
     default: {
