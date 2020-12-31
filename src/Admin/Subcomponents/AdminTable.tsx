@@ -8,9 +8,11 @@ import { history } from "../../routes";
 import { RootState } from "../../store/rootReducer";
 import { adminSetActiveItemId } from "../actions";
 import { getFilteredAdminData } from "../selectors";
+import { ResumeItem, WorkItem } from "../../utils/types";
 
 import AdminDeleteModal from "./AdminDeleteModal";
 import EmptyResults from "../../Common/Components/EmptyResults";
+import { PLACEHOLDER_WORK_ITEM } from "../../Work/constants";
 
 interface Props {}
 
@@ -19,7 +21,7 @@ interface DispatchProps {
 }
 
 interface StateProps {
-  data: any; // TODO
+  data: Array<ResumeItem | WorkItem>;
 }
 
 const AdminTable = (props: Props & DispatchProps & StateProps) => {
@@ -29,7 +31,9 @@ const AdminTable = (props: Props & DispatchProps & StateProps) => {
   const isMobile = useContext(AppContext);
 
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [deleteItem, setDeleteItem] = useState<any>();
+  const [deleteItem, setDeleteItem] = useState<ResumeItem | WorkItem>(
+    PLACEHOLDER_WORK_ITEM
+  );
 
   const { data, setActiveItem } = props;
 
@@ -40,7 +44,7 @@ const AdminTable = (props: Props & DispatchProps & StateProps) => {
 
   const handleDeleteClick = (
     e: React.MouseEvent<SVGElement, MouseEvent>,
-    item: any
+    item: ResumeItem | WorkItem
   ) => {
     e.stopPropagation();
 
@@ -48,7 +52,7 @@ const AdminTable = (props: Props & DispatchProps & StateProps) => {
     setDeleteModalOpen(true);
   };
 
-  const _renderDefaultColumns = (item: any) => {
+  const _renderDefaultColumns = (item: ResumeItem | WorkItem) => {
     if (isMobile) {
       return null;
     }
@@ -61,7 +65,7 @@ const AdminTable = (props: Props & DispatchProps & StateProps) => {
     );
   };
 
-  const _renderDeleteSection = (item: any) => {
+  const _renderDeleteSection = (item: ResumeItem | WorkItem) => {
     return (
       <TableCell className="flex_center_col">
         <Trash
@@ -92,7 +96,7 @@ const AdminTable = (props: Props & DispatchProps & StateProps) => {
         className="admin_table fadeable-content"
         headers={isMobile ? MOBILE_HEADERS : DEFAULT_HEADERS}
       >
-        {data.map((item: any, i: number) => (
+        {data.map((item: ResumeItem | WorkItem, i: number) => (
           <TableRow
             key={`${item.name}_${i}`}
             className="fadeable-content"

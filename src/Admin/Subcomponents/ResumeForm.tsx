@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
 
-import { Input, Text } from "handsome-ui";
+import { Button, Input, Text } from "handsome-ui";
 
 import { RESUME_TAGS } from "../constants";
 import { ResumeItem } from "../../utils/types";
@@ -10,7 +10,7 @@ import TagSection from "./TagSection";
 
 interface Props {
   activeItem?: ResumeItem;
-  onUpdate: (item: ResumeItemForm) => void;
+  onSubmit: (item: ResumeItemForm) => void;
 }
 
 const ResumeForm = (props: Props): JSX.Element => {
@@ -35,34 +35,23 @@ const ResumeForm = (props: Props): JSX.Element => {
 
   const [form, setForm] = useState<ResumeItemForm>(initialFormState);
 
-  const onFormChange = (newForm: ResumeItemForm) => {
-    const { onUpdate } = props;
-
-    setForm(newForm);
-    onUpdate(newForm);
-  };
-
   const _renderInputs = (): React.ReactNode => {
     return (
       <Fragment>
         <Input
           label="Name"
           value={form.name}
-          onChange={(value: string) => onFormChange({ ...form, name: value })}
+          onChange={(value: string) => setForm({ ...form, name: value })}
         />
         <Input
           label="Date String"
           value={form.datestring}
-          onChange={(value: string) =>
-            onFormChange({ ...form, datestring: value })
-          }
+          onChange={(value: string) => setForm({ ...form, datestring: value })}
         />
         <Text
           label="Description"
           value={form.description}
-          onChange={(value: string) =>
-            onFormChange({ ...form, description: value })
-          }
+          onChange={(value: string) => setForm({ ...form, description: value })}
         />
       </Fragment>
     );
@@ -72,11 +61,22 @@ const ResumeForm = (props: Props): JSX.Element => {
     return (
       <TagSection
         tags={form.tags}
+        limit={1}
         availableTags={RESUME_TAGS}
         onUpdateTags={(newTags: Array<string>) =>
-          onFormChange({ ...form, tags: newTags })
+          setForm({ ...form, tags: newTags })
         }
       />
+    );
+  };
+
+  const _renderSubmit = (): React.ReactNode => {
+    const { onSubmit } = props;
+
+    return (
+      <div className="flex_center_col admin_button_container">
+        <Button title="Submit" onClick={() => onSubmit(form)} inverting />
+      </div>
     );
   };
 
@@ -88,6 +88,7 @@ const ResumeForm = (props: Props): JSX.Element => {
         </h1>
         {_renderInputs()}
         {_renderTagSection()}
+        {_renderSubmit()}
       </div>
     </div>
   );

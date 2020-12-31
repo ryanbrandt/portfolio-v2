@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
 
-import { Input, Text } from "handsome-ui";
+import { Button, Input, Text } from "handsome-ui";
 
 import { WorkItemForm } from "../types";
 import { WorkItem } from "../../utils/types";
@@ -10,7 +10,7 @@ import TagSection from "./TagSection";
 
 interface Props {
   activeItem?: WorkItem;
-  onUpdate: (item: WorkItemForm) => void;
+  onSubmit: (item: WorkItemForm) => void;
 }
 
 const WorkForm = (props: Props): JSX.Element => {
@@ -37,44 +37,33 @@ const WorkForm = (props: Props): JSX.Element => {
 
   const [form, setForm] = useState<WorkItemForm>(initialFormState);
 
-  const onFormChange = (newForm: WorkItemForm) => {
-    const { onUpdate } = props;
-
-    setForm(newForm);
-    onUpdate(newForm);
-  };
-
   const _renderInputs = (): React.ReactNode => {
     return (
       <Fragment>
         <Input
           label="Name"
           value={form.name}
-          onChange={(value: string) => onFormChange({ ...form, name: value })}
+          onChange={(value: string) => setForm({ ...form, name: value })}
         />
         <Input
           label="Date String"
           value={form.datestring}
-          onChange={(value: string) =>
-            onFormChange({ ...form, datestring: value })
-          }
+          onChange={(value: string) => setForm({ ...form, datestring: value })}
         />
         <Input
           label="Source URL"
           value={form.source}
-          onChange={(value: string) => onFormChange({ ...form, source: value })}
+          onChange={(value: string) => setForm({ ...form, source: value })}
         />
         <Input
           label="Deploy URL"
           value={form.deploy}
-          onChange={(value: string) => onFormChange({ ...form, deploy: value })}
+          onChange={(value: string) => setForm({ ...form, deploy: value })}
         />
         <Text
           label="Description"
           value={form.description}
-          onChange={(value: string) =>
-            onFormChange({ ...form, description: value })
-          }
+          onChange={(value: string) => setForm({ ...form, description: value })}
         />
       </Fragment>
     );
@@ -86,9 +75,19 @@ const WorkForm = (props: Props): JSX.Element => {
         tags={form.tags}
         availableTags={WORK_TAGS}
         onUpdateTags={(newTags: Array<string>) =>
-          onFormChange({ ...form, tags: newTags })
+          setForm({ ...form, tags: newTags })
         }
       />
+    );
+  };
+
+  const _renderSubmit = (): React.ReactNode => {
+    const { onSubmit } = props;
+
+    return (
+      <div className="flex_center_col admin_button_container">
+        <Button title="Submit" onClick={() => onSubmit(form)} inverting />
+      </div>
     );
   };
 
@@ -100,6 +99,7 @@ const WorkForm = (props: Props): JSX.Element => {
         </h1>
         {_renderInputs()}
         {_renderTagSection()}
+        {_renderSubmit()}
       </div>
     </div>
   );

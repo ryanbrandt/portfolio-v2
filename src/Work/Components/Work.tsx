@@ -106,7 +106,7 @@ const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
     }
 
     return workRows.map((row, i) => (
-      <Row key={`row_${i}`}>
+      <Row style={{ justifyContent: "space-evenly" }} key={`row_${i}`}>
         {row.map((item) => (
           <ContentCard
             key={item.name}

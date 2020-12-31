@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { AppContext, Badge, Breadcrumbs, Button } from "handsome-ui";
+import { AppContext, Badge, Breadcrumbs } from "handsome-ui";
 
 import { history } from "../../routes";
 import {
@@ -19,26 +19,26 @@ import { RootState } from "../../store/rootReducer";
 
 import ResumeForm from "../Subcomponents/ResumeForm";
 import WorkForm from "../Subcomponents/WorkForm";
+import { ResumeItem, WorkItem } from "../../utils/types";
 
 interface Props {}
 
 interface DispatchProps {
-  updateWorkItem: (item: any, resolve: any, reject: any) => void; // TODO
-  updateResumeItem: (item: any, resolve: any, reject: any) => void; // TODO
+  updateWorkItem: (item: WorkItemForm, resolve: any, reject: any) => void;
+  updateResumeItem: (item: ResumeItemForm, resolve: any, reject: any) => void;
 }
 
 interface StateProps {
   activeTab: AdminTab;
-  activeWorkItem: any; // TODO
-  activeResumeItem: any; // TODO
+  activeWorkItem: WorkItem;
+  activeResumeItem: ResumeItem;
 }
 
 const AdminItemManagement = (props: Props & DispatchProps & StateProps) => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const [item, setItem] = useState<ResumeItemForm | WorkItemForm>();
 
-  const onUpdateWorkItemClick = async (): Promise<void> => {
+  const onUpdateWorkItem = async (item: WorkItemForm): Promise<void> => {
     setErrorMessage(null);
     setSuccessMessage(null);
 
@@ -51,7 +51,7 @@ const AdminItemManagement = (props: Props & DispatchProps & StateProps) => {
       .catch((error: string) => setErrorMessage(error));
   };
 
-  const onUpdateResumeItemClick = async (): Promise<void> => {
+  const onUpdateResumeItem = async (item: ResumeItemForm): Promise<void> => {
     setErrorMessage(null);
     setSuccessMessage(null);
 
@@ -79,9 +79,13 @@ const AdminItemManagement = (props: Props & DispatchProps & StateProps) => {
   const _renderForm = (): React.ReactNode => {
     const { activeTab, activeResumeItem, activeWorkItem } = props;
 
-    let form = <ResumeForm onUpdate={setItem} activeItem={activeResumeItem} />;
+    let form = (
+      <ResumeForm onSubmit={onUpdateResumeItem} activeItem={activeResumeItem} />
+    );
     if (activeTab === "work") {
-      form = <WorkForm onUpdate={setItem} activeItem={activeWorkItem} />;
+      form = (
+        <WorkForm onSubmit={onUpdateWorkItem} activeItem={activeWorkItem} />
+      );
     }
 
     return form;
@@ -114,27 +118,12 @@ const AdminItemManagement = (props: Props & DispatchProps & StateProps) => {
     return null;
   };
 
-  const _renderSubmit = (): React.ReactNode => {
-    const { activeTab } = props;
-    let action = onUpdateResumeItemClick;
-    if (activeTab === "work") {
-      action = onUpdateWorkItemClick;
-    }
-
-    return (
-      <div className="flex_center_col admin_button_container">
-        <Button title="Update Item" onClick={action} inverting />
-      </div>
-    );
-  };
-
   const isMobile = useContext(AppContext);
 
   return (
     <div className={isMobile ? "admin_manage-container-mobile" : ""}>
       {_renderCrumbs()}
       {_renderForm()}
-      {_renderSubmit()}
       {_renderMessageSection()}
     </div>
   );
@@ -142,9 +131,9 @@ const AdminItemManagement = (props: Props & DispatchProps & StateProps) => {
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
   return {
-    updateWorkItem: (item: any, resolve: any, reject: any) =>
+    updateWorkItem: (item: WorkItemForm, resolve: any, reject: any) =>
       dispatch(adminUpdateWorkItemRequest(item, resolve, reject)),
-    updateResumeItem: (item: any, resolve: any, reject: any) =>
+    updateResumeItem: (item: ResumeItemForm, resolve: any, reject: any) =>
       dispatch(adminUpdateResumeItemRequest(item, resolve, reject)),
   };
 };

@@ -1,8 +1,10 @@
 import { createSelector } from "reselect";
-import { getResumeList } from "../Resumé/selectors";
 
+import { PLACEHOLDER_RESUME_ITEM } from "../Resumé/constants";
+import { getResumeList } from "../Resumé/selectors";
 import { RootState } from "../store/rootReducer";
 import { ResumeItem, WorkItem } from "../utils/types";
+import { PLACEHOLDER_WORK_ITEM } from "../Work/constants";
 import { getWorkList } from "../Work/selectors";
 
 export const getAdminActiveTab = (state: RootState) => state.admin.activeTab;
@@ -31,13 +33,25 @@ export const getFilteredAdminData = createSelector(
 export const getAdminResumeActiveItem = createSelector(
   [getAdminActiveItemId, getResumeList],
   (id, resume) => {
-    return resume.find((item) => item.id === id);
+    const activeItem = resume.find((item) => item.id === id);
+
+    if (activeItem) {
+      return activeItem;
+    }
+
+    return PLACEHOLDER_RESUME_ITEM;
   }
 );
 
 export const getAdminWorkActiveItem = createSelector(
   [getAdminActiveItemId, getWorkList],
   (id, work) => {
-    return work.find((item) => item.id === id);
+    const activeItem = work.find((item) => item.id === id);
+
+    if (activeItem) {
+      return activeItem;
+    }
+
+    return PLACEHOLDER_WORK_ITEM;
   }
 );

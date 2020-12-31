@@ -8,12 +8,13 @@ import {
   adminDeleteResumeItemRequest,
   adminDeleteWorkItemRequest,
 } from "../actions";
+import { ResumeItem, WorkItem } from "../../utils/types";
 import { getAdminActiveTab } from "../selectors";
 import { RootState } from "../../store/rootReducer";
 import { AdminTab } from "../types";
 
 interface Props {
-  item: any; // TODO
+  item: ResumeItem | WorkItem;
   open: boolean;
   onClose: Function;
 }
@@ -30,7 +31,7 @@ interface DispatchProps {
 const AdminDeleteModal = (
   props: Props & DispatchProps & StateProps
 ): JSX.Element => {
-  const { open, onClose, item = {} } = props;
+  const { open, onClose, item } = props;
 
   const handleConfirmClick = () => {
     const { activeTab, deleteResumeItem, deleteWorkItem } = props;

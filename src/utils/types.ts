@@ -19,4 +19,6 @@ export interface WorkItem {
   deploy: string | null;
   icons: Array<string> | null;
   image: string | null;
+  created: string;
+  modified: string;
 }

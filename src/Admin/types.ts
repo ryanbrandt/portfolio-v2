@@ -9,6 +9,10 @@ export interface ResumeItemForm {
   tags: Array<string>;
 }
 
+export interface ResumeItemPayload extends Omit<ResumeItemForm, "tags"> {
+  tags: string;
+}
+
 export interface WorkItemForm {
   id?: number;
   name: string;
@@ -17,4 +21,8 @@ export interface WorkItemForm {
   tags: Array<string>;
   source: string;
   deploy: string;
+}
+
+export interface WorkItemPayload extends Omit<WorkItemForm, "tags"> {
+  tags: string;
 }

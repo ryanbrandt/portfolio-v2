@@ -1,3 +1,5 @@
+import { ResumeItem } from "../utils/types";
+
 export const RESUME_TOOLS = [
   "TypeScript/JavaScript",
   "C#",
@@ -29,3 +31,14 @@ export const RESUME_TOOLS = [
 
 export const RESUME_DOWNLOAD_LINK =
   "http://ryanbrandt-resume.s3.amazonaws.com/Resume2020.pdf";
+
+export const PLACEHOLDER_RESUME_ITEM: ResumeItem = {
+  id: -1,
+  name: "N/A",
+  datestring: "N/A",
+  description: "N/A",
+  achievments: "N/A",
+  tags: [],
+  created: "N/A",
+  modified: "N/A",
+};

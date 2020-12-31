@@ -6,12 +6,23 @@ interface Props {
   tags: Array<string>;
   availableTags: Array<string>;
   onUpdateTags: (newTags: Array<string>) => void;
+  limit?: number;
 }
 
 const TagSection: React.FunctionComponent<Props> = (props: Props) => {
   const { tags, availableTags } = props;
 
-  const _handleUpdateTags = (i: number, newTag: string) => {
+  const _getUnselectedTags = (selectedTag?: string): Array<string> => {
+    let filteredTags = availableTags.filter((tag) => !tags.includes(tag));
+
+    if (selectedTag) {
+      filteredTags = [...filteredTags, selectedTag];
+    }
+
+    return filteredTags;
+  };
+
+  const _handleUpdateTags = (i: number, newTag: string): void => {
     const { onUpdateTags } = props;
 
     const newTags = [...tags];
@@ -19,7 +30,7 @@ const TagSection: React.FunctionComponent<Props> = (props: Props) => {
     onUpdateTags(newTags);
   };
 
-  const _handleRemoveTag = (i: number) => {
+  const _handleRemoveTag = (i: number): void => {
     const { onUpdateTags } = props;
 
     const newTags = [...tags];
@@ -41,7 +52,7 @@ const TagSection: React.FunctionComponent<Props> = (props: Props) => {
             <Select
               containerClasses="admin_tag-select"
               label={`Tag ${i + 1}`}
-              options={availableTags}
+              options={_getUnselectedTags(tag)}
               value={tag}
               onChange={(value: string) => _handleUpdateTags(i, value)}
             />
@@ -58,7 +69,10 @@ const TagSection: React.FunctionComponent<Props> = (props: Props) => {
   };
 
   const _renderAddTags = (): React.ReactNode => {
-    const canAddTags = availableTags.find((tag) => !tags.includes(tag));
+    const { limit = 100 } = props;
+
+    const canAddTags =
+      tags.length < limit && availableTags.find((tag) => !tags.includes(tag));
 
     if (canAddTags) {
       return (

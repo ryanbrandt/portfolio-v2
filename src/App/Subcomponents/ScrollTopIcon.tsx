@@ -32,7 +32,7 @@ const ScrollTopIcon: React.FunctionComponent<Props> = (
     }
   };
 
-  const fadeModifier = visible ? "fadeable-content" : "fadeable-content-out";
+  const fadeModifier = visible ? "fadeable-content" : "";
   const className = visible ? "app_scroll-top" : "app_scroll-top-hidden";
 
   return (

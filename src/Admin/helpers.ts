@@ -1,20 +1,25 @@
 import api from "../utils/api";
+import {
+  ResumeItemForm,
+  ResumeItemPayload,
+  WorkItemForm,
+  WorkItemPayload,
+} from "./types";
 
-const parseTags = (payload: any) => {
-  let parsed = payload;
-  if (payload.tags) {
-    parsed = {
-      ...payload,
-      tags: JSON.stringify(payload.tags),
-    };
-  }
+const parseTags = (
+  payload: ResumeItemForm | WorkItemForm
+): ResumeItemPayload | WorkItemPayload => {
+  const parsed = {
+    ...payload,
+    tags: JSON.stringify(payload.tags),
+  };
 
   return parsed;
 };
 
 export const handlePromisifiedCreate = async (
   path: string,
-  payload: any,
+  payload: ResumeItemForm | WorkItemForm,
   resolve: any,
   reject: any
 ): Promise<void> => {
@@ -41,7 +46,7 @@ export const handlePromisifiedCreate = async (
 
 export const handlePromisifiedUpdate = async (
   path: string,
-  payload: any,
+  payload: ResumeItemForm | WorkItemForm,
   resolve: any,
   reject: any
 ): Promise<void> => {

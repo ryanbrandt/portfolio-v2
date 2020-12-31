@@ -1,5 +1,5 @@
 import * as t from "./actionTypes";
-import { AdminTab } from "./types";
+import { AdminTab, ResumeItemForm, WorkItemForm } from "./types";
 
 export interface adminInitRequest {
   type: t.ADMIN_INIT_REQUEST;
@@ -49,13 +49,13 @@ export function adminSetActiveItemId(id: number): adminSetActiveItemId {
 
 export interface adminUpdateResumeItemRequest {
   type: t.ADMIN_UPDATE_RESUME_ITEM_REQUEST;
-  item: any; // TODO
+  item: ResumeItemForm;
   resolve: any;
   reject: any;
 }
 
 export function adminUpdateResumeItemRequest(
-  item: any,
+  item: ResumeItemForm,
   resolve: any,
   reject: any
 ): adminUpdateResumeItemRequest {
@@ -69,13 +69,13 @@ export function adminUpdateResumeItemRequest(
 
 export interface adminCreateResumeItemRequest {
   type: t.ADMIN_CREATE_RESUME_ITEM_REQUEST;
-  item: any; // TODO
+  item: ResumeItemForm;
   resolve: any;
   reject: any;
 }
 
 export function adminCreateResumeItemRequest(
-  item: any,
+  item: ResumeItemForm,
   resolve: any,
   reject: any
 ): adminCreateResumeItemRequest {
@@ -103,13 +103,13 @@ export function adminDeleteResumeItemRequest(
 
 export interface adminUpdateWorkItemRequest {
   type: t.ADMIN_UPDATE_WORK_ITEM_REQUEST;
-  item: any; // TODO
+  item: WorkItemForm;
   resolve: any;
   reject: any;
 }
 
 export function adminUpdateWorkItemRequest(
-  item: any,
+  item: WorkItemForm,
   resolve: any,
   reject: any
 ): adminUpdateWorkItemRequest {
@@ -123,13 +123,13 @@ export function adminUpdateWorkItemRequest(
 
 export interface adminCreateWorkItemRequest {
   type: t.ADMIN_CREATE_WORK_ITEM_REQUEST;
-  item: any; // TODO
+  item: WorkItemForm;
   resolve: any;
   reject: any;
 }
 
 export function adminCreateWorkItemRequest(
-  item: any,
+  item: WorkItemForm,
   resolve: any,
   reject: any
 ): adminCreateWorkItemRequest {
