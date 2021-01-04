@@ -41,11 +41,13 @@ const AppFooter = (props: Props & StateProps & DispatchProps) => {
     );
   };
 
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="app_footer aligned_text">
       <Column>
         {_renderLinks()}
-        <div>© 2020 Ryan Brandt. All rights reserved.</div>
+        <div>© {currentYear} Ryan Brandt. All rights reserved.</div>
       </Column>
     </footer>
   );

@@ -38,7 +38,7 @@ const RootContainer: React.FunctionComponent<Props & StateProps> = (
   return (
     <AppContainer
       className="root_container"
-      header={<Header options={headerOptions} />}
+      header={<Header options={headerOptions} defaultActive="Home" />}
     >
       <Router history={history}>{routes}</Router>
       <LoadingOverlay show={contentLoading} fade />
