@@ -20,7 +20,7 @@ const ResumeForm = (props: Props): JSX.Element => {
     name: "",
     datestring: "",
     description: "",
-    achievments: "",
+    achievements: "",
     tags: [],
   };
 
@@ -29,7 +29,7 @@ const ResumeForm = (props: Props): JSX.Element => {
     initialFormState.name = activeItem.name;
     initialFormState.datestring = activeItem.datestring;
     initialFormState.description = activeItem.description;
-    initialFormState.achievments = activeItem.achievments || "";
+    initialFormState.achievements = activeItem.achievements || "";
     initialFormState.tags = activeItem.tags;
   }
 
@@ -39,19 +39,26 @@ const ResumeForm = (props: Props): JSX.Element => {
     return (
       <Fragment>
         <Input
-          label="Name"
+          label="Name*"
           value={form.name}
           onChange={(value: string) => setForm({ ...form, name: value })}
         />
         <Input
-          label="Date String"
+          label="Date String*"
           value={form.datestring}
           onChange={(value: string) => setForm({ ...form, datestring: value })}
         />
         <Text
-          label="Description"
+          label="Description*"
           value={form.description}
           onChange={(value: string) => setForm({ ...form, description: value })}
+        />
+        <Text
+          label="Achievments"
+          value={form.achievements}
+          onChange={(value: string) =>
+            setForm({ ...form, achievements: value })
+          }
         />
       </Fragment>
     );

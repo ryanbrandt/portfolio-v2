@@ -20,7 +20,7 @@ const ResumeItem: React.FunctionComponent<Props> = (
       return (
         <div className="resume_list-achivements-container">
           <div className="resume_list-item_datestring">Achievements</div>
-          {achievments}
+          <div dangerouslySetInnerHTML={{ __html: achievments }} />
         </div>
       );
     }
@@ -47,7 +47,7 @@ const ResumeItem: React.FunctionComponent<Props> = (
         <div className="resume_list-item_title">{title}</div>
       </div>
       <div className="resume_list-item_datestring">{datestring}</div>
-      <p>{description}</p>
+      <p dangerouslySetInnerHTML={{ __html: description }} />
       {_renderAchievements()}
     </div>
   );

@@ -1,7 +1,13 @@
 import React, { Fragment, useEffect, useContext } from "react";
 import { connect } from "react-redux";
 
-import { AppContext, Breadcrumbs, Column, Code } from "handsome-ui";
+import {
+  AppContext,
+  Breadcrumbs,
+  Column,
+  Code,
+  WorldWideWeb,
+} from "handsome-ui";
 
 import { history } from "../../routes";
 import { RootState } from "../../store/rootReducer";
@@ -41,12 +47,10 @@ const WorkContent = (props: Props & StateProps) => {
         )}
         {activeItem.deploy && (
           <Fragment>
-            <div
-              className="work-link"
+            <WorldWideWeb
+              className="home_icon"
               onClick={() => safeOpenWindow(activeItem.deploy)}
-            >
-              Deployed Project
-            </div>
+            />
           </Fragment>
         )}
       </div>

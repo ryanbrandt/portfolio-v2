@@ -37,7 +37,7 @@ export const PLACEHOLDER_RESUME_ITEM: ResumeItem = {
   name: "N/A",
   datestring: "N/A",
   description: "N/A",
-  achievments: "N/A",
+  achievements: "N/A",
   tags: [],
   created: "N/A",
   modified: "N/A",

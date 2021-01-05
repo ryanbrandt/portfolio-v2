@@ -48,7 +48,7 @@ const Resumé: React.FunctionComponent<Props & StateProps & DispatchProps> = (
         datestring={experienceItem.datestring}
         type="expereince"
         description={experienceItem.description}
-        achievments={experienceItem.achievments}
+        achievments={experienceItem.achievements}
       />
     ));
   };
@@ -63,7 +63,7 @@ const Resumé: React.FunctionComponent<Props & StateProps & DispatchProps> = (
         datestring={educationItem.datestring}
         type="education"
         description={educationItem.description}
-        achievments={educationItem.achievments}
+        achievments={educationItem.achievements}
       />
     ));
   };

@@ -3,7 +3,7 @@ export interface ResumeItem {
   name: string;
   datestring: string;
   description: string;
-  achievments: string | null;
+  achievements: string | null;
   tags: Array<string>;
   created: string;
   modified: string;

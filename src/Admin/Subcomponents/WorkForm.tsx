@@ -41,12 +41,12 @@ const WorkForm = (props: Props): JSX.Element => {
     return (
       <Fragment>
         <Input
-          label="Name"
+          label="Name*"
           value={form.name}
           onChange={(value: string) => setForm({ ...form, name: value })}
         />
         <Input
-          label="Date String"
+          label="Date String*"
           value={form.datestring}
           onChange={(value: string) => setForm({ ...form, datestring: value })}
         />
@@ -61,7 +61,7 @@ const WorkForm = (props: Props): JSX.Element => {
           onChange={(value: string) => setForm({ ...form, deploy: value })}
         />
         <Text
-          label="Description"
+          label="Description*"
           value={form.description}
           onChange={(value: string) => setForm({ ...form, description: value })}
         />
