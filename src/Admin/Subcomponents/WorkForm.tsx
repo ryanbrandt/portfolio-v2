@@ -6,6 +6,7 @@ import { WorkItemForm } from "../types";
 import { WorkItem } from "../../utils/types";
 import { WORK_TAGS } from "../constants";
 
+import FileInput from "./FileInput";
 import TagSection from "./TagSection";
 
 interface Props {
@@ -64,6 +65,9 @@ const WorkForm = (props: Props): JSX.Element => {
           label="Description*"
           value={form.description}
           onChange={(value: string) => setForm({ ...form, description: value })}
+        />
+        <FileInput
+          onChange={(files) => setForm({ ...form, image: files[0] })}
         />
       </Fragment>
     );

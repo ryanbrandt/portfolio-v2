@@ -10,6 +10,7 @@ import {
 } from "./helpers";
 import * as t from "./actionTypes";
 import * as a from "./actions";
+import { toBase64 } from "../utils/helpers";
 
 export function* handleAdminInitRequest() {
   yield put(workListRequest());
@@ -96,10 +97,19 @@ export function* handleAdminUpdateWorkItemRequest(
 ) {
   const { item, resolve, reject } = action;
 
+  const parsedPayload: any = {
+    ...item,
+  };
+
+  if (item.image) {
+    const parsedImage = yield call(toBase64, item.image);
+    parsedPayload.image = parsedImage;
+  }
+
   yield call(
     handlePromisifiedUpdate,
     `/work/${item.id}`,
-    item,
+    parsedPayload,
     resolve,
     reject
   );

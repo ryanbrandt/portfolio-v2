@@ -21,6 +21,7 @@ export interface WorkItemForm {
   tags: Array<string>;
   source: string;
   deploy: string;
+  image?: File;
 }
 
 export interface WorkItemPayload extends Omit<WorkItemForm, "tags"> {

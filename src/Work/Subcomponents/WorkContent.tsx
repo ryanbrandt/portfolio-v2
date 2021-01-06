@@ -87,7 +87,9 @@ const WorkContent = (props: Props & StateProps) => {
         <div className="flex_center_col">
           <img
             className={isMobile ? "work-img-mobile" : "work-img"}
-            src="../project-placeholder.jpg"
+            src={
+              activeItem.image ? activeItem.image : "../project-placeholder.jpg"
+            }
             alt="project-placeholder.jpg"
           />
         </div>

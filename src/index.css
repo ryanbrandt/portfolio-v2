@@ -420,3 +420,40 @@ icon:hover {
   padding-bottom: 25px;
   cursor: pointer;
 }
+
+/**************************
+* FILE INPUT TO BE MOVED
+**************************/
+.file_input-container {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.file_input-label {
+  padding: 5px;
+}
+
+.file_input-wrapper {
+  height: 40px;
+  width: fit-content;
+  padding: 5px 25px 5px 25px;
+  box-sizing: border-box;
+  border: 2px solid #012639;
+  border-radius: 11px;
+  cursor: pointer;
+}
+
+.file_input-wrapper:hover {
+  border: 2px solid #012639;
+  background-color: #012639;
+  color: white;
+  transition: 0.5s;
+}
+
+.file_input-hidden {
+  display: none;
+}

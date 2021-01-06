@@ -8,15 +8,20 @@ interface Props {
   onClick: () => void;
 }
 
-const ContentCard = (props: Props) => {
+const ContentCard = (props: Props): JSX.Element => {
   const { imgSrc, title, onClick } = props;
 
   const _renderCard = (isMobile: boolean) => {
     const cssModifier = isMobile ? "-mobile" : "";
-    const fadeClassName = isMobile ? "fadeable-content": "fadeable-half-content";
+    const fadeClassName = isMobile
+      ? "fadeable-content"
+      : "fadeable-half-content";
 
     return (
-      <div className={`${fadeClassName} content_card-container${cssModifier}`} onClick={onClick}>
+      <div
+        className={`${fadeClassName} content_card-container${cssModifier}`}
+        onClick={onClick}
+      >
         <h3 className="content_card-title">{title}</h3>
         <div>
           <img
