@@ -1,12 +1,11 @@
 import React, { Fragment, useState } from "react";
 
-import { Button, Input, Text } from "handsome-ui";
+import { Button, Input, Text, FileInput } from "handsome-ui";
 
 import { WorkItemForm } from "../types";
 import { WorkItem } from "../../utils/types";
 import { WORK_TAGS } from "../constants";
 
-import FileInput from "./FileInput";
 import TagSection from "./TagSection";
 
 interface Props {

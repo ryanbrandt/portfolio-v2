@@ -27,3 +27,9 @@ export interface WorkItemForm {
 export interface WorkItemPayload extends Omit<WorkItemForm, "tags"> {
   tags: string;
 }
+
+export interface UploadPayload {
+  bucket: string;
+  filename: string;
+  fileType: string;
+}

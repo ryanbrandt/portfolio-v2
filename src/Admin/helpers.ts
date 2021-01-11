@@ -2,9 +2,11 @@ import api from "../utils/api";
 import {
   ResumeItemForm,
   ResumeItemPayload,
+  UploadPayload,
   WorkItemForm,
   WorkItemPayload,
 } from "./types";
+import { BACKEND_UPLOAD_BUCKET } from "../utils/secrets";
 
 const parseTags = (
   payload: ResumeItemForm | WorkItemForm
@@ -15,6 +17,29 @@ const parseTags = (
   };
 
   return parsed;
+};
+
+const getUploadUrl = async (file: File): Promise<string> => {
+  const { name, type } = file;
+
+  const payload: UploadPayload = {
+    bucket: "resume-work-images",
+    filename: name,
+    fileType: type,
+  };
+
+  const { ok, data, status } = await api.post<{ url: string }>(
+    "/upload",
+    payload
+  );
+
+  if (ok && data) {
+    const { url } = data;
+
+    return url;
+  }
+
+  throw new Error(`Failed to get presigned URL with ${status}`);
 };
 
 export const handlePromisifiedCreate = async (
@@ -89,4 +114,25 @@ export const handleDelete = async (
   }
 
   return success;
+};
+
+export const handleUploadFile = async (file: File): Promise<string> => {
+  const uploadUrl = await getUploadUrl(file);
+
+  const { Authorization } = api.headers;
+  api.deleteHeader("Authorization");
+
+  const { ok, status } = await api.put(uploadUrl, file, {
+    headers: {
+      "Content-Type": file.type,
+    },
+  });
+
+  api.setHeader("Authorization", Authorization);
+
+  if (ok) {
+    return `https://${BACKEND_UPLOAD_BUCKET}.s3.amazonaws.com/${file.name}`;
+  }
+
+  throw new Error(`Failed to upload to signed url with ${status}`);
 };
