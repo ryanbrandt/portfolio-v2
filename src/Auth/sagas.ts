@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import Amplify, { Auth } from "aws-amplify";
 

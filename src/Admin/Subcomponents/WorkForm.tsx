@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
 
-import { Button, Input, Text, FileInput } from "handsome-ui";
+import { Button, Input, Text, FileInput, Row } from "handsome-ui";
 
 import { WorkItemForm } from "../types";
 import { WorkItem } from "../../utils/types";
@@ -33,9 +33,28 @@ const WorkForm = (props: Props): JSX.Element => {
     initialFormState.tags = activeItem.tags;
     initialFormState.source = activeItem.source || "";
     initialFormState.deploy = activeItem.deploy || "";
+    initialFormState.originalPrimaryImage =
+      activeItem.primaryImage || undefined;
+    initialFormState.originalSecondaryImage =
+      activeItem.secondaryImage || undefined;
   }
 
   const [form, setForm] = useState<WorkItemForm>(initialFormState);
+
+  const _renderFileInputs = (): React.ReactNode => {
+    return (
+      <Row>
+        <FileInput
+          label="Primary Image"
+          onChange={(files) => setForm({ ...form, primaryImage: files[0] })}
+        />
+        <FileInput
+          label="Secondary Image"
+          onChange={(files) => setForm({ ...form, secondaryImage: files[0] })}
+        />
+      </Row>
+    );
+  };
 
   const _renderInputs = (): React.ReactNode => {
     return (
@@ -64,9 +83,6 @@ const WorkForm = (props: Props): JSX.Element => {
           label="Description*"
           value={form.description}
           onChange={(value: string) => setForm({ ...form, description: value })}
-        />
-        <FileInput
-          onChange={(files) => setForm({ ...form, image: files[0] })}
         />
       </Fragment>
     );
@@ -101,6 +117,7 @@ const WorkForm = (props: Props): JSX.Element => {
           {activeItem ? "Update Work Item" : "Create Work Item"}
         </h1>
         {_renderInputs()}
+        {_renderFileInputs()}
         {_renderTagSection()}
         {_renderSubmit()}
       </div>

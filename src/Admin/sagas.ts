@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import { blogListRequest } from "../Blog/actions";
 import { resumeListRequest } from "../Resumé/actions";
@@ -84,12 +85,19 @@ export function* handleAdminCreateWorkItemRequest(
 
   const parsedPayload: any = {
     ...item,
+    primaryImage: item.originalPrimaryImage,
+    secondaryImage: item.originalSecondaryImage,
   };
 
   try {
-    if (item.image) {
-      const imageUrl = yield call(handleUploadFile, item.image);
-      parsedPayload.image = imageUrl;
+    if (item.primaryImage) {
+      const imageUrl = yield call(handleUploadFile, item.primaryImage);
+      parsedPayload.primaryImage = imageUrl;
+    }
+
+    if (item.secondaryImage) {
+      const imageUrl = yield call(handleUploadFile, item.secondaryImage);
+      parsedPayload.secondaryImage = imageUrl;
     }
   } catch (e) {
     reject("Failed to upload image. Try again?");
@@ -113,15 +121,22 @@ export function* handleAdminUpdateWorkItemRequest(
 
   const parsedPayload: any = {
     ...item,
+    primaryImage: item.originalPrimaryImage,
+    secondaryImage: item.originalSecondaryImage,
   };
 
   try {
-    if (item.image) {
-      const imageUrl = yield call(handleUploadFile, item.image);
-      parsedPayload.image = imageUrl;
+    if (item.primaryImage) {
+      const imageUrl = yield call(handleUploadFile, item.primaryImage);
+      parsedPayload.primaryImage = imageUrl;
+    }
+
+    if (item.secondaryImage) {
+      const imageUrl = yield call(handleUploadFile, item.secondaryImage);
+      parsedPayload.secondaryImage = imageUrl;
     }
   } catch (e) {
-    reject("Failed to upload image. Try again?");
+    reject("Failed to upload images. Try again?");
     return;
   }
 

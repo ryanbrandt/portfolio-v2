@@ -1,4 +1,5 @@
-import { takeLatest, all, put, call } from "redux-saga/effects";
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+import { takeLatest, all, put, call, delay } from "redux-saga/effects";
 
 import api from "../utils/api";
 import { setContentLoading } from "../App/actions";
@@ -16,6 +17,7 @@ export function* handleWorkListRequest() {
   } catch (e) {
     console.log(e);
   } finally {
+    yield delay(1000);
     yield put(setContentLoading(false));
   }
 }

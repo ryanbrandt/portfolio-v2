@@ -18,7 +18,8 @@ export interface WorkItem {
   source: string | null;
   deploy: string | null;
   icons: Array<string> | null;
-  image: string | null;
+  primaryImage: string | null;
+  secondaryImage: string | null;
   created: string;
   modified: string;
 }

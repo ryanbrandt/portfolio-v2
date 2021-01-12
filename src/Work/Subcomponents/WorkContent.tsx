@@ -88,9 +88,11 @@ const WorkContent = (props: Props & StateProps) => {
           <img
             className={isMobile ? "work-img-mobile" : "work-img"}
             src={
-              activeItem.image ? activeItem.image : "../project-placeholder.jpg"
+              activeItem.primaryImage
+                ? activeItem.primaryImage
+                : "../project-placeholder.jpg"
             }
-            alt="project-placeholder.jpg"
+            alt="../project-placeholder.jpg"
           />
         </div>
         <Column className="work_content-datestring aligned_text">

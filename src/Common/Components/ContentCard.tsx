@@ -27,7 +27,7 @@ const ContentCard = (props: Props): JSX.Element => {
           <img
             className="content_card-img"
             src={imgSrc}
-            alt="project-placeholder.jpg"
+            alt="../project-placeholder.jpg"
           />
         </div>
       </div>

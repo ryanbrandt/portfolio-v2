@@ -9,7 +9,8 @@ export const PLACEHOLDER_WORK_ITEM: WorkItem = {
   deploy: null,
   source: null,
   icons: null,
-  image: null,
+  primaryImage: null,
+  secondaryImage: null,
   created: "N/A",
   modified: "N/A",
 };

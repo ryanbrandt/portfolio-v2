@@ -110,7 +110,11 @@ const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
         {row.map((item) => (
           <ContentCard
             key={item.name}
-            imgSrc={item.image ? item.image : "project-placeholder.jpg"}
+            imgSrc={
+              item.secondaryImage
+                ? item.secondaryImage
+                : "project-placeholder.jpg"
+            }
             onClick={() => _handleCardSelection(item)}
             title={item.name}
           />

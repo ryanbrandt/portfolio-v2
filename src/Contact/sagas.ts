@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { all, takeLatest, call } from "redux-saga/effects";
 
 import * as t from "./actionTypes";
