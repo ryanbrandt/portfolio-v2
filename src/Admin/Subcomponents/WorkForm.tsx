@@ -2,11 +2,13 @@ import React, { Fragment, useState } from "react";
 
 import { Button, Input, Text, FileInput, Row } from "handsome-ui";
 
-import { WorkItemForm } from "../types";
+import { WorkItemForm, WorkItemFormErrors } from "../types";
 import { WorkItem } from "../../utils/types";
 import { WORK_TAGS } from "../constants";
 
 import TagSection from "./TagSection";
+import { validateWorkForm } from "../validators";
+import { objectIsEmpty } from "../../utils/helpers";
 
 interface Props {
   activeItem?: WorkItem;
@@ -40,15 +42,29 @@ const WorkForm = (props: Props): JSX.Element => {
   }
 
   const [form, setForm] = useState<WorkItemForm>(initialFormState);
+  const [errors, setErrors] = useState<WorkItemFormErrors>({});
+
+  const handleSubmit = (): void => {
+    const { onSubmit } = props;
+
+    const newErrors = validateWorkForm(form);
+    setErrors(newErrors);
+
+    if (objectIsEmpty(newErrors)) {
+      onSubmit(form);
+    }
+  };
 
   const _renderFileInputs = (): React.ReactNode => {
     return (
       <Row>
         <FileInput
+          error={errors.primaryImage}
           label="Primary Image"
           onChange={(files) => setForm({ ...form, primaryImage: files[0] })}
         />
         <FileInput
+          error={errors.secondaryImage}
           label="Secondary Image"
           onChange={(files) => setForm({ ...form, secondaryImage: files[0] })}
         />
@@ -62,26 +78,31 @@ const WorkForm = (props: Props): JSX.Element => {
         <Input
           label="Name*"
           value={form.name}
+          error={errors.name}
           onChange={(value: string) => setForm({ ...form, name: value })}
         />
         <Input
           label="Date String*"
           value={form.datestring}
+          error={errors.datestring}
           onChange={(value: string) => setForm({ ...form, datestring: value })}
         />
         <Input
           label="Source URL"
           value={form.source}
+          error={errors.source}
           onChange={(value: string) => setForm({ ...form, source: value })}
         />
         <Input
           label="Deploy URL"
           value={form.deploy}
+          error={errors.deploy}
           onChange={(value: string) => setForm({ ...form, deploy: value })}
         />
         <Text
           label="Description*"
           value={form.description}
+          error={errors.description}
           onChange={(value: string) => setForm({ ...form, description: value })}
         />
       </Fragment>
@@ -101,11 +122,9 @@ const WorkForm = (props: Props): JSX.Element => {
   };
 
   const _renderSubmit = (): React.ReactNode => {
-    const { onSubmit } = props;
-
     return (
       <div className="flex_center_col admin_button_container">
-        <Button title="Submit" onClick={() => onSubmit(form)} inverting />
+        <Button title="Submit" onClick={handleSubmit} inverting />
       </div>
     );
   };

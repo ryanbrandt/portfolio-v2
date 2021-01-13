@@ -18,7 +18,7 @@ const ScrollTopIcon: React.FunctionComponent<Props> = (
   }, []);
 
   const _handleScroll = (): void => {
-    if (window.pageYOffset > 200) {
+    if (window.pageYOffset > 400) {
       setVisible(true);
     } else {
       setVisible(false);

@@ -27,3 +27,12 @@ export function toBase64(file: File): Promise<ArrayBuffer | string | null> {
     reader.onerror = (error) => reject(error);
   });
 }
+
+/**
+ * Utility to verify an object is empty/has no defined keys
+ *
+ * @param o The object of interest
+ */
+export function objectIsEmpty(o: object): boolean {
+  return Object.keys(o).length === 0;
+}
