@@ -11,12 +11,6 @@ const ScrollTopIcon: React.FunctionComponent<Props> = (
 ): JSX.Element | null => {
   const [visible, setVisible] = useState(false);
 
-  React.useEffect(() => {
-    window.addEventListener("scroll", _handleScroll);
-
-    return () => window.removeEventListener("scroll", _handleScroll);
-  }, []);
-
   const _handleScroll = (): void => {
     if (window.pageYOffset > 400) {
       setVisible(true);
@@ -25,9 +19,15 @@ const ScrollTopIcon: React.FunctionComponent<Props> = (
     }
   };
 
+  React.useEffect(() => {
+    window.addEventListener("scroll", _handleScroll);
+
+    return () => window.removeEventListener("scroll", _handleScroll);
+  }, []);
+
   const _handleClick = () => {
     const { appRef } = props;
-    if (appRef && appRef.current) {
+    if (visible && appRef && appRef.current) {
       appRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };

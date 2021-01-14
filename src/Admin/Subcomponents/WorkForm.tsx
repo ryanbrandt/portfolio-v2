@@ -5,43 +5,24 @@ import { Button, Input, Text, FileInput, Row } from "handsome-ui";
 import { WorkItemForm, WorkItemFormErrors } from "../types";
 import { WorkItem } from "../../utils/types";
 import { WORK_TAGS } from "../constants";
-
-import TagSection from "./TagSection";
 import { validateWorkForm } from "../validators";
+import { getWorkFormInitialState } from "../initializers";
 import { objectIsEmpty } from "../../utils/helpers";
 
+import TagSection from "./TagSection";
+
 interface Props {
-  activeItem?: WorkItem;
   onSubmit: (item: WorkItemForm) => void;
+  activeItem?: WorkItem;
+  processing?: boolean;
 }
 
 const WorkForm = (props: Props): JSX.Element => {
   const { activeItem } = props;
 
-  const initialFormState: WorkItemForm = {
-    name: "",
-    datestring: "",
-    description: "",
-    tags: [],
-    source: "",
-    deploy: "",
-  };
-
-  if (activeItem) {
-    initialFormState.id = activeItem.id;
-    initialFormState.name = activeItem.name;
-    initialFormState.datestring = activeItem.datestring;
-    initialFormState.description = activeItem.description;
-    initialFormState.tags = activeItem.tags;
-    initialFormState.source = activeItem.source || "";
-    initialFormState.deploy = activeItem.deploy || "";
-    initialFormState.originalPrimaryImage =
-      activeItem.primaryImage || undefined;
-    initialFormState.originalSecondaryImage =
-      activeItem.secondaryImage || undefined;
-  }
-
-  const [form, setForm] = useState<WorkItemForm>(initialFormState);
+  const [form, setForm] = useState<WorkItemForm>(
+    getWorkFormInitialState(activeItem)
+  );
   const [errors, setErrors] = useState<WorkItemFormErrors>({});
 
   const handleSubmit = (): void => {
@@ -113,6 +94,8 @@ const WorkForm = (props: Props): JSX.Element => {
     return (
       <TagSection
         tags={form.tags}
+        error={errors.tags}
+        minimum={1}
         availableTags={WORK_TAGS}
         onUpdateTags={(newTags: Array<string>) =>
           setForm({ ...form, tags: newTags })
@@ -122,9 +105,16 @@ const WorkForm = (props: Props): JSX.Element => {
   };
 
   const _renderSubmit = (): React.ReactNode => {
+    const { processing } = props;
+
     return (
       <div className="flex_center_col admin_button_container">
-        <Button title="Submit" onClick={handleSubmit} inverting />
+        <Button
+          title="Submit"
+          onClick={handleSubmit}
+          disabled={processing}
+          inverting
+        />
       </div>
     );
   };

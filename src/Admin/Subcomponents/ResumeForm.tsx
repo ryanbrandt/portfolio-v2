@@ -5,37 +5,24 @@ import { Button, Input, Text } from "handsome-ui";
 import { RESUME_TAGS } from "../constants";
 import { ResumeItem } from "../../utils/types";
 import { ResumeItemForm, ResumeItemFormErrors } from "../types";
-
-import TagSection from "./TagSection";
+import { getResumeFormInitialState } from "../initializers";
 import { validateResumeForm } from "../validators";
 import { objectIsEmpty } from "../../utils/helpers";
 
+import TagSection from "./TagSection";
+
 interface Props {
-  activeItem?: ResumeItem;
   onSubmit: (item: ResumeItemForm) => void;
+  activeItem?: ResumeItem;
+  processing?: boolean;
 }
 
 const ResumeForm = (props: Props): JSX.Element => {
   const { activeItem } = props;
 
-  const initialFormState: ResumeItemForm = {
-    name: "",
-    datestring: "",
-    description: "",
-    achievements: "",
-    tags: [],
-  };
-
-  if (activeItem) {
-    initialFormState.id = activeItem.id;
-    initialFormState.name = activeItem.name;
-    initialFormState.datestring = activeItem.datestring;
-    initialFormState.description = activeItem.description;
-    initialFormState.achievements = activeItem.achievements || "";
-    initialFormState.tags = activeItem.tags;
-  }
-
-  const [form, setForm] = useState<ResumeItemForm>(initialFormState);
+  const [form, setForm] = useState<ResumeItemForm>(
+    getResumeFormInitialState(activeItem)
+  );
   const [errors, setErrors] = useState<ResumeItemFormErrors>({});
 
   const handleSubmit = (): void => {
@@ -86,6 +73,8 @@ const ResumeForm = (props: Props): JSX.Element => {
     return (
       <TagSection
         tags={form.tags}
+        error={errors.tags}
+        minimum={1}
         limit={1}
         availableTags={RESUME_TAGS}
         onUpdateTags={(newTags: Array<string>) =>
@@ -96,9 +85,16 @@ const ResumeForm = (props: Props): JSX.Element => {
   };
 
   const _renderSubmit = (): React.ReactNode => {
+    const { processing } = props;
+
     return (
       <div className="flex_center_col admin_button_container">
-        <Button title="Submit" onClick={handleSubmit} inverting />
+        <Button
+          title="Submit"
+          onClick={handleSubmit}
+          disabled={processing}
+          inverting
+        />
       </div>
     );
   };

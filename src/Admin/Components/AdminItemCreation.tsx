@@ -29,10 +29,12 @@ interface StateProps {
 const AdminItemCreation = (props: Props & DispatchProps & StateProps) => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [processing, setProcessing] = useState<boolean>(false);
 
   const onCreateWorkItem = async (item: WorkItemForm): Promise<void> => {
     setErrorMessage(null);
     setSuccessMessage(null);
+    setProcessing(true);
 
     await new Promise<string>((resolve, reject) => {
       const { createWorkItem } = props;
@@ -41,11 +43,14 @@ const AdminItemCreation = (props: Props & DispatchProps & StateProps) => {
     })
       .then((successString: string) => setSuccessMessage(successString))
       .catch((error: string) => setErrorMessage(error));
+
+    setProcessing(false);
   };
 
   const onCreateResumeItem = async (item: ResumeItemForm): Promise<void> => {
     setErrorMessage(null);
     setSuccessMessage(null);
+    setProcessing(true);
 
     await new Promise<string>((resolve, reject) => {
       const { createResumeItem } = props;
@@ -54,15 +59,19 @@ const AdminItemCreation = (props: Props & DispatchProps & StateProps) => {
     })
       .then((successString: string) => setSuccessMessage(successString))
       .catch((error: string) => setErrorMessage(error));
+
+    setProcessing(false);
   };
 
   const _renderCrumbs = (): React.ReactNode => {
+    const { activeTab } = props;
+
     const crumbs = [
       {
         title: "Admin Dashboard",
         action: () => history.push("/admin"),
       },
-      { title: "Create", action: () => null, disabled: true },
+      { title: `Create ${activeTab} item`, action: () => null, disabled: true },
     ];
 
     return <Breadcrumbs crumbs={crumbs} />;
@@ -70,9 +79,11 @@ const AdminItemCreation = (props: Props & DispatchProps & StateProps) => {
 
   const _renderForm = (): React.ReactNode => {
     const { activeTab } = props;
-    let form = <ResumeForm onSubmit={onCreateResumeItem} />;
+    let form = (
+      <ResumeForm onSubmit={onCreateResumeItem} processing={processing} />
+    );
     if (activeTab === "work") {
-      form = <WorkForm onSubmit={onCreateWorkItem} />;
+      form = <WorkForm onSubmit={onCreateWorkItem} processing={processing} />;
     }
 
     return form;

@@ -35,12 +35,14 @@ interface StateProps {
 }
 
 const AdminItemManagement = (props: Props & DispatchProps & StateProps) => {
+  const [processing, setProcessing] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const onUpdateWorkItem = async (item: WorkItemForm): Promise<void> => {
     setErrorMessage(null);
     setSuccessMessage(null);
+    setProcessing(true);
 
     await new Promise<string>((resolve, reject) => {
       const { updateWorkItem } = props;
@@ -49,11 +51,14 @@ const AdminItemManagement = (props: Props & DispatchProps & StateProps) => {
     })
       .then((successString: string) => setSuccessMessage(successString))
       .catch((error: string) => setErrorMessage(error));
+
+    setProcessing(false);
   };
 
   const onUpdateResumeItem = async (item: ResumeItemForm): Promise<void> => {
     setErrorMessage(null);
     setSuccessMessage(null);
+    setProcessing(true);
 
     await new Promise<string>((resolve, reject) => {
       const { updateResumeItem } = props;
@@ -62,15 +67,28 @@ const AdminItemManagement = (props: Props & DispatchProps & StateProps) => {
     })
       .then((successString: string) => setSuccessMessage(successString))
       .catch((error: string) => setErrorMessage(error));
+
+    setProcessing(false);
   };
 
   const _renderCrumbs = () => {
+    const { activeTab } = props;
+
+    let item = "";
+    if (activeTab === "resume") {
+      const { activeResumeItem } = props;
+      item = activeResumeItem.name;
+    } else if (activeTab === "work") {
+      const { activeWorkItem } = props;
+      item = activeWorkItem.name;
+    }
+
     const crumbs = [
       {
         title: "Admin Dashboard",
         action: () => history.push("/admin"),
       },
-      { title: "Manage", action: () => null, disabled: true },
+      { title: `Manage ${item}`, action: () => null, disabled: true },
     ];
 
     return <Breadcrumbs crumbs={crumbs} />;
@@ -80,11 +98,19 @@ const AdminItemManagement = (props: Props & DispatchProps & StateProps) => {
     const { activeTab, activeResumeItem, activeWorkItem } = props;
 
     let form = (
-      <ResumeForm onSubmit={onUpdateResumeItem} activeItem={activeResumeItem} />
+      <ResumeForm
+        onSubmit={onUpdateResumeItem}
+        activeItem={activeResumeItem}
+        processing={processing}
+      />
     );
     if (activeTab === "work") {
       form = (
-        <WorkForm onSubmit={onUpdateWorkItem} activeItem={activeWorkItem} />
+        <WorkForm
+          onSubmit={onUpdateWorkItem}
+          activeItem={activeWorkItem}
+          processing={processing}
+        />
       );
     }
 

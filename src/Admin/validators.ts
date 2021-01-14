@@ -1,5 +1,6 @@
 import {
   INVALID_FILE_TYPE_ERROR,
+  INVALID_TAG_ERROR,
   REQUIRED_ERROR,
   VALID_IMAGE_TYPES,
 } from "./constants";
@@ -11,7 +12,14 @@ import {
 } from "./types";
 
 export const validateWorkForm = (form: WorkItemForm): WorkItemFormErrors => {
-  const { name, datestring, description, primaryImage, secondaryImage } = form;
+  const {
+    name,
+    datestring,
+    description,
+    tags,
+    primaryImage,
+    secondaryImage,
+  } = form;
   const errors: WorkItemFormErrors = {};
 
   if (!name || name.trim().length < 1) {
@@ -34,13 +42,17 @@ export const validateWorkForm = (form: WorkItemForm): WorkItemFormErrors => {
     errors.secondaryImage = INVALID_FILE_TYPE_ERROR;
   }
 
+  if (tags.includes("")) {
+    errors.tags = INVALID_TAG_ERROR;
+  }
+
   return errors;
 };
 
 export const validateResumeForm = (
   form: ResumeItemForm
 ): ResumeItemFormErrors => {
-  const { name, datestring, description } = form;
+  const { name, datestring, description, tags } = form;
 
   const errors: ResumeItemFormErrors = {};
 
@@ -54,6 +66,10 @@ export const validateResumeForm = (
 
   if (!description || description.trim().length < 1) {
     errors.description = REQUIRED_ERROR;
+  }
+
+  if (tags.includes("")) {
+    errors.tags = INVALID_TAG_ERROR;
   }
 
   return errors;

@@ -1,12 +1,14 @@
 import React from "react";
 
-import { Row, Select } from "handsome-ui";
+import { Select, Plus, Trash } from "handsome-ui";
 
 interface Props {
   tags: Array<string>;
   availableTags: Array<string>;
   onUpdateTags: (newTags: Array<string>) => void;
   limit?: number;
+  minimum?: number;
+  error?: string;
 }
 
 const TagSection: React.FunctionComponent<Props> = (props: Props) => {
@@ -44,42 +46,70 @@ const TagSection: React.FunctionComponent<Props> = (props: Props) => {
     onUpdateTags([...tags, ""]);
   };
 
+  const _renderRemoveTag = (tagIndex: number): React.ReactNode => {
+    const { minimum = 0 } = props;
+
+    const canRemoveTags = tags.length > minimum;
+
+    if (canRemoveTags) {
+      return (
+        <Trash
+          className="admin_add-remove"
+          onClick={() => _handleRemoveTag(tagIndex)}
+          width={25}
+          height={25}
+        />
+      );
+    }
+
+    return null;
+  };
+
   const _renderCurrentTags = (): React.ReactNode => {
+    const { minimum = 0 } = props;
+
     return (
       <div className="admin_active-tags">
         {tags.map((tag, i) => (
-          <Row key={`tag_${i}`}>
+          <div className="admin_tag-row" key={`tag_${i}`}>
             <Select
               containerClasses="admin_tag-select"
-              label={`Tag ${i + 1}`}
+              label={`Tag ${i + 1}${i + 1 <= minimum ? "*" : ""}`}
               options={_getUnselectedTags(tag)}
               value={tag}
               onChange={(value: string) => _handleUpdateTags(i, value)}
             />
-            <div
-              className="admin_add-remove"
-              onClick={() => _handleRemoveTag(i)}
-            >
-              Remove
-            </div>
-          </Row>
+            {_renderRemoveTag(i)}
+          </div>
         ))}
       </div>
     );
   };
 
   const _renderAddTags = (): React.ReactNode => {
-    const { limit = 100 } = props;
+    const { limit = availableTags.length } = props;
 
-    const canAddTags =
-      tags.length < limit && availableTags.find((tag) => !tags.includes(tag));
+    const canAddTags = tags.length < limit;
 
     if (canAddTags) {
       return (
-        <div className="admin_add-remove" onClick={_handleAddTag}>
-          Add Tag
-        </div>
+        <Plus
+          className="admin_add-remove"
+          onClick={_handleAddTag}
+          width={20}
+          height={20}
+        />
       );
+    }
+
+    return null;
+  };
+
+  const _renderErrorSection = (): React.ReactNode => {
+    const { error } = props;
+
+    if (error) {
+      return <div className="admin_tag-error">{error}</div>;
     }
 
     return null;
@@ -89,6 +119,7 @@ const TagSection: React.FunctionComponent<Props> = (props: Props) => {
     <div className="admin_tag-section">
       {_renderCurrentTags()}
       {_renderAddTags()}
+      {_renderErrorSection()}
     </div>
   );
 };

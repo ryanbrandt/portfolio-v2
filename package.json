@@ -6,7 +6,7 @@
   "dependencies": {
     "apisauce": "^1.1.1",
     "aws-amplify": "^3.3.10",
-    "handsome-ui": "git://github.com/ryanbrandt/handsome-ui#handsome-ui-v0.0.1-beta",
+    "handsome-ui": "git://github.com/ryanbrandt/handsome-ui#handsome-ui-v0.0.2-beta",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-google-recaptcha": "^2.1.0",

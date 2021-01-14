@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useRef } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import ReCAPTCHA from "react-google-recaptcha";
@@ -28,6 +28,8 @@ const initialState: ContactForm = {
 };
 
 const ContactForm = (props: Props & DispatchProps) => {
+  const recaptchaRef: React.MutableRefObject<ReCAPTCHA | null> = useRef(null);
+
   const [fields, setFields] = useState(initialState);
   const [processing, setProcessing] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -46,6 +48,14 @@ const ContactForm = (props: Props & DispatchProps) => {
     return captchaValidated && allFieldsComplete;
   };
 
+  const _resetRecaptcha = (): void => {
+    const { current: recaptcha } = recaptchaRef;
+    if (recaptcha) {
+      recaptcha.reset();
+      setCaptchaValidated(false);
+    }
+  };
+
   const _handleFormSubmit = async (): Promise<void> => {
     setProcessing(true);
     setSuccessMessage(null);
@@ -56,8 +66,15 @@ const ContactForm = (props: Props & DispatchProps) => {
 
       sendMessage(fields, resolve, reject);
     })
-      .then((successMessage) => setSuccessMessage(successMessage))
-      .catch((errorMessage) => setErrorMessage(errorMessage));
+      .then((successMessage) => {
+        setFields(initialState);
+        _resetRecaptcha();
+        setSuccessMessage(successMessage);
+      })
+      .catch((errorMessage: string) => {
+        _resetRecaptcha();
+        setErrorMessage(errorMessage);
+      });
 
     setProcessing(false);
   };
@@ -66,6 +83,7 @@ const ContactForm = (props: Props & DispatchProps) => {
     return (
       <div className="contact_recaptcha">
         <ReCAPTCHA
+          ref={recaptchaRef}
           sitekey={RECAPTCHA_KEY}
           onChange={(token: string | null) =>
             setCaptchaValidated(token ? true : false)
@@ -125,6 +143,7 @@ const ContactForm = (props: Props & DispatchProps) => {
         <Text
           label="How Can I Help You?"
           containerClassName="contact_input"
+          value={fields.content}
           onChange={(value: string) => setFields({ ...fields, content: value })}
         />
         {_renderRecaptcha()}

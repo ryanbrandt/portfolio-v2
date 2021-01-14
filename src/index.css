@@ -389,19 +389,24 @@ icon:hover {
 }
 
 .admin_tag-section {
-  padding: 15px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.admin_tag-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .admin_tag-select {
-  margin-top: 10px;
-  margin-right: 20px;
+  flex: 1 1;
 }
 
 .admin_add-remove {
   margin-top: 10px;
+  margin-left: 25px;
   opacity: 0.5;
-  width: fit-content;
-  height: fit-content;
   cursor: pointer;
 }
 
@@ -419,4 +424,11 @@ icon:hover {
   padding-top: 25px;
   padding-bottom: 25px;
   cursor: pointer;
+}
+
+.admin_tag-error {
+  margin-top: 10px;
+  font-size: 13px;
+  color: rgba(255, 0, 0, 0.616);
+  font-style: italic;
 }
