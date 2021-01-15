@@ -96,6 +96,15 @@ icon:hover {
   flex: 1 1;
 }
 
+.app-error-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 50px;
+  flex-wrap: wrap;
+}
+
 .app-error {
   background-color: rgba(255, 0, 0, 0.616) !important;
   margin: 10px;
