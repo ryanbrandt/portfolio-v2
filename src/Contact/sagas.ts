@@ -1,13 +1,16 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { all, takeLatest, call } from "redux-saga/effects";
+import { all, takeLatest, call, put, delay } from "redux-saga/effects";
 
 import * as t from "./actionTypes";
 import { sendMessageRequest } from "./actions";
+import { setContentLoading } from "../App/actions";
 
 import api from "../utils/api";
 
 export function* handleSendMessageRequest(action: sendMessageRequest) {
   const { payload, resolve, reject } = action;
+
+  yield put(setContentLoading(true));
 
   let success = true;
   try {
@@ -24,6 +27,9 @@ export function* handleSendMessageRequest(action: sendMessageRequest) {
     } else {
       reject("Your message couldn't be processed. Try again?");
     }
+
+    yield delay(1000);
+    yield put(setContentLoading(false));
   }
 }
 

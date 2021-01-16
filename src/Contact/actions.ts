@@ -1,6 +1,6 @@
 import * as t from "./actionTypes";
 
-import { ContactForm } from "./Subcomponents/ContactForm";
+import { ContactForm } from "./types";
 
 export interface sendMessageRequest {
   type: t.SEND_MESSAGE_REQUEST;

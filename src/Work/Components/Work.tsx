@@ -65,6 +65,7 @@ const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
     { title: "All", key: "all" },
     { title: "Web", key: "web" },
     { title: "Tools", key: "tools" },
+    { title: "Contract", key: "contract" },
     { title: "Other", key: "other" },
   ];
 

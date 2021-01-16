@@ -74,6 +74,20 @@ const WorkContent = (props: Props & StateProps) => {
     );
   };
 
+  const _renderImage = (): React.ReactNode => {
+    return (
+      <img
+        className={isMobile ? "work-img-mobile" : "work-img"}
+        src={
+          activeItem.primaryImage
+            ? activeItem.primaryImage
+            : "../project-placeholder.jpg"
+        }
+        alt="../project-placeholder.jpg"
+      />
+    );
+  };
+
   if (activeItem) {
     return (
       <div
@@ -84,22 +98,12 @@ const WorkContent = (props: Props & StateProps) => {
         }
       >
         {isMobile && _renderMobileHeader()}
-        <div className="flex_center_col">
-          <img
-            className={isMobile ? "work-img-mobile" : "work-img"}
-            src={
-              activeItem.primaryImage
-                ? activeItem.primaryImage
-                : "../project-placeholder.jpg"
-            }
-            alt="../project-placeholder.jpg"
-          />
-        </div>
+        <div className="flex_center_col">{_renderImage()}</div>
         <Column className="work_content-datestring aligned_text">
           {activeItem.datestring}
           {_renderLinks()}
         </Column>
-        <p>{activeItem.description}</p>
+        <p dangerouslySetInnerHTML={{ __html: activeItem.description }} />
       </div>
     );
   }

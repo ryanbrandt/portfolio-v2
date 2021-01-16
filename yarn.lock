@@ -7044,7 +7044,7 @@ handle-thing@^2.0.0:
 
 "handsome-ui@git://github.com/ryanbrandt/handsome-ui#master":
   version "1.0.0"
-  resolved "git://github.com/ryanbrandt/handsome-ui#f5404881e3f180decd79f4c72dc28cfa768aa6f9"
+  resolved "git://github.com/ryanbrandt/handsome-ui#d8ec649f4fb3a7c929e7493b0ac3c5c1f921eb5e"
 
 har-schema@^2.0.0:
   version "2.0.0"

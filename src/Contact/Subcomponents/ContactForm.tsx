@@ -1,43 +1,32 @@
 import React, { Fragment, useState, useRef } from "react";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
 import ReCAPTCHA from "react-google-recaptcha";
 
-import { Input, Button, Text, LoadingOverlay, Badge } from "handsome-ui";
+import { Input, Button, Text } from "handsome-ui";
 
 import { RECAPTCHA_KEY } from "../../utils/secrets";
-import { sendMessageRequest } from "../actions";
+import { ContactForm as IContactForm } from "../types";
+import { EMAIL_REGEX, EMAIL_VALIDATION_ERROR } from "../constants";
 
-interface DispatchProps {
-  sendMessage: (payload: ContactForm, resolve: any, reject: any) => void;
+interface Props {
+  onSubmit: (form: IContactForm) => void;
 }
 
-interface Props {}
-
-export interface ContactForm {
-  [key: string]: any;
-  name: string;
-  email: string;
-  content: string;
-}
-
-const initialState: ContactForm = {
+const initialState: IContactForm = {
   name: "",
   email: "",
   content: "",
 };
 
-const ContactForm = (props: Props & DispatchProps) => {
+const ContactForm = (props: Props): JSX.Element => {
   const recaptchaRef: React.MutableRefObject<ReCAPTCHA | null> = useRef(null);
 
   const [fields, setFields] = useState(initialState);
-  const [processing, setProcessing] = useState(false);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [invalidEmail, setInvalidEmail] = useState<boolean>(false);
   const [captchaValidated, setCaptchaValidated] = useState(false);
 
   const _formIsValid = (): boolean => {
     let allFieldsComplete = true;
+    // eslint-disable-next-line no-restricted-syntax
     for (const key in fields) {
       if (fields[key].length < 1) {
         allFieldsComplete = false;
@@ -45,7 +34,7 @@ const ContactForm = (props: Props & DispatchProps) => {
       }
     }
 
-    return captchaValidated && allFieldsComplete;
+    return captchaValidated && allFieldsComplete && !invalidEmail;
   };
 
   const _resetRecaptcha = (): void => {
@@ -56,27 +45,23 @@ const ContactForm = (props: Props & DispatchProps) => {
     }
   };
 
-  const _handleFormSubmit = async (): Promise<void> => {
-    setProcessing(true);
-    setSuccessMessage(null);
-    setErrorMessage(null);
+  const handleFormSubmit = (): void => {
+    if (_formIsValid()) {
+      const { onSubmit } = props;
 
-    await new Promise<string>((resolve, reject) => {
-      const { sendMessage } = props;
+      onSubmit(fields);
+      _resetRecaptcha();
+    }
+  };
 
-      sendMessage(fields, resolve, reject);
-    })
-      .then((successMessage) => {
-        setFields(initialState);
-        _resetRecaptcha();
-        setSuccessMessage(successMessage);
-      })
-      .catch((errorMessage: string) => {
-        _resetRecaptcha();
-        setErrorMessage(errorMessage);
-      });
+  const handleEmailChange = (value: string): void => {
+    let invalidEmailValue = false;
+    if (!EMAIL_REGEX.test(value)) {
+      invalidEmailValue = true;
+    }
 
-    setProcessing(false);
+    setFields({ ...fields, email: value });
+    setInvalidEmail(invalidEmailValue);
   };
 
   const _renderRecaptcha = (): React.ReactNode => {
@@ -100,25 +85,11 @@ const ContactForm = (props: Props & DispatchProps) => {
       <div className="flex_center_col contact_submit">
         <Button
           title="Send Message"
-          onClick={_handleFormSubmit}
+          onClick={disabled ? () => null : handleFormSubmit}
           disabled={disabled}
           inverting
           round
         />
-      </div>
-    );
-  };
-
-  const _renderMessageSection = (): React.ReactNode => {
-    return (
-      <div className="flex_center_col">
-        {errorMessage && (
-          <Badge
-            className="fadeable-content app-error"
-            content={errorMessage}
-          />
-        )}
-        {successMessage && <Badge content={successMessage} />}
       </div>
     );
   };
@@ -137,8 +108,9 @@ const ContactForm = (props: Props & DispatchProps) => {
           label="Email"
           placeholder="Your Email Address"
           value={fields.email}
+          error={invalidEmail ? EMAIL_VALIDATION_ERROR : undefined}
           containerClassName="contact_input"
-          onChange={(value: string) => setFields({ ...fields, email: value })}
+          onChange={handleEmailChange}
         />
         <Text
           label="How Can I Help You?"
@@ -149,20 +121,8 @@ const ContactForm = (props: Props & DispatchProps) => {
         {_renderRecaptcha()}
         {_renderSubmitButton()}
       </div>
-      {_renderMessageSection()}
-      <LoadingOverlay show={processing} />
     </Fragment>
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
-  return {
-    sendMessage: (payload: ContactForm, resolve: any, reject: any) =>
-      dispatch(sendMessageRequest(payload, resolve, reject)),
-  };
-};
-
-export default connect<void, DispatchProps, Props, any>(
-  undefined,
-  mapDispatchToProps
-)(ContactForm);
+export default ContactForm;

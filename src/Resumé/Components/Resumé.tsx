@@ -12,6 +12,7 @@ import { safeOpenWindow } from "../../utils/helpers";
 import { ResumeItem as IResumeItem } from "../../utils/types";
 
 import ResumeItem from "../Subcomponents/ResumeItem";
+import EmptyResults from "../../Common/Components/EmptyResults";
 
 interface Props {}
 
@@ -38,34 +39,42 @@ const Resumé: React.FunctionComponent<Props & StateProps & DispatchProps> = (
     safeOpenWindow(RESUME_DOWNLOAD_LINK);
   };
 
-  const _renderExperience = () => {
+  const _renderExperience = (): React.ReactNode => {
     const { experience } = props;
 
-    return experience.map((experienceItem) => (
-      <ResumeItem
-        key={experienceItem.name}
-        title={experienceItem.name}
-        datestring={experienceItem.datestring}
-        type="expereince"
-        description={experienceItem.description}
-        achievments={experienceItem.achievements}
-      />
-    ));
+    if (experience.length > 0) {
+      return experience.map((experienceItem) => (
+        <ResumeItem
+          key={experienceItem.name}
+          title={experienceItem.name}
+          datestring={experienceItem.datestring}
+          type="expereince"
+          description={experienceItem.description}
+          achievments={experienceItem.achievements}
+        />
+      ));
+    }
+
+    return <EmptyResults />;
   };
 
   const _renderEducation = (): React.ReactNode => {
     const { education } = props;
 
-    return education.map((educationItem) => (
-      <ResumeItem
-        key={educationItem.name}
-        title={educationItem.name}
-        datestring={educationItem.datestring}
-        type="education"
-        description={educationItem.description}
-        achievments={educationItem.achievements}
-      />
-    ));
+    if (education.length > 0) {
+      return education.map((educationItem) => (
+        <ResumeItem
+          key={educationItem.name}
+          title={educationItem.name}
+          datestring={educationItem.datestring}
+          type="education"
+          description={educationItem.description}
+          achievments={educationItem.achievements}
+        />
+      ));
+    }
+
+    return <EmptyResults />;
   };
 
   const _renderToolsAndTechnologies = (): React.ReactNode => {
