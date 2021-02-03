@@ -7042,9 +7042,9 @@ handle-thing@^2.0.0:
   resolved "https://registry.yarnpkg.com/handle-thing/-/handle-thing-2.0.1.tgz#857f79ce359580c340d43081cc648970d0bb234e"
   integrity sha512-9Qn4yBxelxoh2Ow62nP+Ka/kMnOXRi8BXnRaUwezLNhqelnN49xKz4F/dPP8OYLxLxq6JDtZb2i9XznUQbNPTg==
 
-"handsome-ui@git://github.com/ryanbrandt/handsome-ui#master":
+"handsome-ui@git://github.com/ryanbrandt/handsome-ui#total-coverage":
   version "1.0.0"
-  resolved "git://github.com/ryanbrandt/handsome-ui#aea3aa495aea3b415e919375bab66f2b82609133"
+  resolved "git://github.com/ryanbrandt/handsome-ui#ad5a7bba1350e6d4902124df9baf394b3e50dcfe"
 
 har-schema@^2.0.0:
   version "2.0.0"

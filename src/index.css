@@ -48,15 +48,15 @@ icon:hover {
 }
 
 .fadeable-content {
-  animation: fadeIn 1s;
+  animation: fadeIn 0.5s;
 }
 
 .fadeable-content-out {
-  animation: fadeOut 1s;
+  animation: fadeOut 0.5s;
 }
 
 .fadeable-half-content {
-  animation: fadeInHalf 1s;
+  animation: fadeInHalf 0.5s;
 }
 
 @keyframes fadeIn {
@@ -241,11 +241,12 @@ icon:hover {
   padding: 1vw;
   cursor: pointer;
   fill: #506670c5;
+  transition: 0.5s;
 }
 
 .home_icon:hover {
   fill: black;
-  transition: 0.75s;
+  transition: 0.5s;
 }
 
 .version_string {
@@ -356,9 +357,13 @@ icon:hover {
   color: #506670c5;
 }
 
+.work-img-loading {
+  margin: 50px;
+}
+
 .work-img {
-  height: 80%;
-  width: 90%;
+  height: 50%;
+  width: 70%;
   padding-bottom: 5vh;
 }
 

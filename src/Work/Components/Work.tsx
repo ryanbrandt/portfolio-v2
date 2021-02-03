@@ -69,7 +69,7 @@ const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
     { title: "Other", key: "other" },
   ];
 
-  const _handleCardSelection = (item: WorkItem): void => {
+  const handleCardSelection = (item: WorkItem): void => {
     const { setActiveItem } = props;
     setActiveItem(item.id);
 
@@ -116,7 +116,7 @@ const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
                 ? item.secondaryImage
                 : "project-placeholder.jpg"
             }
-            onClick={() => _handleCardSelection(item)}
+            onClick={() => handleCardSelection(item)}
             title={item.name}
           />
         ))}

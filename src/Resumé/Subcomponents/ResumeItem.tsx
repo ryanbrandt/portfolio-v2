@@ -35,8 +35,10 @@ const ResumeItem: React.FunctionComponent<Props> = (
     height: 20,
   };
 
+  // eslint-disable-next-line react/jsx-props-no-spreading
   let Icon = <GraduationCap {...iconProps} />;
   if (type === "expereince") {
+    // eslint-disable-next-line react/jsx-props-no-spreading
     Icon = <Suitcase {...iconProps} />;
   }
 

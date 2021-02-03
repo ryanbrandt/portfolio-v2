@@ -1,6 +1,6 @@
 # portfolio v2
 
-Portolio & personal admin dashboard rebuild
+Portolio & personal admin dashboard
 
 ### Tech
 

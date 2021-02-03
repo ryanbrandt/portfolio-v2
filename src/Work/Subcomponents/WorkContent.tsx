@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useContext } from "react";
+import React, { Fragment, useEffect, useState, useContext } from "react";
 import { connect } from "react-redux";
 
 import {
@@ -7,6 +7,7 @@ import {
   Column,
   Code,
   WorldWideWeb,
+  Spinner,
 } from "handsome-ui";
 
 import { history } from "../../routes";
@@ -22,17 +23,28 @@ interface StateProps {
 }
 
 const WorkContent = (props: Props & StateProps) => {
+  const FALLBACK_IMG = "../project-placeholder.jpg";
+
   const isMobile = useContext(AppContext);
+
+  const [imgLoaded, setImgLoaded] = useState(false);
+
   const { activeItem } = props;
 
   useEffect(() => {
     const WORK_ITEM_PATH_REGEX = /\/work\/[-0-9]+/;
+
     const { location } = window;
     const { pathname } = location;
+
     if (WORK_ITEM_PATH_REGEX.test(pathname) && (!isMobile || !activeItem.id)) {
       history.push("/work");
     }
   }, [isMobile, activeItem]);
+
+  const handleImgLoaded = (): void => {
+    setTimeout(() => setImgLoaded(true), 500);
+  };
 
   const _renderLinks = (): React.ReactNode => {
     return (
@@ -75,28 +87,38 @@ const WorkContent = (props: Props & StateProps) => {
   };
 
   const _renderImage = (): React.ReactNode => {
+    let imgStyle = {};
+    if (!imgLoaded) {
+      imgStyle = { display: "none" };
+    }
+
+    let imgClassName = "fadeable-content work-img";
+    if (isMobile) {
+      imgClassName = "work-img-mobile";
+    }
+
     return (
-      <img
-        className={isMobile ? "work-img-mobile" : "work-img"}
-        src={
-          activeItem.primaryImage
-            ? activeItem.primaryImage
-            : "../project-placeholder.jpg"
-        }
-        alt="../project-placeholder.jpg"
-      />
+      <Fragment>
+        <img
+          style={imgStyle}
+          className={imgClassName}
+          src={activeItem.primaryImage || FALLBACK_IMG}
+          onLoad={handleImgLoaded}
+          alt={FALLBACK_IMG}
+        />
+        {!imgLoaded && <Spinner className="work-img-loading" />}
+      </Fragment>
     );
   };
 
   if (activeItem) {
+    let containerClassName = "work_content-container";
+    if (isMobile) {
+      containerClassName = "work_content-container-mobile fadeable-content";
+    }
+
     return (
-      <div
-        className={
-          isMobile
-            ? "work_content-container-mobile fadeable-content"
-            : " work_content-container"
-        }
-      >
+      <div className={containerClassName}>
         {isMobile && _renderMobileHeader()}
         <div className="flex_center_col">{_renderImage()}</div>
         <Column className="work_content-datestring aligned_text">
