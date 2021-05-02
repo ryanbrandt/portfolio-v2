@@ -14,8 +14,10 @@ export const RESUME_TOOLS = [
   "Electron",
   "Express",
   "Serverless",
-  ".NET",
+  "GraphQL",
+  "ASP.NET",
   "WPF",
+  "Entity Framework",
   "ReactiveUI",
   "Flask",
   "Django",
@@ -25,7 +27,6 @@ export const RESUME_TOOLS = [
   "Xunit",
   "AWS",
   "Heroku",
-  "WiX Toolset",
   "CircleCI",
 ];
 
