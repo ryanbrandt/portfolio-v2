@@ -450,3 +450,21 @@ icon:hover {
   color: rgba(255, 0, 0, 0.616);
   font-style: italic;
 }
+
+.admin_markup-container {
+  margin: 10px;
+}
+
+.admin_markup-toggle {
+  padding: 10px;
+}
+
+.markup_preview-container {
+  padding: 15px;
+  width: 485px;
+  background-color: #ddeaf077;
+}
+
+.markup-mobile {
+  width: 72vw;
+}

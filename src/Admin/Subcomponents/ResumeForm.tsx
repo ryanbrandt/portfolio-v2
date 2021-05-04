@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
 
-import { Button, Input, Text } from "handsome-ui";
+import { Button, Input } from "handsome-ui";
 
 import { RESUME_TAGS } from "../constants";
 import { ResumeItem } from "../../utils/types";
@@ -10,6 +10,7 @@ import { validateResumeForm } from "../validators";
 import { objectIsEmpty } from "../../utils/helpers";
 
 import TagSection from "./TagSection";
+import AdminMarkupTextField from "./AdminMarkupTextField";
 
 interface Props {
   onSubmit: (item: ResumeItemForm) => void;
@@ -51,13 +52,13 @@ const ResumeForm = (props: Props): JSX.Element => {
           error={errors.datestring}
           onChange={(value: string) => setForm({ ...form, datestring: value })}
         />
-        <Text
+        <AdminMarkupTextField
           label="Description*"
           value={form.description}
           error={errors.description}
           onChange={(value: string) => setForm({ ...form, description: value })}
         />
-        <Text
+        <AdminMarkupTextField
           label="Achievments"
           value={form.achievements}
           error={errors.achievements}

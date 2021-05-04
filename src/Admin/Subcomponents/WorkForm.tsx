@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
 
-import { Button, Input, Text, FileInput, Row } from "handsome-ui";
+import { Button, Input, FileInput, Row } from "handsome-ui";
 
 import { WorkItemForm, WorkItemFormErrors } from "../types";
 import { WorkItem } from "../../utils/types";
@@ -10,6 +10,7 @@ import { getWorkFormInitialState } from "../initializers";
 import { objectIsEmpty } from "../../utils/helpers";
 
 import TagSection from "./TagSection";
+import AdminMarkupTextField from "./AdminMarkupTextField";
 
 interface Props {
   onSubmit: (item: WorkItemForm) => void;
@@ -80,7 +81,7 @@ const WorkForm = (props: Props): JSX.Element => {
           error={errors.deploy}
           onChange={(value: string) => setForm({ ...form, deploy: value })}
         />
-        <Text
+        <AdminMarkupTextField
           label="Description*"
           value={form.description}
           error={errors.description}
