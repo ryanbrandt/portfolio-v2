@@ -57,7 +57,7 @@ export function* handleAdminDeleteResumeItemRequest(
 ) {
   const { id } = action;
 
-  const success = yield call(handleDelete, "/resume", id);
+  const success: boolean = yield call(handleDelete, "/resume", id);
 
   if (success) {
     yield put(resumeListRequest());
@@ -91,12 +91,15 @@ export function* handleAdminCreateWorkItemRequest(
 
   try {
     if (item.primaryImage) {
-      const imageUrl = yield call(handleUploadFile, item.primaryImage);
+      const imageUrl: string = yield call(handleUploadFile, item.primaryImage);
       parsedPayload.primaryImage = imageUrl;
     }
 
     if (item.secondaryImage) {
-      const imageUrl = yield call(handleUploadFile, item.secondaryImage);
+      const imageUrl: string = yield call(
+        handleUploadFile,
+        item.secondaryImage
+      );
       parsedPayload.secondaryImage = imageUrl;
     }
   } catch (e) {
@@ -127,12 +130,15 @@ export function* handleAdminUpdateWorkItemRequest(
 
   try {
     if (item.primaryImage) {
-      const imageUrl = yield call(handleUploadFile, item.primaryImage);
+      const imageUrl: string = yield call(handleUploadFile, item.primaryImage);
       parsedPayload.primaryImage = imageUrl;
     }
 
     if (item.secondaryImage) {
-      const imageUrl = yield call(handleUploadFile, item.secondaryImage);
+      const imageUrl: string = yield call(
+        handleUploadFile,
+        item.secondaryImage
+      );
       parsedPayload.secondaryImage = imageUrl;
     }
   } catch (e) {
@@ -161,7 +167,7 @@ export function* handleAdminDeleteWorkItemRequest(
 ) {
   const { id } = action;
 
-  const success = yield call(handleDelete, "/work", id);
+  const success: boolean = yield call(handleDelete, "/work", id);
 
   if (success) {
     yield put(workListRequest());

@@ -107,15 +107,11 @@ const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
     }
 
     return workRows.map((row, i) => (
-      <Row style={{ justifyContent: "space-evenly" }} key={`row_${i}`}>
+      <Row version="space-evenly" key={`row_${i}`}>
         {row.map((item) => (
           <ContentCard
             key={item.name}
-            imgSrc={
-              item.secondaryImage
-                ? item.secondaryImage
-                : "project-placeholder.jpg"
-            }
+            imgSrc={item.secondaryImage ?? "project-placeholder.jpg"}
             onClick={() => handleCardSelection(item)}
             title={item.name}
           />

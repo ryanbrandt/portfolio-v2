@@ -15,7 +15,9 @@ export function* handleAdminLoginRequest(action: a.adminLoginRequest) {
     yield Amplify.configure(awsConfig);
     yield call([Auth, Auth.configure], awsConfig);
 
-    const user = yield call([Auth, Auth.signIn], email, password);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const user: any = yield call([Auth, Auth.signIn], email, password);
     yield put(a.adminLoginSuccess(user));
 
     const { signInUserSession } = user;
