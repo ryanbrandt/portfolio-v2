@@ -1,6 +1,6 @@
 import React from "react";
 
-import { AppContext } from "handsome-ui";
+import { useIsMobile } from "handsome-ui";
 
 interface Props {
   imgSrc: string;
@@ -11,33 +11,25 @@ interface Props {
 const ContentCard = (props: Props): JSX.Element => {
   const { imgSrc, title, onClick } = props;
 
-  const _renderCard = (isMobile: boolean) => {
-    const cssModifier = isMobile ? "-mobile" : "";
-    const fadeClassName = isMobile
-      ? "fadeable-content"
-      : "fadeable-half-content";
+  const isMobile = useIsMobile();
 
-    return (
-      <div
-        className={`${fadeClassName} content_card-container${cssModifier}`}
-        onClick={onClick}
-      >
-        <h3 className="content_card-title">{title}</h3>
-        <div>
-          <img
-            className="content_card-img"
-            src={imgSrc}
-            alt="../project-placeholder.jpg"
-          />
-        </div>
-      </div>
-    );
-  };
+  const cssModifier = isMobile ? "-mobile" : "";
+  const fadeClassName = isMobile ? "fadeable-content" : "fadeable-half-content";
 
   return (
-    <AppContext.Consumer>
-      {(isMobile) => _renderCard(isMobile)}
-    </AppContext.Consumer>
+    <div
+      className={`${fadeClassName} content_card-container${cssModifier}`}
+      onClick={onClick}
+    >
+      <h3 className="content_card-title">{title}</h3>
+      <div>
+        <img
+          className="content_card-img"
+          src={imgSrc}
+          alt="../project-placeholder.jpg"
+        />
+      </div>
+    </div>
   );
 };
 
