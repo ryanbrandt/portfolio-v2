@@ -20,7 +20,6 @@ import { RootState } from "../../store/rootReducer";
 import { WorkItem } from "../../utils/types";
 import { WorkTab } from "../types";
 
-import WorkContent from "../Subcomponents/WorkContent";
 import EmptyResults from "../../Common/Components/EmptyResults";
 import ContentCard from "../../Common/Components/ContentCard";
 
@@ -42,12 +41,6 @@ interface DispatchProps {
 const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
   const isMobile = useIsMobile();
   const [contentModalOpen, setContentModalOpen] = useState(false);
-
-  useEffect(() => {
-    if (!isMobile && contentModalOpen) {
-      setContentModalOpen(false);
-    }
-  }, [isMobile, contentModalOpen]);
 
   useEffect(() => {
     const { fetchWorkList, setQuery, setTab } = props;
@@ -73,25 +66,7 @@ const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
     const { setActiveItem } = props;
     setActiveItem(item.id);
 
-    if (isMobile) {
-      history.push(`/work/${item.id}`);
-    } else {
-      setContentModalOpen(true);
-    }
-  };
-
-  const _renderContentModal = (): React.ReactNode => {
-    const { activeItem } = props;
-
-    return (
-      <Modal
-        heading={<h1 className="aligned_text">{activeItem.name}</h1>}
-        open={contentModalOpen}
-        onClose={() => setContentModalOpen(false)}
-      >
-        <WorkContent />
-      </Modal>
-    );
+    history.push(`/work/${item.id}`);
   };
 
   const _renderCards = (): React.ReactNode => {
@@ -139,7 +114,6 @@ const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
           {_renderCards()}
         </div>
       </div>
-      {_renderContentModal()}
     </div>
   );
 };
