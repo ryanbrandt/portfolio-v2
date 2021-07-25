@@ -39,7 +39,7 @@ const WorkForm = (props: Props): JSX.Element => {
 
   const _renderFileInputs = (): React.ReactNode => {
     return (
-      <Row>
+      <Row version="space-between">
         <FileInput
           error={errors.primaryImage}
           label="Primary Image"

@@ -1,13 +1,13 @@
-import React, { Fragment, useEffect, useState, useContext } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { connect } from "react-redux";
 
 import {
-  AppContext,
   Breadcrumbs,
   Column,
   Code,
   WorldWideWeb,
   Spinner,
+  useIsMobile,
 } from "handsome-ui";
 
 import { history } from "../../routes";
@@ -25,7 +25,7 @@ interface StateProps {
 const WorkContent = (props: Props & StateProps) => {
   const FALLBACK_IMG = "../project-placeholder.jpg";
 
-  const isMobile = useContext(AppContext);
+  const isMobile = useIsMobile();
 
   const [imgLoaded, setImgLoaded] = useState(false);
 

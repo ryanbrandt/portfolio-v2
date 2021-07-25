@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { Divider, TabMenu, Row, AppContext, Modal } from "handsome-ui";
+import { Divider, TabMenu, Row, useIsMobile, Modal } from "handsome-ui";
 
 import { history } from "../../routes";
 import {
@@ -40,11 +40,11 @@ interface DispatchProps {
 }
 
 const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
-  const isMobile = useContext(AppContext);
+  const isMobile = useIsMobile();
   const [contentModalOpen, setContentModalOpen] = useState(false);
 
   useEffect(() => {
-    if (isMobile && contentModalOpen) {
+    if (!isMobile && contentModalOpen) {
       setContentModalOpen(false);
     }
   }, [isMobile, contentModalOpen]);
@@ -73,7 +73,7 @@ const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
     const { setActiveItem } = props;
     setActiveItem(item.id);
 
-    if (isMobile) {
+    if (!isMobile) {
       history.push(`/work/${item.id}`);
     } else {
       setContentModalOpen(true);

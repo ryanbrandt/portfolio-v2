@@ -1,8 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { Breadcrumbs, AppContext, Badge } from "handsome-ui";
+import { Breadcrumbs, useIsMobile, Badge } from "handsome-ui";
 
 import {
   adminCreateWorkItemRequest,
@@ -116,7 +116,7 @@ const AdminItemCreation = (props: Props & DispatchProps & StateProps) => {
     return null;
   };
 
-  const isMobile = useContext(AppContext);
+  const isMobile = useIsMobile();
 
   return (
     <div className={isMobile ? "admin_manage-container-mobile" : ""}>

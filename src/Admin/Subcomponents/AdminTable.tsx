@@ -1,8 +1,8 @@
-import React, { Fragment, useContext, useState } from "react";
+import React, { Fragment, useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { Table, TableRow, TableCell, AppContext, Trash } from "handsome-ui";
+import { Table, TableRow, TableCell, useIsMobile, Trash } from "handsome-ui";
 
 import { history } from "../../routes";
 import { RootState } from "../../store/rootReducer";
@@ -28,7 +28,7 @@ const AdminTable = (props: Props & DispatchProps & StateProps) => {
   const MOBILE_HEADERS = ["Name"];
   const DEFAULT_HEADERS = ["Name", "Created", "Modified"];
 
-  const isMobile = useContext(AppContext);
+  const isMobile = useIsMobile();
 
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [deleteItem, setDeleteItem] = useState<ResumeItem | WorkItem>(
