@@ -73,7 +73,7 @@ const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
     const { setActiveItem } = props;
     setActiveItem(item.id);
 
-    if (!isMobile) {
+    if (isMobile) {
       history.push(`/work/${item.id}`);
     } else {
       setContentModalOpen(true);
