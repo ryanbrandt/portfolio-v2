@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { Divider, TabMenu, Row, useIsMobile, Modal } from "handsome-ui";
+import { Divider, TabMenu, Row } from "handsome-ui";
 
 import { history } from "../../routes";
 import {
@@ -39,9 +39,6 @@ interface DispatchProps {
 }
 
 const Work = (props: Props & StateProps & DispatchProps): JSX.Element => {
-  const isMobile = useIsMobile();
-  const [contentModalOpen, setContentModalOpen] = useState(false);
-
   useEffect(() => {
     const { fetchWorkList, setQuery, setTab } = props;
 
