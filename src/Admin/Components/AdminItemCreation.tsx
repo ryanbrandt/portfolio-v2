@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { Breadcrumbs, Badge, useIsMobile } from "handsome-ui";
+import { Breadcrumbs, useIsMobile, Badge } from "handsome-ui";
 
 import {
   adminCreateWorkItemRequest,

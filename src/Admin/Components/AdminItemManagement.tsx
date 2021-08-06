@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { Badge, Breadcrumbs, useIsMobile } from "handsome-ui";
+import { useIsMobile, Badge, Breadcrumbs } from "handsome-ui";
 
 import { history } from "../../routes";
 import {

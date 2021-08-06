@@ -2,7 +2,7 @@ import React, { Fragment, useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { Table, TableRow, TableCell, Trash, useIsMobile } from "handsome-ui";
+import { Table, TableRow, TableCell, useIsMobile, Trash } from "handsome-ui";
 
 import { history } from "../../routes";
 import { RootState } from "../../store/rootReducer";

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useState } from "react";
 import { connect } from "react-redux";
 
 import {
@@ -6,7 +6,7 @@ import {
   Column,
   Code,
   WorldWideWeb,
-  BounceLouder,
+  Spinner,
   useIsMobile,
 } from "handsome-ui";
 
@@ -30,17 +30,6 @@ const WorkContent = (props: Props & StateProps) => {
   const [imgLoaded, setImgLoaded] = useState(false);
 
   const { activeItem } = props;
-
-  useEffect(() => {
-    const WORK_ITEM_PATH_REGEX = /\/work\/[-0-9]+/;
-
-    const { location } = window;
-    const { pathname } = location;
-
-    if (WORK_ITEM_PATH_REGEX.test(pathname) && (!isMobile || !activeItem.id)) {
-      history.push("/work");
-    }
-  }, [isMobile, activeItem]);
 
   const handleImgLoaded = (): void => {
     setTimeout(() => setImgLoaded(true), 500);
@@ -69,13 +58,13 @@ const WorkContent = (props: Props & StateProps) => {
     );
   };
 
-  const _renderMobileHeader = (): React.ReactNode => {
+  const _renderHeader = (): React.ReactNode => {
     const crumbs = [
       {
         title: "Work",
         action: () => history.push("/work"),
       },
-      { title: activeItem.name, action: () => null, disabled: true },
+      { title: activeItem.name, disabled: true },
     ];
 
     return (
@@ -106,20 +95,15 @@ const WorkContent = (props: Props & StateProps) => {
           onLoad={handleImgLoaded}
           alt={FALLBACK_IMG}
         />
-        {!imgLoaded && <BounceLouder className="work-img-loading" />}
+        {!imgLoaded && <Spinner className="work-img-loading" />}
       </Fragment>
     );
   };
 
   if (activeItem) {
-    let containerClassName = "work_content-container";
-    if (isMobile) {
-      containerClassName = "work_content-container-mobile fadeable-content";
-    }
-
     return (
-      <div className={containerClassName}>
-        {isMobile && _renderMobileHeader()}
+      <div className="work_content-container-mobile fadeable-content">
+        {_renderHeader()}
         <div className="flex_center_col">{_renderImage()}</div>
         <Column className="work_content-datestring aligned_text">
           {activeItem.datestring}
@@ -130,7 +114,7 @@ const WorkContent = (props: Props & StateProps) => {
     );
   }
 
-  return null;
+  throw Error("No active item");
 };
 
 const mapStateToProps = (state: RootState) => {

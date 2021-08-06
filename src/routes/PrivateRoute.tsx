@@ -26,6 +26,7 @@ const PrivateRoute = (props: Props & StateProps) => {
     }
   }, [pathname, user]);
 
+  // eslint-disable-next-line react/jsx-props-no-spreading
   return <Route {...props} component={user && component ? component : Login} />;
 };
 

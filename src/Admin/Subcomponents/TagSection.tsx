@@ -51,18 +51,16 @@ const TagSection: React.FunctionComponent<Props> = (props: Props) => {
 
     const canRemoveTags = tags.length > minimum;
 
-    if (canRemoveTags) {
-      return (
-        <Trash
-          className="admin_add-remove"
-          onClick={() => _handleRemoveTag(tagIndex)}
-          width={25}
-          height={25}
-        />
-      );
-    }
+    const modifier = canRemoveTags ? "" : "disabled";
 
-    return null;
+    return (
+      <Trash
+        className={`admin_add-remove ${modifier}`}
+        onClick={canRemoveTags ? () => _handleRemoveTag(tagIndex) : () => null}
+        width={25}
+        height={25}
+      />
+    );
   };
 
   const _renderCurrentTags = (): React.ReactNode => {
@@ -96,8 +94,8 @@ const TagSection: React.FunctionComponent<Props> = (props: Props) => {
         <Plus
           className="admin_add-remove"
           onClick={_handleAddTag}
-          width={20}
-          height={20}
+          width={15}
+          height={15}
         />
       );
     }
