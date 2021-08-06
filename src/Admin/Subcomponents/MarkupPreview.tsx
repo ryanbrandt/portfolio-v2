@@ -1,13 +1,13 @@
-import React, { useContext } from "react";
+import React from "react";
 
-import { AppContext } from "handsome-ui";
+import { useIsMobile } from "handsome-ui";
 
 interface Props {
   html: string;
 }
 
 const MarkupPreview: React.FunctionComponent<Props> = (props: Props) => {
-  const isMobile = useContext(AppContext);
+  const isMobile = useIsMobile();
 
   const { html } = props;
 

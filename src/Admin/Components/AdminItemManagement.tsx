@@ -1,8 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { AppContext, Badge, Breadcrumbs } from "handsome-ui";
+import { Badge, Breadcrumbs, useIsMobile } from "handsome-ui";
 
 import { history } from "../../routes";
 import {
@@ -144,7 +144,7 @@ const AdminItemManagement = (props: Props & DispatchProps & StateProps) => {
     return null;
   };
 
-  const isMobile = useContext(AppContext);
+  const isMobile = useIsMobile();
 
   return (
     <div className={isMobile ? "admin_manage-container-mobile" : ""}>

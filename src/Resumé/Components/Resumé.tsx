@@ -2,7 +2,14 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { Divider, Row, Column, Badge, Download, AppContext } from "handsome-ui";
+import {
+  Divider,
+  Row,
+  Column,
+  Badge,
+  Download,
+  useIsMobile,
+} from "handsome-ui";
 
 import { resumeListRequest } from "../actions";
 import { RESUME_DOWNLOAD_LINK, RESUME_TOOLS } from "../constants";
@@ -109,24 +116,22 @@ const Resumé: React.FunctionComponent<Props & StateProps & DispatchProps> = (
     );
   };
 
+  const isMobile = useIsMobile();
+
   return (
-    <AppContext.Consumer>
-      {(isMobile) => (
-        <div className="fadeable-content flex_center_col">
-          <div>
-            <h1 className="aligned_text">
-              <Download
-                className={isMobile ? "download_icon-mobile" : "download_icon"}
-                onClick={_handleDownloadClick}
-              />
-              Resumé
-            </h1>
-            <Divider />
-            <div className="app_wide_container">{_renderResumeSection()}</div>
-          </div>
-        </div>
-      )}
-    </AppContext.Consumer>
+    <div className="fadeable-content flex_center_col">
+      <div>
+        <h1 className="aligned_text">
+          <Download
+            className={isMobile ? "download_icon-mobile" : "download_icon"}
+            onClick={_handleDownloadClick}
+          />
+          Resumé
+        </h1>
+        <Divider />
+        <div className="app_wide_container">{_renderResumeSection()}</div>
+      </div>
+    </div>
   );
 };
 
