@@ -35,6 +35,8 @@ interface DispatchProps {
 const Resumé: React.FunctionComponent<Props & StateProps & DispatchProps> = (
   props: Props & StateProps & DispatchProps
 ): JSX.Element => {
+  const isMobile = useIsMobile();
+
   useEffect(() => {
     const { fetchResumeList } = props;
 
@@ -115,8 +117,6 @@ const Resumé: React.FunctionComponent<Props & StateProps & DispatchProps> = (
       </Row>
     );
   };
-
-  const isMobile = useIsMobile();
 
   return (
     <div className="fadeable-content flex_center_col">

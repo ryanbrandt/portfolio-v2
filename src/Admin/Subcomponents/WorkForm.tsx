@@ -38,14 +38,21 @@ const WorkForm = (props: Props): JSX.Element => {
   };
 
   const _renderFileInputs = (): React.ReactNode => {
+    const { primaryImage, secondaryImage } = form;
+
+    const primaryImageSelection = primaryImage ? [primaryImage] : [];
+    const secondaryImageSelection = secondaryImage ? [secondaryImage] : [];
+
     return (
       <Row version="space-between">
         <FileInput
+          selection={primaryImageSelection}
           error={errors.primaryImage}
           label="Primary Image"
           onChange={(files) => setForm({ ...form, primaryImage: files[0] })}
         />
         <FileInput
+          selection={secondaryImageSelection}
           error={errors.secondaryImage}
           label="Secondary Image"
           onChange={(files) => setForm({ ...form, secondaryImage: files[0] })}
